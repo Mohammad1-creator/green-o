@@ -53,6 +53,26 @@ isOneToOne: true
       referencedColumns: ["id"]
     }
                   ]
+                },"notifications": {
+                  Row: {
+                    "body": string | null,"created_at": string,"id": string,"push_attempts": number,"push_error": string | null,"push_status": Database["public"]['Enums']["push_status"],"read_at": string | null,"title": string,"type": string,"url": string | null,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body"?: string | null,"created_at"?: string,"id"?: string,"push_attempts"?: number,"push_error"?: string | null,"push_status"?: Database["public"]['Enums']["push_status"],"read_at"?: string | null,"title": string,"type": string,"url"?: string | null,"user_id": string
+                  }
+                  Update: {
+                    "body"?: string | null,"created_at"?: string,"id"?: string,"push_attempts"?: number,"push_error"?: string | null,"push_status"?: Database["public"]['Enums']["push_status"],"read_at"?: string | null,"title"?: string,"type"?: string,"url"?: string | null,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notifications_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"profiles": {
                   Row: {
                     "created_at": string,"created_by": string | null,"department_id": string | null,"full_name": string,"id": string,"is_active": boolean,"role": Database["public"]['Enums']["app_role"],"updated_at": string
@@ -73,6 +93,26 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"push_subscriptions": {
+                  Row: {
+                    "auth": string,"created_at": string,"endpoint": string,"id": string,"last_success_at": string | null,"p256dh": string,"user_agent": string | null,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "auth": string,"created_at"?: string,"endpoint": string,"id"?: string,"last_success_at"?: string | null,"p256dh": string,"user_agent"?: string | null,"user_id": string
+                  }
+                  Update: {
+                    "auth"?: string,"created_at"?: string,"endpoint"?: string,"id"?: string,"last_success_at"?: string | null,"p256dh"?: string,"user_agent"?: string | null,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "push_subscriptions_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 }
           }
           Views: {
@@ -88,6 +128,12 @@ isOneToOne: false
 "can_manage_account":
 { Args: { "p_department_id": string,"p_role": Database["public"]['Enums']["app_role"] }; Returns: boolean
                            },
+"claim_push_batch":
+{ Args: { "p_ids": string[] }; Returns: { "body": string | null,"id": string,"title": string,"url": string | null,"user_id": string }[]
+                           },
+"configure_push_dispatch":
+{ Args: { "p_secret": string,"p_url": string,"p_vercel_bypass"?: string }; Returns: undefined
+                           },
 "create_user_profile":
 { Args: { "p_department_id": string,"p_employee_no": string,"p_full_name": string,"p_job_title"?: string,"p_phone"?: string,"p_role": Database["public"]['Enums']["app_role"],"p_user_id": string }; Returns: undefined
                            },
@@ -95,6 +141,18 @@ isOneToOne: false
 { Args: Record<PropertyKey, never>; Returns: string
                            },
 "mark_local_environment":
+{ Args: Record<PropertyKey, never>; Returns: string
+                           },
+"mark_all_notifications_read":
+{ Args: Record<PropertyKey, never>; Returns: number
+                           },
+"record_push_failure":
+{ Args: { "p_error": string,"p_id": string }; Returns: undefined
+                           },
+"register_push_subscription":
+{ Args: { "p_auth": string,"p_endpoint": string,"p_p256dh": string,"p_user_agent"?: string }; Returns: undefined
+                           },
+"send_test_notification":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
 "set_user_active":
@@ -105,7 +163,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee"
+            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","push_status": "pending"|"sent"|"failed"|"skipped"
           }
           CompositeTypes: {
             [_ in never]: never

@@ -6,6 +6,7 @@ import {
   HeaderSkeleton,
   SidebarSkeleton,
 } from "@/components/admin/admin-chrome";
+import { ServiceWorkerRegistrar } from "@/components/pwa/service-worker-registrar";
 
 export default function AdminLayout({ children }: LayoutProps<"/admin">) {
   return (
@@ -20,6 +21,7 @@ export default function AdminLayout({ children }: LayoutProps<"/admin">) {
           <AdminHeader />
         </Suspense>
         <main className="flex-1 px-4 py-6 lg:px-8">{children}</main>
+        <ServiceWorkerRegistrar />
       </div>
     </div>
   );

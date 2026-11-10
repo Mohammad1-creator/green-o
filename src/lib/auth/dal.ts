@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { cache } from "react";
 
 import { type AppRole, MANAGER_ROLES, homePathFor } from "@/lib/auth/roles";
+import { readPublicSupabaseConfig } from "@/lib/supabase/public-config";
 import { createClient } from "@/lib/supabase/server";
 
 export type CurrentUser = {
@@ -19,6 +20,7 @@ export type CurrentUser = {
  * deactivated, or without a profile. Reads cookies: call inside <Suspense>.
  */
 export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
+  if (!readPublicSupabaseConfig()) return null;
   const supabase = await createClient();
   const { data: claimsData } = await supabase.auth.getClaims();
   const userId = claimsData?.claims?.sub;

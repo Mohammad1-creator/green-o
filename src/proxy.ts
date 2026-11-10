@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { readPublicSupabaseConfig } from "@/lib/supabase/public-config";
 
 /** Pages that work without signing in. */
-const PUBLIC_PATHS = ["/login", "/health", "/auth"];
+const PUBLIC_PATHS = ["/login", "/health", "/auth", "/m/install"];
 
 function isPublicPath(pathname: string): boolean {
   return PUBLIC_PATHS.some(

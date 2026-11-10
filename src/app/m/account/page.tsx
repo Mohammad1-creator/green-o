@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Suspense } from "react";
 
 import { PageSkeleton } from "@/components/page-skeleton";
@@ -57,6 +58,12 @@ async function Account() {
       <p className="text-sm text-muted-foreground">
         لتغيير كلمة المرور راجع مديرك.
       </p>
+      <Link
+        href="/m/install"
+        className="block text-sm text-primary underline-offset-4 hover:underline"
+      >
+        تثبيت التطبيق وتفعيل الإشعارات
+      </Link>
       <SignOutButton />
     </div>
   );

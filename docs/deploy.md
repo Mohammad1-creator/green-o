@@ -68,8 +68,59 @@
 | رابط dev | شريط "بيئة التطوير"، وقاعدة البيانات "متصلة" مع معرّف مشروع `green-o-dev` |
 | رابط الإنتاج | بلا شريط، وقاعدة البيانات "متصلة" مع معرّف مشروع `green-o-prod` |
 
+## 6. تجهيز قاعدة البيانات (مرة لكل مشروع)
+
+نفّذ ما يلي من **SQL Editor** في لوحة Supabase لكل مشروع:
+
+1. **تطبيق الترحيلات:** انسخ محتوى ملفات `supabase/migrations/` بالترتيب ونفّذها، أو اترك ذلك لي عبر Supabase CLI بعد أن تمنحني الصلاحية.
+2. **علامة البيئة:** في مشروع الإنتاج نفّذ:
+   ```sql
+   update private.environment_marker set env = 'prod';
+   ```
+   وفي مشروع التطوير:
+   ```sql
+   update private.environment_marker set env = 'dev';
+   ```
+   صفحة `/health` تعرض هذه العلامة، وتحذّر بالأحمر إن لم تطابق البيئة.
+3. **المفتاح السري:** من Project Settings ← API Keys انسخ **Secret key**، وأضفه في Vercel باسم `SUPABASE_SECRET_KEY` لكل بيئة بقيمة مشروعها، مع تفعيل **Sensitive**.
+4. **أول مدير عام:** على جهازك، ضع في `.env.local` رابط المشروع ومفتاحه السري، ثم شغّل:
+   ```bash
+   npm run bootstrap:admin
+   ```
+   يسألك عن الاسم ورقم الموظف وكلمة المرور.
+5. **بيانات تجريبية (التطوير فقط):** مع `APP_ENV=dev` و`DEV_PROJECT_REF` و`SEED_PASSWORD` في `.env.local`:
+   ```bash
+   npm run seed:dev
+   ```
+   السكربت يرفض العمل على أي قاعدة علامتها ليست `local` أو `dev`.
+
+## 7. الإشعارات (Web Push)
+
+1. **مفاتيح VAPID:** على جهازك شغّل:
+   ```bash
+   npx web-push generate-vapid-keys
+   ```
+   أنشئ زوجاً مستقلاً لكل بيئة، وأضفه في Vercel:
+
+   | المتغير | القيمة |
+   |---|---|
+   | `NEXT_PUBLIC_VAPID_PUBLIC_KEY` | Public Key |
+   | `VAPID_PRIVATE_KEY` | Private Key (Sensitive) |
+   | `VAPID_SUBJECT` | رابط التطبيق، مثل `https://<الرابط>` |
+   | `PUSH_DISPATCH_SECRET` | سرّ عشوائي من 32 خانة أو أكثر (Sensitive) |
+
+   لا تغيّر مفاتيح VAPID بعد التشغيل، فتغييرها يُبطل اشتراكات كل الأجهزة.
+2. **ربط القاعدة بمسار الإرسال:** في SQL Editor لكل مشروع:
+   ```sql
+   select public.configure_push_dispatch(
+     'https://<رابط-البيئة>/api/push/dispatch',
+     '<قيمة PUSH_DISPATCH_SECRET نفسها>'
+   );
+   ```
+   في بيئة التطوير، لأن روابط Preview محمية: من Vercel ← Settings ← Deployment Protection ← **Protection Bypass for Automation** أنشئ سرّاً، ومرّره معاملاً ثالثاً للدالة.
+3. **التجربة:** من الجوال افتح `/m/install`، ثبّت التطبيق، فعّل الإشعارات، ثم اضغط «إرسال إشعار تجريبي».
+
 ## ما يأتي في المراحل القادمة
 
-- **المرحلة 1:** المفتاح السري (يُضاف بعلامة Sensitive)، وتطبيق ترحيلات القاعدة من GitHub Actions، واستبدال النشر التلقائي لفرع `main` بـ Deploy Hook حتى تُحدَّث القاعدة قبل التطبيق.
-- **المرحلة 2:** مفاتيح VAPID للإشعارات.
 - **المرحلة 12:** حساب التخزين الخارجي للنسخ الاحتياطية.
+- **قبل الإطلاق:** نقل تطبيق الترحيلات إلى GitHub Actions، واستبدال النشر التلقائي لفرع `main` بـ Deploy Hook، حتى تُحدَّث القاعدة قبل التطبيق.

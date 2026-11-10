@@ -2,6 +2,7 @@ import { FactoryIcon } from "lucide-react";
 import Link from "next/link";
 
 import { SignOutButton } from "@/components/sign-out-button";
+import { BellForCurrentUser } from "@/features/notifications/components/bell-for-user";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getCurrentUser } from "@/lib/auth/dal";
 import { ROLE_LABELS } from "@/lib/auth/roles";
@@ -53,6 +54,7 @@ export async function AdminHeader() {
             {user.departmentName ? ` · ${user.departmentName}` : null}
           </div>
         </div>
+        <BellForCurrentUser href="/admin/notifications" />
         <SignOutButton compact />
       </div>
     </header>

@@ -3,6 +3,7 @@ import { IBM_Plex_Sans_Arabic } from "next/font/google";
 
 import { EnvBanner } from "@/components/env-banner";
 import { DirectionProvider } from "@/components/ui/direction";
+import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <DirectionProvider direction="rtl">
           <EnvBanner />
           {children}
+          <Toaster position="top-center" />
         </DirectionProvider>
       </body>
     </html>

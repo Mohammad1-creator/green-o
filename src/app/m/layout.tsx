@@ -2,6 +2,7 @@ import { Suspense } from "react";
 
 import { BottomNav } from "@/components/mobile/bottom-nav";
 import { MobileHeader } from "@/components/mobile/mobile-header";
+import { ServiceWorkerRegistrar } from "@/components/pwa/service-worker-registrar";
 
 export default function MobileLayout({ children }: LayoutProps<"/m">) {
   return (
@@ -11,6 +12,7 @@ export default function MobileLayout({ children }: LayoutProps<"/m">) {
       </Suspense>
       <main className="flex-1 px-4 pt-4 pb-24">{children}</main>
       <BottomNav />
+      <ServiceWorkerRegistrar />
     </div>
   );
 }
