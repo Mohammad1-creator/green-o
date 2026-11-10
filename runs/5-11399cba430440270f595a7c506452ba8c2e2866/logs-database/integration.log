@@ -1,0 +1,14 @@
+
+> green-o@0.1.0 test:integration
+> vitest run --config vitest.integration.config.mts
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.1.0 [39m[90m/home/runner/work/green-o/green-o[39m
+
+ [32m✓[39m tests/integration/auth-and-access.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1084[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m10 passed[39m[22m[90m (10)[39m
+[2m   Start at [22m 19:20:40
+[2m   Duration [22m 1.29s[2m (tests 92%, transform 4%, import 4%)[22m
+

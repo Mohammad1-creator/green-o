@@ -1,0 +1,46 @@
+
+> green-o@0.1.0 build
+> next build
+
+▲ Next.js 16.4.6 (Turbopack)
+✓ Running next.config.ts took 37ms
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.5s
+  Running TypeScript ...
+  Finished TypeScript in 5.2s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/16) ...
+  Generating static pages using 3 workers (4/16) 
+  Generating static pages using 3 workers (8/16) 
+  Generating static pages using 3 workers (12/16) 
+✓ Generating static pages using 3 workers (16/16) in 637ms
+  Finalizing page optimization ...
+
+Route (app)              Revalidate  Expire
+┌ ◐ /
+├ ○ /_not-found
+├ ◐ /admin                       1m      1h
+├ ◐ /admin/departments           1m      1h
+├ ◐ /admin/settings              1m      1h
+├ ◐ /admin/users                 1m      1h
+├   /admin/users/[id]            1m      1h
+│ └ ◐ /admin/users/[id]          1m      1h
+├ ◐ /admin/users/new             1m      1h
+├ ƒ /auth/signout
+├ ◐ /health
+├ ○ /login                       1m      1h
+├ ◐ /m                           1m      1h
+├ ◐ /m/account                   1m      1h
+└ ○ /robots.txt
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)             prerendered as static content
+◐  (Partial Prerender)  prerendered as static HTML with dynamic server-streamed content
+ƒ  (Dynamic)            server-rendered on demand
+
