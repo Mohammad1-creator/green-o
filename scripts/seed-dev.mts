@@ -365,12 +365,81 @@ async function ensureProductionCatalog(client: SupabaseClient): Promise<void> {
   }
 }
 
+/**
+ * One running order, so the workers' "my stages" screen has something to
+ * show. Written directly: the order functions need a signed-in manager.
+ */
+async function ensureDemoOrder(
+  client: SupabaseClient,
+  departmentIds: Record<DepartmentKey, string>,
+): Promise<void> {
+  const DEMO_NOTE = "أمر تجريبي";
+  const { data: existing } = await client
+    .from("production_orders")
+    .select("id")
+    .eq("notes", DEMO_NOTE)
+    .maybeSingle();
+  if (existing) return;
+
+  const { data: product, error: productError } = await client
+    .from("products")
+    .select("id, unit, route:product_route_steps(seq, stage_id)")
+    .eq("code", "MDF-18-W")
+    .single();
+  if (productError) throw productError;
+  const { data: order, error: orderError } = await client
+    .from("production_orders")
+    .insert({
+      product_id: product.id,
+      department_id: departmentIds.production,
+      quantity: 200,
+      unit: product.unit,
+      notes: DEMO_NOTE,
+    })
+    .select("id")
+    .single();
+  if (orderError) throw orderError;
+
+  const route = [...product.route].sort(
+    (a: { seq: number }, b: { seq: number }) => a.seq - b.seq,
+  ) as { seq: number; stage_id: string }[];
+  const { data: stages, error: stagesError } = await client
+    .from("order_stages")
+    .insert(
+      route.map((step, index) => ({
+        order_id: order.id,
+        seq: index + 1,
+        stage_id: step.stage_id,
+      })),
+    )
+    .select("id, seq");
+  if (stagesError) throw stagesError;
+
+  // Cutting, laminating and packing workers, in route order.
+  const workerNos = ["3001", "3002", "3003"];
+  for (const stage of stages as { id: string; seq: number }[]) {
+    const workerNo = workerNos[stage.seq - 1];
+    if (!workerNo) continue;
+    const { data: details } = await client
+      .from("employee_details")
+      .select("user_id")
+      .eq("employee_no", workerNo)
+      .single();
+    if (!details) continue;
+    const { error } = await client
+      .from("order_stage_assignees")
+      .insert({ order_stage_id: stage.id, user_id: details.user_id });
+    if (error) throw error;
+  }
+}
+
 const departmentIds = await ensureDepartments(supabase);
 for (const user of DEMO_USERS) {
   await ensureUser(supabase, user, departmentIds, password);
 }
 await ensureMachines(supabase, departmentIds);
 await ensureProductionCatalog(supabase);
+await ensureDemoOrder(supabase, departmentIds);
 
 console.log(
   `Seeded ${Object.keys(DEPARTMENTS).length} departments and ${DEMO_USERS.length} users (${marker}).`,
