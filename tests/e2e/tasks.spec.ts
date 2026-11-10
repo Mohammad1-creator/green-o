@@ -28,7 +28,9 @@ test.describe("tasks", () => {
       .fill("افحص التسريب وغيّر الحشوة إن لزم.");
     await manager.getByLabel("الموظف").selectOption({ label: technician.name });
     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();
-    await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();
+    await expect(
+      manager.getByText("أُنشئت المهمة وأُرسل إشعار للمسند إليهم."),
+    ).toBeVisible();
     const taskUrl = new URL(manager.url());
     const taskId = taskUrl.pathname.split("/").pop() ?? "";
 
