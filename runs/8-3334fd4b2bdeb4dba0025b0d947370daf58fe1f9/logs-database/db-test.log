@@ -1,0 +1,80 @@
+Target: local stack (127.0.0.1:54322)
+3.36: Pulling from supabase/pg_prove
+4f4fb700ef54: Pulling fs layer
+06d62d0de6d7: Pulling fs layer
+dcccee43ad5d: Pulling fs layer
+a22cb17b3b93: Pulling fs layer
+4f4fb700ef54: Already exists
+4f4fb700ef54: Pull complete
+a22cb17b3b93: Download complete
+a008cf086da5: Download complete
+dcccee43ad5d: Download complete
+06d62d0de6d7: Download complete
+dcccee43ad5d: Pull complete
+a22cb17b3b93: Pull complete
+06d62d0de6d7: Pull complete
+Digest: sha256:<hex>
+Status: Downloaded newer image for public.ecr.aws/supabase/pg_prove:3.36
+public.ecr.aws/supabase/pg_prove:3.36
+/home/runner/work/green-o/green-o/supabase/tests/000_setup.test.sql .......... ok
+/home/runner/work/green-o/green-o/supabase/tests/010_foundation.test.sql ..... ok
+/home/runner/work/green-o/green-o/supabase/tests/020_notifications.test.sql .. ok
+/home/runner/work/green-o/green-o/supabase/tests/030_tasks.test.sql .......... 
+# Failed test 1: "a department manager creates a team in their department"
+#     died: 42501: permission denied for table teams
+#         HINT:       Grant the required privileges to the current role with: GRANT INSERT ON public.teams TO authenticated;
+#         CONTEXT:
+#             SQL statement " insert into public.teams (id, department_id, name)
+#                  values ('00000000-0000-4000-8000-0000000003f1', '00000000-0000-4000-8000-0000000003d1', 'فريق الصيانة أ') "
+#             PL/pgSQL function lives_ok(text,text) line 14 at EXECUTE
+# Failed test 3: "and adds two employees"
+#     died: P0001: عضو الفريق يجب أن يكون من قسم الفريق نفسه
+#         CONTEXT:
+#             PL/pgSQL function private.check_team_member() line 9 at RAISE
+#             SQL statement " insert into public.team_members (team_id, user_id) values
+#                  ('00000000-0000-4000-8000-0000000003f1', '00000000-0000-4000-8000-000000000304'),
+#                  ('00000000-0000-4000-8000-0000000003f1', '00000000-0000-4000-8000-000000000305') "
+#             PL/pgSQL function lives_ok(text,text) line 14 at EXECUTE
+# Failed test 7: "and a task for a team"
+#     died: P0001: الفريق غير موجود في قسم المهمة أو موقوف
+#         CONTEXT:
+#             PL/pgSQL function private.resolve_assignees(uuid,uuid[],uuid) line 14 at RAISE
+#             PL/pgSQL function private.create_task_record(public.task_kind,text,text,timestamp with time zone,uuid,uuid[],uuid) line 17 at assignment
+#             PL/pgSQL function public.create_task(text,text,timestamp with time zone,uuid,uuid[],uuid) line 14 at RETURN
+#             SQL statement " select public.create_task('اختبار: مهمة الفريق', null, null, null, null,
+#                    '00000000-0000-4000-8000-0000000003f1') "
+#             PL/pgSQL function lives_ok(text,text) line 14 at EXECUTE
+# Failed test 12: "a team task is assigned to every active team member"
+#         have: 0
+#         want: 2
+# Failed test 13: "each assignee is notified"
+#         have: 1
+#         want: 2
+# Failed test 16: "the general manager sees every task"
+#         have: 2
+#         want: 3
+# Failed test 17: "an employee sees the tasks assigned to them"
+#         have: 1
+#         want: 2
+# Failed test 37: "cancelling needs a reason"
+#       caught: P0002: المهمة غير موجودة
+#       wanted: P0001
+# Failed test 38: "an open task is cancelled with a reason"
+#     died: P0002: المهمة غير موجودة
+#         CONTEXT:
+#             PL/pgSQL function private.lock_task(uuid) line 7 at RAISE
+#             SQL expression "private.lock_task(p_task_id)"
+#             PL/pgSQL function public.cancel_task(uuid,text) line 3 during statement block local variable initialization
+#             SQL statement " select public.cancel_task((select id from tests.task_ids where name = 'team'), 'لم تعد مطلوبة') "
+#             PL/pgSQL function lives_ok(text,text) line 14 at EXECUTE
+# Looks like you failed 9 tests of 40
+Failed 9/40 subtests 
+
+Test Summary Report
+-------------------
+/home/runner/work/green-o/green-o/supabase/tests/030_tasks.test.sql        (Wstat: 0 Tests: 40 Failed: 9)
+  Failed tests:  1, 3, 7, 12-13, 16-17, 37-38
+Files=4, Tests=108,  0 wallclock secs ( 0.03 usr  0.02 sys +  0.04 cusr  0.02 csys =  0.11 CPU)
+Result: FAIL
+error running container: exit 1
+Try rerunning the command with --debug to troubleshoot the error.

@@ -1,0 +1,13 @@
+ANON_KEY=<hidden>
+API_URL=<hidden>
+DB_URL=<hidden>
+GRAPHQL_URL=<hidden>
+JWT_SECRET=<hidden>
+PUBLISHABLE_KEY=<hidden>
+REST_URL=<hidden>
+S3_PROTOCOL_ACCESS_KEY_ID=<hidden>
+S3_PROTOCOL_ACCESS_KEY_SECRET=<hidden>
+S3_PROTOCOL_REGION=<hidden>
+SECRET_KEY=<hidden>
+SERVICE_ROLE_KEY=<hidden>
+STORAGE_S3_URL=<hidden>
