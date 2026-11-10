@@ -1,0 +1,163 @@
+
+> green-o@0.1.0 test:e2e
+> playwright test
+
+
+Running 28 tests using 2 workers
+·························××××T
+::error file=tests/e2e/task-collaboration.spec.ts,title=[desktop] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder::  1) [desktop] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/task-collaboration.spec.ts,title=[desktop] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder,line=55,col=41::  1) [desktop] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A    Error: locator.fill: Test ended.%0A    Call log:%0A      - waiting for getByLabel('تعليق جديد')%0A%0A%0A      53 |     await signIn(tech, technician.employeeNo);%0A      54 |     await tech.goto(`/m/tasks/${taskId}`);%0A    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");%0A         |                                         ^%0A      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();%0A      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(%0A      58 |       "وصلت القطعة البديلة",%0A        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+::error file=tests/e2e/task-collaboration.spec.ts,title=[desktop] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder::  1) [desktop] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/task-collaboration.spec.ts,title=[desktop] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder,line=55,col=41::  1) [desktop] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: locator.fill: Test ended.%0A    Call log:%0A      - waiting for getByLabel('تعليق جديد')%0A%0A%0A      53 |     await signIn(tech, technician.employeeNo);%0A      54 |     await tech.goto(`/m/tasks/${taskId}`);%0A    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");%0A         |                                         ^%0A      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();%0A      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(%0A      58 |       "وصلت القطعة البديلة",%0A        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+::error file=tests/e2e/task-collaboration.spec.ts,title=[desktop] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder::  1) [desktop] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/task-collaboration.spec.ts,title=[desktop] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder,line=55,col=41::  1) [desktop] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: locator.fill: Test ended.%0A    Call log:%0A      - waiting for getByLabel('تعليق جديد')%0A%0A%0A      53 |     await signIn(tech, technician.employeeNo);%0A      54 |     await tech.goto(`/m/tasks/${taskId}`);%0A    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");%0A         |                                         ^%0A      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();%0A      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(%0A      58 |       "وصلت القطعة البديلة",%0A        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+·T
+::error file=tests/e2e/task-collaboration.spec.ts,title=[mobile] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder::  2) [mobile] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/task-collaboration.spec.ts,title=[mobile] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder,line=55,col=41::  2) [mobile] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A    Error: locator.fill: Test ended.%0A    Call log:%0A      - waiting for getByLabel('تعليق جديد')%0A%0A%0A      53 |     await signIn(tech, technician.employeeNo);%0A      54 |     await tech.goto(`/m/tasks/${taskId}`);%0A    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");%0A         |                                         ^%0A      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();%0A      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(%0A      58 |       "وصلت القطعة البديلة",%0A        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+::error file=tests/e2e/task-collaboration.spec.ts,title=[mobile] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder::  2) [mobile] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/task-collaboration.spec.ts,title=[mobile] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder,line=55,col=41::  2) [mobile] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: locator.fill: Test ended.%0A    Call log:%0A      - waiting for getByLabel('تعليق جديد')%0A%0A%0A      53 |     await signIn(tech, technician.employeeNo);%0A      54 |     await tech.goto(`/m/tasks/${taskId}`);%0A    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");%0A         |                                         ^%0A      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();%0A      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(%0A      58 |       "وصلت القطعة البديلة",%0A        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+::error file=tests/e2e/task-collaboration.spec.ts,title=[mobile] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder::  2) [mobile] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/task-collaboration.spec.ts,title=[mobile] › tests/e2e/task-collaboration.spec.ts%3A32%3A3 › working together on a task › comments%2C a photo and a reminder,line=55,col=41::  2) [mobile] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: locator.fill: Test ended.%0A    Call log:%0A      - waiting for getByLabel('تعليق جديد')%0A%0A%0A      53 |     await signIn(tech, technician.employeeNo);%0A      54 |     await tech.goto(`/m/tasks/${taskId}`);%0A    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");%0A         |                                         ^%0A      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();%0A      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(%0A      58 |       "وصلت القطعة البديلة",%0A        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+
+
+  1) [desktop] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test ended.
+    Call log:
+      - waiting for getByLabel('تعليق جديد')
+
+
+      53 |     await signIn(tech, technician.employeeNo);
+      54 |     await tech.goto(`/m/tasks/${taskId}`);
+    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");
+         |                                         ^
+      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();
+      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(
+      58 |       "وصلت القطعة البديلة",
+        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+
+    Error Context: test-results/task-collaboration-working-f0c6f-ents-a-photo-and-a-reminder-desktop/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test ended.
+    Call log:
+      - waiting for getByLabel('تعليق جديد')
+
+
+      53 |     await signIn(tech, technician.employeeNo);
+      54 |     await tech.goto(`/m/tasks/${taskId}`);
+    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");
+         |                                         ^
+      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();
+      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(
+      58 |       "وصلت القطعة البديلة",
+        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+
+    Error Context: test-results/task-collaboration-working-f0c6f-ents-a-photo-and-a-reminder-desktop-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/task-collaboration-working-f0c6f-ents-a-photo-and-a-reminder-desktop-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/task-collaboration-working-f0c6f-ents-a-photo-and-a-reminder-desktop-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test ended.
+    Call log:
+      - waiting for getByLabel('تعليق جديد')
+
+
+      53 |     await signIn(tech, technician.employeeNo);
+      54 |     await tech.goto(`/m/tasks/${taskId}`);
+    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");
+         |                                         ^
+      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();
+      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(
+      58 |       "وصلت القطعة البديلة",
+        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+
+    Error Context: test-results/task-collaboration-working-f0c6f-ents-a-photo-and-a-reminder-desktop-retry2/error-context.md
+
+  2) [mobile] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test ended.
+    Call log:
+      - waiting for getByLabel('تعليق جديد')
+
+
+      53 |     await signIn(tech, technician.employeeNo);
+      54 |     await tech.goto(`/m/tasks/${taskId}`);
+    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");
+         |                                         ^
+      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();
+      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(
+      58 |       "وصلت القطعة البديلة",
+        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+
+    Error Context: test-results/task-collaboration-working-f0c6f-ents-a-photo-and-a-reminder-mobile/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test ended.
+    Call log:
+      - waiting for getByLabel('تعليق جديد')
+
+
+      53 |     await signIn(tech, technician.employeeNo);
+      54 |     await tech.goto(`/m/tasks/${taskId}`);
+    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");
+         |                                         ^
+      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();
+      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(
+      58 |       "وصلت القطعة البديلة",
+        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+
+    Error Context: test-results/task-collaboration-working-f0c6f-ents-a-photo-and-a-reminder-mobile-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/task-collaboration-working-f0c6f-ents-a-photo-and-a-reminder-mobile-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/task-collaboration-working-f0c6f-ents-a-photo-and-a-reminder-mobile-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test ended.
+    Call log:
+      - waiting for getByLabel('تعليق جديد')
+
+
+      53 |     await signIn(tech, technician.employeeNo);
+      54 |     await tech.goto(`/m/tasks/${taskId}`);
+    > 55 |     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");
+         |                                         ^
+      56 |     await tech.getByRole("button", { name: "إضافة التعليق" }).click();
+      57 |     await expect(tech.getByRole("list", { name: "التعليقات" })).toContainText(
+      58 |       "وصلت القطعة البديلة",
+        at /home/runner/work/green-o/green-o/tests/e2e/task-collaboration.spec.ts:55:41
+
+    Error Context: test-results/task-collaboration-working-f0c6f-ents-a-photo-and-a-reminder-mobile-retry2/error-context.md
+
+  2 failed
+    [desktop] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder 
+    [mobile] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder 
+  26 passed (1.9m)
+::notice title=🎭 Playwright Run Summary::  2 failed%0A    [desktop] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A    [mobile] › tests/e2e/task-collaboration.spec.ts:32:3 › working together on a task › comments, a photo and a reminder %0A  26 passed (1.9m)
