@@ -11,9 +11,10 @@ import {
   ManagerTaskActions,
   MarkSeen,
 } from "@/features/tasks/components/task-actions";
+import { TaskCollaboration } from "@/features/tasks/components/task-collaboration";
 import { TaskStatusBadge } from "@/features/tasks/components/task-status-badge";
 import { TaskTimeline } from "@/features/tasks/components/task-timeline";
-import { taskCode } from "@/features/tasks/labels";
+import { isFinalStatus, taskCode } from "@/features/tasks/labels";
 import { getTaskDetail } from "@/features/tasks/queries";
 import { requireUser } from "@/lib/auth/dal";
 import { managesDepartment } from "@/lib/auth/scope";
@@ -113,6 +114,13 @@ async function MobileTask({ params }: { params: Promise<{ id: string }> }) {
           </CardContent>
         </Card>
       ) : null}
+
+      <TaskCollaboration
+        taskId={task.id}
+        timeZone={tz}
+        isFinal={isFinalStatus(task.status)}
+        canManage={canManage}
+      />
 
       <Card>
         <CardHeader>

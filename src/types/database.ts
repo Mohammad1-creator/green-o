@@ -19,6 +19,44 @@ export type Database = {
                   Relationships: [
                     
                   ]
+                },"attachments": {
+                  Row: {
+                    "comment_id": string | null,"created_at": string,"deleted_at": string | null,"deleted_by": string | null,"id": string,"mime_type": string,"size_bytes": number,"storage_path": string,"task_id": string | null,"uploaded_by": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "comment_id"?: string | null,"created_at"?: string,"deleted_at"?: string | null,"deleted_by"?: string | null,"id"?: string,"mime_type": string,"size_bytes": number,"storage_path": string,"task_id"?: string | null,"uploaded_by": string
+                  }
+                  Update: {
+                    "comment_id"?: string | null,"created_at"?: string,"deleted_at"?: string | null,"deleted_by"?: string | null,"id"?: string,"mime_type"?: string,"size_bytes"?: number,"storage_path"?: string,"task_id"?: string | null,"uploaded_by"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "attachments_comment_id_fkey"
+      columns: ["comment_id"]
+isOneToOne: false
+      referencedRelation: "task_comments"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "attachments_deleted_by_fkey"
+      columns: ["deleted_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "attachments_task_id_fkey"
+      columns: ["task_id"]
+isOneToOne: false
+      referencedRelation: "tasks"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "attachments_uploaded_by_fkey"
+      columns: ["uploaded_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"departments": {
                   Row: {
                     "created_at": string,"created_by": string | null,"id": string,"is_active": boolean,"name": string,"updated_at": string
@@ -139,6 +177,32 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"task_comments": {
+                  Row: {
+                    "author_id": string,"body": string,"created_at": string,"id": string,"task_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "author_id": string,"body": string,"created_at"?: string,"id"?: string,"task_id": string
+                  }
+                  Update: {
+                    "author_id"?: string,"body"?: string,"created_at"?: string,"id"?: string,"task_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "task_comments_author_id_fkey"
+      columns: ["author_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_comments_task_id_fkey"
+      columns: ["task_id"]
+isOneToOne: false
+      referencedRelation: "tasks"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"task_events": {
                   Row: {
                     "actor_id": string | null,"created_at": string,"event": string,"from_status": Database["public"]['Enums']["task_status"] | null,"id": number,"note": string | null,"task_id": string,"to_status": Database["public"]['Enums']["task_status"] | null
@@ -159,6 +223,32 @@ isOneToOne: false
       referencedColumns: ["id"]
     },{
       foreignKeyName: "task_events_task_id_fkey"
+      columns: ["task_id"]
+isOneToOne: false
+      referencedRelation: "tasks"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"task_reminders": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"id": string,"remind_at": string,"sent_at": string | null,"task_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"id"?: string,"remind_at": string,"sent_at"?: string | null,"task_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"id"?: string,"remind_at"?: string,"sent_at"?: string | null,"task_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "task_reminders_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_reminders_task_id_fkey"
       columns: ["task_id"]
 isOneToOne: false
       referencedRelation: "tasks"
@@ -258,6 +348,12 @@ isOneToOne: false
             "acknowledge_task":
 { Args: { "p_task_id": string }; Returns: undefined
                            },
+"add_task_comment":
+{ Args: { "p_body": string,"p_task_id": string }; Returns: string
+                           },
+"add_task_reminder":
+{ Args: { "p_remind_at": string,"p_task_id": string }; Returns: string
+                           },
 "approve_task":
 { Args: { "p_task_id": string }; Returns: undefined
                            },
@@ -287,6 +383,9 @@ isOneToOne: false
 "create_user_profile":
 { Args: { "p_department_id": string,"p_employee_no": string,"p_full_name": string,"p_job_title"?: string,"p_phone"?: string,"p_role": Database["public"]['Enums']["app_role"],"p_user_id": string }; Returns: undefined
                            },
+"delete_task_reminder":
+{ Args: { "p_reminder_id": string }; Returns: undefined
+                           },
 "environment_marker":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
@@ -295,6 +394,9 @@ isOneToOne: false
                            },
 "mark_all_notifications_read":
 { Args: Record<PropertyKey, never>; Returns: number
+                           },
+"mark_attachment_deleted":
+{ Args: { "p_attachment_id": string }; Returns: string
                            },
 "mark_local_environment":
 { Args: Record<PropertyKey, never>; Returns: string
@@ -310,6 +412,9 @@ isOneToOne: false
                            },
 "register_push_subscription":
 { Args: { "p_auth": string,"p_endpoint": string,"p_p256dh": string,"p_user_agent"?: string }; Returns: undefined
+                           },
+"register_task_attachment":
+{ Args: { "p_comment_id"?: string,"p_mime_type": string,"p_path": string,"p_size_bytes": number,"p_task_id": string }; Returns: string
                            },
 "return_task":
 { Args: { "p_reason": string,"p_task_id": string }; Returns: undefined

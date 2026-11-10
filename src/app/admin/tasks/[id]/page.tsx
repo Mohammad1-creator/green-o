@@ -11,6 +11,10 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ManagerTaskActions } from "@/features/tasks/components/task-actions";
 import {
+  TaskCollaboration,
+  TaskReminders,
+} from "@/features/tasks/components/task-collaboration";
+import {
   EditTaskForm,
   ReassignTaskForm,
 } from "@/features/tasks/components/task-forms";
@@ -178,6 +182,13 @@ async function TaskDetails({
             </CardContent>
           </Card>
 
+          <TaskCollaboration
+            taskId={task.id}
+            timeZone={tz}
+            isFinal={isFinalStatus(task.status)}
+            canManage={canManage}
+          />
+
           <Card>
             <CardHeader>
               <CardTitle>السجل</CardTitle>
@@ -215,6 +226,11 @@ async function TaskDetails({
                 />
               </CardContent>
             </Card>
+            <TaskReminders
+              taskId={task.id}
+              timeZone={tz}
+              isOpen={isOpenStatus(task.status)}
+            />
             {options ? (
               <Card>
                 <CardHeader>
