@@ -250,11 +250,127 @@ async function ensureMachines(
   }
 }
 
+/** Returns the row's id, inserting it first if no row matches. */
+async function ensureRow(
+  client: SupabaseClient,
+  table: string,
+  match: Record<string, string>,
+  row: Record<string, unknown>,
+): Promise<string> {
+  let query = client.from(table).select("id");
+  for (const [column, value] of Object.entries(match)) {
+    query = query.eq(column, value);
+  }
+  const { data: existing, error: readError } = await query.maybeSingle();
+  if (readError) throw readError;
+  if (existing) return (existing as { id: string }).id;
+  const { data, error } = await client
+    .from(table)
+    .insert(row)
+    .select("id")
+    .single();
+  if (error) throw error;
+  return (data as { id: string }).id;
+}
+
+async function ensureProductionCatalog(client: SupabaseClient): Promise<void> {
+  const spec = (label: string, row: Record<string, unknown>) =>
+    ensureRow(client, "spec_definitions", { label }, { label, ...row });
+  const thickness = await spec("السماكة", {
+    data_type: "number",
+    unit: "مم",
+    min_value: 1,
+    max_value: 50,
+    is_required: true,
+    sort_order: 1,
+  });
+  const color = await spec("اللون", {
+    data_type: "select",
+    options: ["أبيض", "رمادي", "بني"],
+    sort_order: 2,
+  });
+  const moisture = await spec("مقاوم للرطوبة", {
+    data_type: "boolean",
+    sort_order: 3,
+  });
+  await spec("ملاحظات التصنيع", { data_type: "text", sort_order: 4 });
+
+  const stage = (name: string, sortOrder: number) =>
+    ensureRow(client, "stages", { name }, { name, sort_order: sortOrder });
+  const cut = await stage("قص", 1);
+  const laminate = await stage("تصفيح", 2);
+  const pack = await stage("تغليف", 3);
+
+  const products = [
+    {
+      code: "MDF-18-W",
+      name: "لوح MDF أبيض 18 مم",
+      specs: { [thickness]: 18, [color]: "أبيض", [moisture]: false },
+      route: [cut, laminate, pack],
+    },
+    {
+      code: "MDF-12-G",
+      name: "لوح MDF رمادي 12 مم مقاوم للرطوبة",
+      specs: { [thickness]: 12, [color]: "رمادي", [moisture]: true },
+      route: [cut, pack],
+    },
+  ];
+  for (const product of products) {
+    const productId = await ensureRow(
+      client,
+      "products",
+      { code: product.code },
+      {
+        code: product.code,
+        name: product.name,
+        unit: "لوح",
+        specs: product.specs,
+      },
+    );
+    const { count } = await client
+      .from("product_route_steps")
+      .select("seq", { count: "exact", head: true })
+      .eq("product_id", productId);
+    if (!count) {
+      const { error } = await client.from("product_route_steps").insert(
+        product.route.map((stageId, index) => ({
+          product_id: productId,
+          seq: index + 1,
+          stage_id: stageId,
+        })),
+      );
+      if (error) throw error;
+    }
+  }
+
+  const defects: [string, string | null][] = [
+    ["كسر في الحافة", cut],
+    ["مقاس خاطئ", cut],
+    ["فقاعات في التصفيح", laminate],
+    ["خدش", laminate],
+    ["تلف التغليف", pack],
+    ["عيب آخر", null],
+  ];
+  for (const [name, stageId] of defects) {
+    let query = client.from("defect_types").select("id").eq("name", name);
+    query = stageId
+      ? query.eq("stage_id", stageId)
+      : query.is("stage_id", null);
+    const { data: existing } = await query.maybeSingle();
+    if (existing) continue;
+    const { error } = await client
+      .from("defect_types")
+      .insert({ name, stage_id: stageId });
+    if (error) throw error;
+  }
+}
+
 const departmentIds = await ensureDepartments(supabase);
 for (const user of DEMO_USERS) {
   await ensureUser(supabase, user, departmentIds, password);
 }
 await ensureMachines(supabase, departmentIds);
+await ensureProductionCatalog(supabase);
 
 console.log(
   `Seeded ${Object.keys(DEPARTMENTS).length} departments and ${DEMO_USERS.length} users (${marker}).`,
