@@ -67,6 +67,7 @@ reset role; select tests.clear_claims();
 create table tests.tampered as
   select id, new_data from audit.log
    where table_name = 'public.departments' and new_data ->> 'name' = 'اختبار م11: قسم ب';
+grant select on tests.tampered to authenticated;
 alter table audit.log disable trigger log_immutable;
 update audit.log set new_data = jsonb_set(new_data, '{name}', '"قسم مزوّر"')
  where id = (select id from tests.tampered);
