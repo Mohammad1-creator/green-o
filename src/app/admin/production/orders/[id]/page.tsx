@@ -95,12 +95,21 @@ async function Order({
           </span>
         }
         actions={
-          <Link
-            href="/admin/production/orders"
-            className={buttonVariants({ variant: "outline" })}
-          >
-            العودة للأوامر
-          </Link>
+          <>
+            <Link
+              href={`/print/orders/${order.id}`}
+              target="_blank"
+              className={buttonVariants({ variant: "outline" })}
+            >
+              طباعة الأمر
+            </Link>
+            <Link
+              href="/admin/production/orders"
+              className={buttonVariants({ variant: "outline" })}
+            >
+              العودة للأوامر
+            </Link>
+          </>
         }
       />
       {query.created ? (

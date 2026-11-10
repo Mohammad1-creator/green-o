@@ -779,8 +779,68 @@ isOneToOne: false
 "reject_fault":
 { Args: { "p_fault_id": string,"p_reason": string }; Returns: undefined
                            },
+"report_defects_by_type":
+{ Args: { "p_from": string,"p_to": string }; Returns: {
+              "defect_qty": number,"defect_type_id": string,"entries": number,"name": string,"stage_name": string
+            }[]
+                           },
 "report_fault":
 { Args: { "p_description": string,"p_machine_id": string,"p_machine_stopped"?: boolean }; Returns: string
+                           },
+"report_faults_by_machine":
+{ Args: { "p_from": string,"p_to": string }; Returns: {
+              "avg_repair_hours": number,"code": string,"downtime_hours": number,"faults": number,"machine_id": string,"name": string,"stopped": number
+            }[]
+                           },
+"report_maintenance_summary":
+{ Args: { "p_from": string,"p_to": string }; Returns: {
+              "avg_repair_hours": number,"avg_response_hours": number,"downtime_hours": number,"open_now": number,"rejected": number,"reported": number,"resolved": number
+            }[]
+                           },
+"report_pm_compliance":
+{ Args: { "p_from": string,"p_to": string }; Returns: {
+              "cancelled": number,"due": number,"late": number,"missed": number,"on_time": number
+            }[]
+                           },
+"report_production_by_product":
+{ Args: { "p_from": string,"p_to": string }; Returns: {
+              "code": string,"defect_qty": number,"finished_qty": number,"name": string,"product_id": string,"unit": string
+            }[]
+                           },
+"report_production_by_stage":
+{ Args: { "p_from": string,"p_to": string }; Returns: {
+              "defect_qty": number,"good_qty": number,"stage_id": string,"stage_name": string,"waiting_qty": number
+            }[]
+                           },
+"report_production_by_worker":
+{ Args: { "p_from": string,"p_to": string }; Returns: {
+              "defect_qty": number,"entries": number,"full_name": string,"good_qty": number,"worker_id": string
+            }[]
+                           },
+"report_production_summary":
+{ Args: { "p_from": string,"p_to": string }; Returns: {
+              "defect_qty": number,"good_qty": number,"orders_completed": number,"orders_late": number,"orders_running": number
+            }[]
+                           },
+"report_task_summary":
+{ Args: { "p_department_id"?: string,"p_from": string,"p_to": string }; Returns: {
+              "avg_completion_hours": number,"cancelled": number,"completed": number,"completed_on_time": number,"open": number,"overdue": number,"pending_approval": number,"returned": number,"total": number
+            }[]
+                           },
+"report_tasks_by_department":
+{ Args: { "p_from": string,"p_to": string }; Returns: {
+              "avg_completion_hours": number,"completed": number,"completed_on_time": number,"department_id": string,"department_name": string,"overdue": number,"total": number
+            }[]
+                           },
+"report_tasks_by_person":
+{ Args: { "p_department_id"?: string,"p_from": string,"p_to": string }; Returns: {
+              "assigned": number,"completed": number,"completed_on_time": number,"department_name": string,"full_name": string,"overdue": number,"returned": number,"user_id": string
+            }[]
+                           },
+"report_tasks_by_team":
+{ Args: { "p_department_id"?: string,"p_from": string,"p_to": string }; Returns: {
+              "completed": number,"completed_on_time": number,"department_name": string,"overdue": number,"team_id": string,"team_name": string,"total": number
+            }[]
                            },
 "return_task":
 { Args: { "p_reason": string,"p_task_id": string }; Returns: undefined

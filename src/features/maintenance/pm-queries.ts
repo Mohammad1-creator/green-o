@@ -45,16 +45,16 @@ export async function listPmPlanTasks(planId: string) {
   return data;
 }
 
-/** Preventive tasks due on or after `from` and before `before` (dates). */
-export async function listPmOutcomes(from: string, before: string) {
+/**
+ * Preventive compliance for tasks due from `from` up to yesterday, counted
+ * in the database (the API returns at most 1000 rows).
+ */
+export async function getPmCompliance(from: string, to: string) {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("tasks")
-    .select("status, due_at, submitted_at")
-    .eq("kind", "preventive")
-    .gte("pm_due_date", from)
-    .lt("pm_due_date", before)
-    .limit(5000);
+  const { data, error } = await supabase.rpc("report_pm_compliance", {
+    p_from: from,
+    p_to: to,
+  });
   if (error) throw error;
-  return data;
+  return data[0] ?? { due: 0, on_time: 0, late: 0, missed: 0, cancelled: 0 };
 }

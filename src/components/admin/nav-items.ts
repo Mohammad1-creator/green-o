@@ -81,6 +81,12 @@ export const ADMIN_NAV: readonly NavItem[] = [
     roles: PRODUCTION,
   },
   {
+    href: "/admin/reports",
+    label: "التقارير",
+    icon: "reports",
+    roles: MANAGER_ROLES,
+  },
+  {
     href: "/admin/users",
     label: "المستخدمون",
     icon: "users",

@@ -17,8 +17,10 @@ import {
   RunPmNowForm,
 } from "@/features/maintenance/components/pm-forms";
 import { PmPlanTable } from "@/features/maintenance/components/pm-plan-list";
-import { pmCompliance } from "@/features/maintenance/pm-compliance";
-import { listPmOutcomes, listPmPlans } from "@/features/maintenance/pm-queries";
+import {
+  getPmCompliance,
+  listPmPlans,
+} from "@/features/maintenance/pm-queries";
 import { listMachines } from "@/features/maintenance/queries";
 import { getAssignmentOptions } from "@/features/tasks/queries";
 import { requireRole } from "@/lib/auth/dal";
@@ -60,14 +62,14 @@ async function Preventive({
     getFactorySettings(),
   ]);
   const today = zonedToday(settings.timeZone);
-  const [plans, outcomes, machines, options] = await Promise.all([
+  const [plans, compliance, machines, options] = await Promise.all([
     listPmPlans(),
-    listPmOutcomes(addDays(today, -COMPLIANCE_DAYS), today),
+    getPmCompliance(addDays(today, -COMPLIANCE_DAYS), today),
     listMachines({ activeOnly: true }),
     getAssignmentOptions(viewer),
   ]);
 
-  const compliance = pmCompliance(outcomes);
+  const rate = compliance.due > 0 ? compliance.on_time / compliance.due : null;
   const active = plans.filter((plan) => plan.is_active);
   const paused = plans.filter((plan) => !plan.is_active);
   const machineParam = z.uuid().safeParse(query.machine);
@@ -87,9 +89,7 @@ async function Preventive({
           <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <StatTile
               label="نسبة الالتزام"
-              value={
-                compliance.rate === null ? "—" : formatPercent(compliance.rate)
-              }
+              value={rate === null ? "—" : formatPercent(rate)}
               hint={
                 compliance.due === 0
                   ? "لم يحل موعد أي مهمة بعد"
@@ -98,7 +98,7 @@ async function Preventive({
             />
             <StatTile
               label="نُفّذت في موعدها"
-              value={formatNumber(compliance.onTime)}
+              value={formatNumber(compliance.on_time)}
             />
             <StatTile
               label="نُفّذت بعد موعدها"
