@@ -1,0 +1,18 @@
+# gitleaks: all default rules, plus a narrow allowlist of values that look
+# like credentials but are not secrets. Keep this list short and explained.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Known non-secrets"
+regexTarget = "secret"
+regexes = [
+  # Code references, e.g. process.env.SUPABASE_SECRET_KEY or input.password.
+  '''^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)+$''',
+  # Demo password for local and CI databases only (scripts/seed-dev.mts).
+  '''^Local-Demo-2026$''',
+  # Sample passwords in the password-policy unit tests and older e2e tests.
+  '''^Factory-2026$''',
+  '''^Maint-Test-2026$''',
+  '''^Deact-Test-2026$''',
+]

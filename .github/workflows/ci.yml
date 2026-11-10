@@ -14,6 +14,11 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# Explicit bash runs with pipefail, so "cmd | tee log" still fails when cmd fails.
+defaults:
+  run:
+    shell: bash
+
 env:
   NEXT_TELEMETRY_DISABLED: 1
   SUPABASE_CLI: npx -y supabase@3.1.0
@@ -62,6 +67,25 @@ jobs:
       - uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: .gitleaks.toml
+      # The job summary needs a signed-in account, so on a finding the redacted
+      # report (rule, file, line, fingerprint; never the value) is published too.
+      - name: Report findings (redacted)
+        if: failure()
+        run: |
+          mkdir -p ci-logs
+          docker run --rm -v "$PWD:/repo" -w /repo \
+            -e GIT_CONFIG_COUNT=1 -e GIT_CONFIG_KEY_0=safe.directory -e GIT_CONFIG_VALUE_0='*' \
+            ghcr.io/gitleaks/gitleaks:v8.30.1 git . --config .gitleaks.toml --redact --no-banner \
+            --report-format json --report-path ci-logs/gitleaks.json || true
+          node -e "const r=require('./ci-logs/gitleaks.json'); for (const f of r) console.log([f.RuleID, f.File + ':' + f.StartLine, f.Commit.slice(0, 7), f.Fingerprint].join(' | '))" | tee ci-logs/gitleaks.log
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: logs-gitleaks
+          path: ci-logs/
+          if-no-files-found: ignore
+          retention-days: 7
 
   database:
     name: Database, integration and end-to-end tests

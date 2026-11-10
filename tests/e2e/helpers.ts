@@ -16,6 +16,19 @@ export function randomDigits(length: number): string {
   return Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
 }
 
+/**
+ * An app alert containing this text. (Next.js also renders an empty
+ * role="alert" route announcer, so the role alone is ambiguous.)
+ */
+export function alertWith(page: Page, text: string) {
+  return page.getByRole("alert").filter({ hasText: text });
+}
+
+/** A fresh password for accounts created during a test. */
+export function newPassword(): string {
+  return `E2e-${randomDigits(6)}-${randomDigits(4)}`;
+}
+
 /** Flows that sign in need Supabase with the demo data (CI provides both). */
 export function requireSupabase() {
   test.skip(

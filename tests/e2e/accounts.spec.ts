@@ -1,7 +1,9 @@
 import { expect, test } from "@playwright/test";
 
 import {
+  alertWith,
   DEMO,
+  newPassword,
   randomDigits,
   requireSupabase,
   signIn,
@@ -14,10 +16,10 @@ test.describe("sign-in and accounts", () => {
   });
 
   test("a wrong password shows an Arabic error", async ({ page }) => {
-    await signIn(page, DEMO.generalManager, "wrong-password-123");
-    await expect(page.getByRole("alert")).toContainText(
-      "رقم الموظف أو كلمة المرور غير صحيحة",
-    );
+    await signIn(page, DEMO.generalManager, newPassword());
+    await expect(
+      alertWith(page, "رقم الموظف أو كلمة المرور غير صحيحة"),
+    ).toBeVisible();
   });
 
   test("Arabic-Indic digits in the employee number are accepted", async ({
@@ -48,7 +50,7 @@ test.describe("sign-in and accounts", () => {
     page,
   }) => {
     const employeeNo = `7${randomDigits(7)}`;
-    const password = "Maint-Test-2026";
+    const password = newPassword();
 
     await signIn(page, DEMO.maintenanceManager);
     await expect(page).toHaveURL(/\/admin$/);
@@ -78,7 +80,7 @@ test.describe("sign-in and accounts", () => {
     browser,
   }) => {
     const employeeNo = `6${randomDigits(7)}`;
-    const password = "Deact-Test-2026";
+    const password = newPassword();
 
     const manager = await browser.newPage();
     await signIn(manager, DEMO.productionManager);
@@ -100,9 +102,9 @@ test.describe("sign-in and accounts", () => {
 
     await employee.reload();
     await expect(employee).toHaveURL(/\/login\?reason=inactive/);
-    await expect(employee.getByRole("alert")).toContainText("موقوف");
+    await expect(alertWith(employee, "موقوف")).toBeVisible();
 
     await signIn(employee, employeeNo, password);
-    await expect(employee.getByRole("alert")).toContainText("موقوف");
+    await expect(alertWith(employee, "موقوف")).toBeVisible();
   });
 });
