@@ -1,0 +1,43 @@
+Target: local stack (127.0.0.1:54322)
+3.36: Pulling from supabase/pg_prove
+06d62d0de6d7: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+a22cb17b3b93: Pulling fs layer
+dcccee43ad5d: Pulling fs layer
+4f4fb700ef54: Already exists
+4f4fb700ef54: Pull complete
+dcccee43ad5d: Download complete
+a22cb17b3b93: Download complete
+06d62d0de6d7: Download complete
+a008cf086da5: Download complete
+dcccee43ad5d: Pull complete
+a22cb17b3b93: Pull complete
+06d62d0de6d7: Pull complete
+Digest: sha256:<hex>
+Status: Downloaded newer image for public.ecr.aws/supabase/pg_prove:3.36
+public.ecr.aws/supabase/pg_prove:3.36
+/home/runner/work/green-o/green-o/supabase/tests/000_setup.test.sql ................... ok
+/home/runner/work/green-o/green-o/supabase/tests/010_foundation.test.sql .............. ok
+/home/runner/work/green-o/green-o/supabase/tests/020_notifications.test.sql ........... ok
+/home/runner/work/green-o/green-o/supabase/tests/030_tasks.test.sql ................... ok
+/home/runner/work/green-o/green-o/supabase/tests/040_task_collaboration.test.sql ...... ok
+/home/runner/work/green-o/green-o/supabase/tests/050_maintenance.test.sql ............. ok
+/home/runner/work/green-o/green-o/supabase/tests/060_preventive_maintenance.test.sql .. ok
+/home/runner/work/green-o/green-o/supabase/tests/070_production_catalog.test.sql ...... ok
+/home/runner/work/green-o/green-o/supabase/tests/080_production_orders.test.sql ....... ok
+/home/runner/work/green-o/green-o/supabase/tests/090_reports.test.sql ................. ok
+psql:/home/runner/work/green-o/green-o/supabase/tests/100_audit_tools.test.sql:81: ERROR:  permission denied for table tampered
+HINT:  Grant the required privileges to the current role with: GRANT SELECT ON tests.tampered TO authenticated;
+/home/runner/work/green-o/green-o/supabase/tests/100_audit_tools.test.sql ............. 
+Dubious, test returned 3 (wstat 768, 0x300)
+Failed 6/13 subtests 
+
+Test Summary Report
+-------------------
+/home/runner/work/green-o/green-o/supabase/tests/100_audit_tools.test.sql           (Wstat: 768 (exited 3) Tests: 7 Failed: 0)
+  Non-zero exit status: 3
+  Parse errors: Bad plan.  You planned 13 tests but ran 7.
+Files=11, Tests=291,  1 wallclock secs ( 0.04 usr  0.01 sys +  0.08 cusr  0.04 csys =  0.17 CPU)
+Result: FAIL
+error running container: exit 1
+Try rerunning the command with --debug to troubleshoot the error.
