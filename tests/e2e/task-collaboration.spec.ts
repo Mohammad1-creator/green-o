@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { DEMO, randomDigits, requireSupabase, signIn } from "./helpers";
+import { DEMO, randomDigits, requireSupabase, signInAs } from "./helpers";
 
 // A 1x1 PNG, enough to exercise the shrink-and-upload path.
 const PNG = Buffer.from(
@@ -37,7 +37,7 @@ test.describe("working together on a task", () => {
     const title = `تغيير السير ${randomDigits(5)}`;
 
     const manager = await (await browser.newContext()).newPage();
-    await signIn(manager, DEMO.maintenanceManager);
+    await signInAs(manager, DEMO.maintenanceManager);
     await expect(manager).toHaveURL(/\/admin$/);
     await manager.goto("/admin/tasks/new");
     await manager.getByLabel("العنوان").fill(title);
@@ -50,7 +50,7 @@ test.describe("working together on a task", () => {
 
     // The technician comments and attaches a photo from the phone.
     const tech = await (await browser.newContext()).newPage();
-    await signIn(tech, technician.employeeNo);
+    await signInAs(tech, technician.employeeNo);
     await tech.goto(`/m/tasks/${taskId}`);
     await tech.getByLabel("تعليق جديد").fill("وصلت القطعة البديلة");
     await tech.getByRole("button", { name: "إضافة التعليق" }).click();

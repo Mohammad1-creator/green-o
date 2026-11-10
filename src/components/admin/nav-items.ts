@@ -25,6 +25,10 @@ export type NavItem = {
 };
 
 const GM: readonly AppRole[] = ["general_manager"];
+const MAINTENANCE: readonly AppRole[] = [
+  "general_manager",
+  "maintenance_manager",
+];
 
 /** Admin sidebar, in display order. Each item lists the roles that see it. */
 export const ADMIN_NAV: readonly NavItem[] = [
@@ -36,6 +40,18 @@ export const ADMIN_NAV: readonly NavItem[] = [
     roles: MANAGER_ROLES,
   },
   { href: "/admin/teams", label: "الفرق", icon: "teams", roles: MANAGER_ROLES },
+  {
+    href: "/admin/maintenance/faults",
+    label: "بلاغات الأعطال",
+    icon: "faults",
+    roles: MANAGER_ROLES,
+  },
+  {
+    href: "/admin/maintenance/machines",
+    label: "الآلات",
+    icon: "machines",
+    roles: MAINTENANCE,
+  },
   {
     href: "/admin/users",
     label: "المستخدمون",

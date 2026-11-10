@@ -1,6 +1,11 @@
 "use client";
 
-import { HomeIcon, type LucideIcon, UserRoundIcon } from "lucide-react";
+import {
+  HomeIcon,
+  type LucideIcon,
+  TriangleAlertIcon,
+  UserRoundIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -8,6 +13,7 @@ type Item = { href: string; label: string; icon: LucideIcon };
 
 const ITEMS: Item[] = [
   { href: "/m", label: "مهامي", icon: HomeIcon },
+  { href: "/m/faults", label: "الأعطال", icon: TriangleAlertIcon },
   { href: "/m/account", label: "حسابي", icon: UserRoundIcon },
 ];
 

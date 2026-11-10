@@ -1,9 +1,7 @@
 "use client";
 
-import { CameraIcon, Trash2Icon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useActionState, useRef, useState } from "react";
-import { toast } from "sonner";
+import { Trash2Icon } from "lucide-react";
+import { useActionState, useRef } from "react";
 
 import { FormMessage } from "@/components/form-message";
 import { Button } from "@/components/ui/button";
@@ -12,15 +10,12 @@ import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { type ActionState, firstFieldError } from "@/lib/action-state";
-import { prepareImage } from "@/lib/images/compress";
-import { createClient } from "@/lib/supabase/browser";
 
 import {
   addCommentAction,
   addReminderAction,
   deleteAttachmentAction,
   deleteReminderAction,
-  registerAttachmentAction,
 } from "../collab-actions";
 
 export function CommentForm({ taskId }: { taskId: string }) {
@@ -58,77 +53,6 @@ export function CommentForm({ taskId }: { taskId: string }) {
       </Button>
       {state && !state.ok ? <FormMessage state={state} /> : null}
     </form>
-  );
-}
-
-/** Takes or picks a photo, shrinks it, uploads it, then records it. */
-export function PhotoUploader({ taskId }: { taskId: string }) {
-  const router = useRouter();
-  const input = useRef<HTMLInputElement>(null);
-  const [busy, setBusy] = useState(false);
-
-  async function upload(file: File) {
-    setBusy(true);
-    try {
-      const image = await prepareImage(file);
-      if (!image) {
-        toast.error("صيغة الصورة غير مدعومة. استخدم JPEG أو PNG.");
-        return;
-      }
-      const path = `tasks/${taskId}/${crypto.randomUUID()}.${image.extension}`;
-      const supabase = createClient();
-      const { error } = await supabase.storage
-        .from("attachments")
-        .upload(path, image.blob, {
-          contentType: image.mimeType,
-          upsert: false,
-        });
-      if (error) {
-        toast.error("تعذّر رفع الصورة. تحقق من الاتصال وحاول مرة أخرى.");
-        return;
-      }
-      const result = await registerAttachmentAction({
-        taskId,
-        path,
-        mimeType: image.mimeType,
-        size: image.blob.size,
-      });
-      if (!result.ok) {
-        toast.error(result.message);
-        return;
-      }
-      toast.success("أُرفقت الصورة");
-      router.refresh();
-    } finally {
-      setBusy(false);
-      if (input.current) input.current.value = "";
-    }
-  }
-
-  return (
-    <div>
-      <input
-        ref={input}
-        type="file"
-        accept="image/*"
-        className="sr-only"
-        id={`photo-${taskId}`}
-        aria-label="اختيار صورة"
-        onChange={(event) => {
-          const file = event.target.files?.[0];
-          if (file) void upload(file);
-        }}
-      />
-      <Button
-        type="button"
-        variant="outline"
-        disabled={busy}
-        onClick={() => input.current?.click()}
-      >
-        {busy ? <Spinner /> : <CameraIcon />}
-        {busy ? "جارٍ رفع الصورة…" : "إرفاق صورة"}
-      </Button>
-    </div>
   );
 }
 

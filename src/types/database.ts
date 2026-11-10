@@ -21,14 +21,14 @@ export type Database = {
                   ]
                 },"attachments": {
                   Row: {
-                    "comment_id": string | null,"created_at": string,"deleted_at": string | null,"deleted_by": string | null,"id": string,"mime_type": string,"size_bytes": number,"storage_path": string,"task_id": string | null,"uploaded_by": string
+                    "comment_id": string | null,"created_at": string,"deleted_at": string | null,"deleted_by": string | null,"fault_report_id": string | null,"id": string,"mime_type": string,"size_bytes": number,"storage_path": string,"task_id": string | null,"uploaded_by": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "comment_id"?: string | null,"created_at"?: string,"deleted_at"?: string | null,"deleted_by"?: string | null,"id"?: string,"mime_type": string,"size_bytes": number,"storage_path": string,"task_id"?: string | null,"uploaded_by": string
+                    "comment_id"?: string | null,"created_at"?: string,"deleted_at"?: string | null,"deleted_by"?: string | null,"fault_report_id"?: string | null,"id"?: string,"mime_type": string,"size_bytes": number,"storage_path": string,"task_id"?: string | null,"uploaded_by": string
                   }
                   Update: {
-                    "comment_id"?: string | null,"created_at"?: string,"deleted_at"?: string | null,"deleted_by"?: string | null,"id"?: string,"mime_type"?: string,"size_bytes"?: number,"storage_path"?: string,"task_id"?: string | null,"uploaded_by"?: string
+                    "comment_id"?: string | null,"created_at"?: string,"deleted_at"?: string | null,"deleted_by"?: string | null,"fault_report_id"?: string | null,"id"?: string,"mime_type"?: string,"size_bytes"?: number,"storage_path"?: string,"task_id"?: string | null,"uploaded_by"?: string
                   }
                   Relationships: [
                     {
@@ -42,6 +42,12 @@ isOneToOne: false
       columns: ["deleted_by"]
 isOneToOne: false
       referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "attachments_fault_report_id_fkey"
+      columns: ["fault_report_id"]
+isOneToOne: false
+      referencedRelation: "fault_reports"
       referencedColumns: ["id"]
     },{
       foreignKeyName: "attachments_task_id_fkey"
@@ -88,6 +94,58 @@ isOneToOne: false
       columns: ["user_id"]
 isOneToOne: true
       referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"fault_reports": {
+                  Row: {
+                    "created_at": string,"description": string,"id": string,"machine_id": string,"machine_stopped": boolean,"number": number,"rejection_reason": string | null,"reported_by": string,"reporter_department_id": string | null,"resolution_notes": string | null,"resolved_at": string | null,"status": Database["public"]['Enums']["fault_status"],"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"description": string,"id"?: string,"machine_id": string,"machine_stopped"?: boolean,"number"?: number,"rejection_reason"?: string | null,"reported_by": string,"reporter_department_id"?: string | null,"resolution_notes"?: string | null,"resolved_at"?: string | null,"status"?: Database["public"]['Enums']["fault_status"],"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"description"?: string,"id"?: string,"machine_id"?: string,"machine_stopped"?: boolean,"number"?: number,"rejection_reason"?: string | null,"reported_by"?: string,"reporter_department_id"?: string | null,"resolution_notes"?: string | null,"resolved_at"?: string | null,"status"?: Database["public"]['Enums']["fault_status"],"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "fault_reports_machine_id_fkey"
+      columns: ["machine_id"]
+isOneToOne: false
+      referencedRelation: "machines"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "fault_reports_reported_by_fkey"
+      columns: ["reported_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "fault_reports_reporter_department_id_fkey"
+      columns: ["reporter_department_id"]
+isOneToOne: false
+      referencedRelation: "departments"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"machines": {
+                  Row: {
+                    "code": string,"created_at": string,"created_by": string | null,"department_id": string | null,"id": string,"installed_on": string | null,"is_active": boolean,"manufacturer": string | null,"model": string | null,"name": string,"notes": string | null,"serial_no": string | null,"status": Database["public"]['Enums']["machine_status"],"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "code": string,"created_at"?: string,"created_by"?: string | null,"department_id"?: string | null,"id"?: string,"installed_on"?: string | null,"is_active"?: boolean,"manufacturer"?: string | null,"model"?: string | null,"name": string,"notes"?: string | null,"serial_no"?: string | null,"status"?: Database["public"]['Enums']["machine_status"],"updated_at"?: string
+                  }
+                  Update: {
+                    "code"?: string,"created_at"?: string,"created_by"?: string | null,"department_id"?: string | null,"id"?: string,"installed_on"?: string | null,"is_active"?: boolean,"manufacturer"?: string | null,"model"?: string | null,"name"?: string,"notes"?: string | null,"serial_no"?: string | null,"status"?: Database["public"]['Enums']["machine_status"],"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "machines_department_id_fkey"
+      columns: ["department_id"]
+isOneToOne: false
+      referencedRelation: "departments"
       referencedColumns: ["id"]
     }
                   ]
@@ -257,14 +315,14 @@ isOneToOne: false
                   ]
                 },"tasks": {
                   Row: {
-                    "approved_by": string | null,"assigned_team_id": string | null,"cancel_reason": string | null,"cancelled_at": string | null,"completed_at": string | null,"created_at": string,"created_by": string | null,"department_id": string,"description": string | null,"due_at": string | null,"id": string,"kind": Database["public"]['Enums']["task_kind"],"number": number,"status": Database["public"]['Enums']["task_status"],"submitted_at": string | null,"title": string,"updated_at": string,"is_overdue": boolean | null
+                    "approved_by": string | null,"assigned_team_id": string | null,"cancel_reason": string | null,"cancelled_at": string | null,"completed_at": string | null,"created_at": string,"created_by": string | null,"department_id": string,"description": string | null,"due_at": string | null,"fault_report_id": string | null,"id": string,"kind": Database["public"]['Enums']["task_kind"],"number": number,"status": Database["public"]['Enums']["task_status"],"submitted_at": string | null,"title": string,"updated_at": string,"is_overdue": boolean | null
                   }
                   ComputedFields: "is_overdue"
                   Insert: {
-                    "approved_by"?: string | null,"assigned_team_id"?: string | null,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id": string,"description"?: string | null,"due_at"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["task_kind"],"number"?: number,"status"?: Database["public"]['Enums']["task_status"],"submitted_at"?: string | null,"title": string,"updated_at"?: string
+                    "approved_by"?: string | null,"assigned_team_id"?: string | null,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id": string,"description"?: string | null,"due_at"?: string | null,"fault_report_id"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["task_kind"],"number"?: number,"status"?: Database["public"]['Enums']["task_status"],"submitted_at"?: string | null,"title": string,"updated_at"?: string
                   }
                   Update: {
-                    "approved_by"?: string | null,"assigned_team_id"?: string | null,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id"?: string,"description"?: string | null,"due_at"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["task_kind"],"number"?: number,"status"?: Database["public"]['Enums']["task_status"],"submitted_at"?: string | null,"title"?: string,"updated_at"?: string
+                    "approved_by"?: string | null,"assigned_team_id"?: string | null,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id"?: string,"description"?: string | null,"due_at"?: string | null,"fault_report_id"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["task_kind"],"number"?: number,"status"?: Database["public"]['Enums']["task_status"],"submitted_at"?: string | null,"title"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     {
@@ -290,6 +348,12 @@ isOneToOne: false
       columns: ["department_id"]
 isOneToOne: false
       referencedRelation: "departments"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "tasks_fault_report_id_fkey"
+      columns: ["fault_report_id"]
+isOneToOne: false
+      referencedRelation: "fault_reports"
       referencedColumns: ["id"]
     }
                   ]
@@ -357,6 +421,9 @@ isOneToOne: false
 "approve_task":
 { Args: { "p_task_id": string }; Returns: undefined
                            },
+"assign_fault_repair":
+{ Args: { "p_assignee_ids"?: (string)[],"p_description"?: string,"p_due_at"?: string,"p_fault_id": string,"p_team_id"?: string,"p_title"?: string }; Returns: string
+                           },
 "authorize_password_reset":
 { Args: { "p_user_id": string }; Returns: undefined
                            },
@@ -410,11 +477,20 @@ isOneToOne: false
 "record_push_failure":
 { Args: { "p_error": string,"p_id": string }; Returns: undefined
                            },
+"register_fault_attachment":
+{ Args: { "p_fault_id": string,"p_mime_type": string,"p_path": string,"p_size_bytes": number }; Returns: string
+                           },
 "register_push_subscription":
 { Args: { "p_auth": string,"p_endpoint": string,"p_p256dh": string,"p_user_agent"?: string }; Returns: undefined
                            },
 "register_task_attachment":
 { Args: { "p_comment_id"?: string,"p_mime_type": string,"p_path": string,"p_size_bytes": number,"p_task_id": string }; Returns: string
+                           },
+"reject_fault":
+{ Args: { "p_fault_id": string,"p_reason": string }; Returns: undefined
+                           },
+"report_fault":
+{ Args: { "p_description": string,"p_machine_id": string,"p_machine_stopped"?: boolean }; Returns: string
                            },
 "return_task":
 { Args: { "p_reason": string,"p_task_id": string }; Returns: undefined
@@ -439,7 +515,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","push_status": "pending"|"sent"|"failed"|"skipped","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
+            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","fault_status": "open"|"assigned"|"resolved"|"rejected","machine_status": "operational"|"down"|"under_maintenance"|"retired","push_status": "pending"|"sent"|"failed"|"skipped","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -555,7 +631,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"push_status": ["pending", "sent", "failed", "skipped"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
+            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"fault_status": ["open", "assigned", "resolved", "rejected"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"push_status": ["pending", "sent", "failed", "skipped"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
           }
         }
 } as const

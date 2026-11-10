@@ -53,38 +53,6 @@ export async function addCommentAction(
   return { ok: true, message: "أُضيف التعليق" };
 }
 
-const attachmentSchema = z.object({
-  taskId: z.uuid(),
-  path: z.string().min(1).max(300),
-  mimeType: z.enum(["image/jpeg", "image/png", "image/webp"]),
-  size: z
-    .number()
-    .int()
-    .positive()
-    .max(10 * 1024 * 1024),
-});
-
-/** Records a photo the browser has just uploaded to the task's folder. */
-export async function registerAttachmentAction(
-  input: unknown,
-): Promise<{ ok: true } | { ok: false; message: string }> {
-  if (!(await getCurrentUser()))
-    return { ok: false, message: "انتهت الجلسة. سجّل الدخول مرة أخرى." };
-  const parsed = attachmentSchema.safeParse(input);
-  if (!parsed.success) return { ok: false, message: "الصورة غير صالحة" };
-
-  const supabase = await createClient();
-  const { error } = await supabase.rpc("register_task_attachment", {
-    p_task_id: parsed.data.taskId,
-    p_path: parsed.data.path,
-    p_mime_type: parsed.data.mimeType,
-    p_size_bytes: parsed.data.size,
-  });
-  if (error) return { ok: false, message: toUserMessage(error) };
-  refresh(parsed.data.taskId);
-  return { ok: true };
-}
-
 export async function deleteAttachmentAction(
   _previous: ActionState,
   formData: FormData,

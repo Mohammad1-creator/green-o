@@ -197,10 +197,64 @@ async function ensureUser(
   if (detailsError) throw detailsError;
 }
 
+const DEMO_MACHINES: {
+  code: string;
+  name: string;
+  department: DepartmentKey;
+  manufacturer: string;
+}[] = [
+  {
+    code: "M-01",
+    name: "مقص الألواح",
+    department: "production",
+    manufacturer: "Haco",
+  },
+  {
+    code: "M-02",
+    name: "مكبس التصفيح",
+    department: "production",
+    manufacturer: "Wemhöner",
+  },
+  {
+    code: "M-03",
+    name: "آلة التغليف",
+    department: "production",
+    manufacturer: "Robopac",
+  },
+  {
+    code: "M-04",
+    name: "ضاغط الهواء",
+    department: "maintenance",
+    manufacturer: "Atlas Copco",
+  },
+];
+
+async function ensureMachines(
+  client: SupabaseClient,
+  departmentIds: Record<DepartmentKey, string>,
+): Promise<void> {
+  for (const machine of DEMO_MACHINES) {
+    const { data: existing } = await client
+      .from("machines")
+      .select("id")
+      .eq("code", machine.code)
+      .maybeSingle();
+    if (existing) continue;
+    const { error } = await client.from("machines").insert({
+      code: machine.code,
+      name: machine.name,
+      department_id: departmentIds[machine.department],
+      manufacturer: machine.manufacturer,
+    });
+    if (error) throw error;
+  }
+}
+
 const departmentIds = await ensureDepartments(supabase);
 for (const user of DEMO_USERS) {
   await ensureUser(supabase, user, departmentIds, password);
 }
+await ensureMachines(supabase, departmentIds);
 
 console.log(
   `Seeded ${Object.keys(DEPARTMENTS).length} departments and ${DEMO_USERS.length} users (${marker}).`,

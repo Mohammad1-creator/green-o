@@ -1,18 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PhotoGrid } from "@/features/attachments/photo-grid";
+import { PhotoUploader } from "@/features/attachments/photo-uploader";
+import { listPhotos } from "@/features/attachments/queries";
 import { formatDateTime } from "@/lib/format";
 
-import {
-  listTaskComments,
-  listTaskPhotos,
-  listTaskReminders,
-} from "../collab-queries";
+import { listTaskComments, listTaskReminders } from "../collab-queries";
 
 import {
   AddReminderForm,
   CommentForm,
   DeletePhotoForm,
   DeleteReminderForm,
-  PhotoUploader,
 } from "./collab-forms";
 
 /** Comments and photos, shown to everyone who can see the task. */
@@ -29,7 +27,7 @@ export async function TaskCollaboration({
 }) {
   const [comments, photos] = await Promise.all([
     listTaskComments(taskId),
-    listTaskPhotos(taskId),
+    listPhotos({ taskId }),
   ]);
 
   return (
@@ -39,49 +37,19 @@ export async function TaskCollaboration({
           <CardTitle>الصور</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {photos.length === 0 ? (
-            <p className="text-sm text-muted-foreground">لا توجد صور.</p>
-          ) : (
-            <ul
-              className="grid grid-cols-2 gap-3 sm:grid-cols-3"
-              aria-label="صور المهمة"
-            >
-              {photos.map((photo) => (
-                <li key={photo.id} className="space-y-1">
-                  {photo.url ? (
-                    <a
-                      href={photo.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="block"
-                    >
-                      {/* Signed links change on every visit, so next/image adds nothing here. */}
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={photo.url}
-                        alt={`صورة أرفقها ${photo.uploader?.full_name ?? ""}`}
-                        className="aspect-square w-full rounded-lg border object-cover"
-                        loading="lazy"
-                      />
-                    </a>
-                  ) : null}
-                  <div className="flex items-center justify-between gap-1 text-xs text-muted-foreground">
-                    <span className="truncate">
-                      {photo.uploader?.full_name} ·{" "}
-                      {formatDateTime(photo.created_at, timeZone)}
-                    </span>
-                    {canManage ? (
-                      <DeletePhotoForm
-                        taskId={taskId}
-                        attachmentId={photo.id}
-                      />
-                    ) : null}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-          {isFinal ? null : <PhotoUploader taskId={taskId} />}
+          <PhotoGrid
+            photos={photos}
+            timeZone={timeZone}
+            label="صور المهمة"
+            renderAction={
+              canManage
+                ? (photo) => (
+                    <DeletePhotoForm taskId={taskId} attachmentId={photo.id} />
+                  )
+                : undefined
+            }
+          />
+          {isFinal ? null : <PhotoUploader folder="tasks" ownerId={taskId} />}
         </CardContent>
       </Card>
 

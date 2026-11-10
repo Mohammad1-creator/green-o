@@ -50,6 +50,16 @@ export async function signIn(
   await page.getByRole("button", { name: "دخول" }).click();
 }
 
+/** Signs in and waits until the app has left the login page. */
+export async function signInAs(
+  page: Page,
+  employeeNo: string,
+  password = DEMO_PASSWORD,
+) {
+  await signIn(page, employeeNo, password);
+  await page.waitForURL((url) => !url.pathname.startsWith("/login"));
+}
+
 export async function signOut(page: Page) {
   await page.getByRole("button", { name: "تسجيل الخروج" }).first().click();
   await expect(page).toHaveURL(/\/login/);
