@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { APP_ENV_LABELS, getAppEnv, getPublicSupabaseConfig } from "@/lib/env";
+import { createAdminClient, hasAdminConfig } from "@/lib/supabase/admin";
 import { checkSupabaseHealth } from "@/lib/supabase/health";
 
 export const metadata: Metadata = {
@@ -34,6 +35,13 @@ export default function HealthPage() {
             <dd data-testid="db-status">
               <Suspense fallback={<span>جارٍ الفحص…</span>}>
                 <DatabaseStatus />
+              </Suspense>
+            </dd>
+
+            <dt className="text-muted-foreground">علامة البيئة</dt>
+            <dd data-testid="db-marker">
+              <Suspense fallback={<span>جارٍ الفحص…</span>}>
+                <EnvironmentMarker />
               </Suspense>
             </dd>
           </dl>
@@ -72,4 +80,44 @@ async function DatabaseStatus() {
   }
 
   return <Badge variant="destructive">تعذّر الاتصال</Badge>;
+}
+
+const MARKER_FOR_ENV = {
+  local: ["local"],
+  dev: ["dev"],
+  prod: ["prod"],
+} as const;
+
+/**
+ * The database labels itself (private.environment_marker). A production app
+ * talking to a database not marked "prod" means the keys are mixed up.
+ */
+async function EnvironmentMarker() {
+  await connection();
+  if (!hasAdminConfig()) {
+    return (
+      <span className="text-sm text-muted-foreground">
+        يحتاج المفتاح السري على الخادم
+      </span>
+    );
+  }
+
+  const { data: marker, error } =
+    await createAdminClient().rpc("environment_marker");
+  if (error || !marker)
+    return <Badge variant="destructive">تعذّرت القراءة</Badge>;
+
+  const env = getAppEnv();
+  const expected: readonly string[] = MARKER_FOR_ENV[env];
+  const matches =
+    expected.includes(marker) || (env === "local" && marker === "unset");
+  return matches ? (
+    <Badge variant="secondary" dir="ltr">
+      {marker}
+    </Badge>
+  ) : (
+    <Badge variant="destructive">
+      لا تطابق البيئة: القاعدة معلَّمة «{marker}»
+    </Badge>
+  );
 }

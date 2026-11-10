@@ -91,6 +91,34 @@ jobs:
           if ! diff -q ci-logs/database.ts src/types/database.ts > /dev/null 2>&1; then
             echo "::warning::src/types/database.ts is out of date. Copy it from the ci-results branch."
           fi
+      - name: Point the app at the local Supabase
+        run: $SUPABASE_CLI status -o env 2>/dev/null | node scripts/ci/export-supabase-env.mjs
+      - name: Seed demo data
+        env:
+          APP_ENV: local
+        run: npm run seed:dev 2>&1 | node scripts/ci/redact.mjs | tee ci-logs/seed.log
+      - name: Integration tests (API)
+        run: npm run test:integration 2>&1 | node scripts/ci/redact.mjs | tee ci-logs/integration.log
+      - name: Build against the local Supabase
+        env:
+          APP_ENV: local
+        run: npm run build 2>&1 | node scripts/ci/redact.mjs | tee ci-logs/app-build.log
+      - name: Check that the secret key stayed out of the build
+        run: npm run check:secrets 2>&1 | tee ci-logs/app-secrets.log
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium > ci-logs/playwright-install.log 2>&1
+      - name: End-to-end tests
+        env:
+          APP_ENV: local
+        run: npm run test:e2e 2>&1 | node scripts/ci/redact.mjs | tee ci-logs/e2e.log
+      - name: Keep page snapshots of failed tests
+        if: failure()
+        run: |
+          mkdir -p ci-logs/e2e-failures
+          find test-results -name 'error-context.md' 2>/dev/null | while read -r file; do
+            name=$(echo "$file" | sed 's|^test-results/||; s|/error-context.md$||; s|[^A-Za-z0-9._-]|_|g')
+            node scripts/ci/redact.mjs < "$file" > "ci-logs/e2e-failures/${name}.md"
+          done
       - name: Annotate failures
         if: failure()
         run: bash scripts/ci/annotate-failures.sh

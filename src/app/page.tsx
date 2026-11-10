@@ -1,52 +1,40 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Spinner } from "@/components/ui/spinner";
+import { getCurrentUser } from "@/lib/auth/dal";
+import { homePathFor } from "@/lib/auth/roles";
+import { readPublicSupabaseConfig } from "@/lib/supabase/public-config";
 
-const PARTS = [
-  {
-    title: "لوحة الإدارة",
-    description: "للمدير العام ومديري الأقسام من الكمبيوتر.",
-  },
-  {
-    title: "تطبيق الجوال",
-    description: "للموظفين على آيفون وأندرويد، يُثبَّت على الشاشة الرئيسية.",
-  },
-];
-
+/** Sends each user to their home: managers to /admin, employees to /m. */
 export default function HomePage() {
+  if (!readPublicSupabaseConfig()) return <NotConfigured />;
+
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-4 py-10">
-      <header className="space-y-2">
-        <h1 className="text-3xl font-bold">نظام إدارة المصنع</h1>
-        <p className="text-muted-foreground">
-          المهام والصيانة والإنتاج في مكان واحد. النظام قيد البناء، والمرحلة
-          الحالية هي التأسيس.
-        </p>
-      </header>
+    <main className="flex flex-1 items-center justify-center">
+      <Suspense fallback={<Spinner className="size-6" />}>
+        <RedirectHome />
+      </Suspense>
+    </main>
+  );
+}
 
-      <section className="grid gap-4 sm:grid-cols-2">
-        {PARTS.map((part) => (
-          <Card key={part.title}>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between gap-2">
-                {part.title}
-                <Badge variant="secondary">قيد البناء</Badge>
-              </CardTitle>
-              <CardDescription>{part.description}</CardDescription>
-            </CardHeader>
-            <CardContent />
-          </Card>
-        ))}
-      </section>
+async function RedirectHome(): Promise<null> {
+  const user = await getCurrentUser();
+  if (!user) redirect("/auth/signout?reason=inactive");
+  redirect(homePathFor(user.role));
+}
 
+function NotConfigured() {
+  return (
+    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col justify-center gap-4 px-4 py-10">
+      <h1 className="text-2xl font-bold">نظام إدارة المصنع</h1>
+      <p className="text-muted-foreground">
+        النظام غير مربوط بقاعدة البيانات بعد. اتبع دليل الإعداد في المستودع
+        (docs/deploy.md).
+      </p>
       <div>
         <Link href="/health" className={buttonVariants({ variant: "outline" })}>
           فحص حالة النظام
