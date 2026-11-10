@@ -1,0 +1,11 @@
+
+> green-o@0.1.0 seed:dev
+> node --env-file-if-exists=.env.local scripts/seed-dev.mts
+
+.env.local not found. Continuing without it.
+(node:7079) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/green-o/green-o/src/lib/auth/staff-email-domain.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/runner/work/green-o/green-o/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 3 departments and 9 users (local).
+Sign in with employee number 1000 (general manager), 2000, 3000, 2001, 3001 ...

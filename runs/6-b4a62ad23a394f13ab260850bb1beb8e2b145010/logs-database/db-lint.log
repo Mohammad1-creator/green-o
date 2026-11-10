@@ -1,0 +1,6 @@
+Target: local stack (127.0.0.1:54322)
+Linting schema: public
+Linting schema: private
+Linting schema: audit
+
+No schema errors found
