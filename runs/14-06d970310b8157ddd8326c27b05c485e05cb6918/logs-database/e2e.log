@@ -1,0 +1,163 @@
+
+> green-o@0.1.0 test:e2e
+> playwright test
+
+
+Running 30 tests using 2 workers
+·····×·×··F
+::error file=tests/e2e/maintenance.spec.ts,title=[desktop] › tests/e2e/maintenance.spec.ts%3A10%3A3 › maintenance › a fault is reported%2C repaired%2C approved and closed,line=24,col=40::  1) [desktop] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed %0A    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:%0A        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })%0A        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')%0A%0A    Call log:%0A      - waiting for getByLabel('الآلة')%0A%0A%0A      22 |     await signInAs(reporter, reporterNo);%0A      23 |     await reporter.goto("/m/faults/new");%0A    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });%0A         |                                        ^%0A      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);%0A      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();%0A      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();%0A        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+::error file=tests/e2e/maintenance.spec.ts,title=[desktop] › tests/e2e/maintenance.spec.ts%3A10%3A3 › maintenance › a fault is reported%2C repaired%2C approved and closed,line=24,col=40::  1) [desktop] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:%0A        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })%0A        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')%0A%0A    Call log:%0A      - waiting for getByLabel('الآلة')%0A%0A%0A      22 |     await signInAs(reporter, reporterNo);%0A      23 |     await reporter.goto("/m/faults/new");%0A    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });%0A         |                                        ^%0A      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);%0A      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();%0A      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();%0A        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+::error file=tests/e2e/maintenance.spec.ts,title=[desktop] › tests/e2e/maintenance.spec.ts%3A10%3A3 › maintenance › a fault is reported%2C repaired%2C approved and closed,line=24,col=40::  1) [desktop] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:%0A        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })%0A        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')%0A%0A    Call log:%0A      - waiting for getByLabel('الآلة')%0A%0A%0A      22 |     await signInAs(reporter, reporterNo);%0A      23 |     await reporter.goto("/m/faults/new");%0A    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });%0A         |                                        ^%0A      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);%0A      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();%0A      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();%0A        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+···········×·×·F
+::error file=tests/e2e/maintenance.spec.ts,title=[mobile] › tests/e2e/maintenance.spec.ts%3A10%3A3 › maintenance › a fault is reported%2C repaired%2C approved and closed,line=24,col=40::  2) [mobile] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed %0A    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:%0A        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })%0A        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')%0A%0A    Call log:%0A      - waiting for getByLabel('الآلة')%0A%0A%0A      22 |     await signInAs(reporter, reporterNo);%0A      23 |     await reporter.goto("/m/faults/new");%0A    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });%0A         |                                        ^%0A      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);%0A      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();%0A      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();%0A        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+::error file=tests/e2e/maintenance.spec.ts,title=[mobile] › tests/e2e/maintenance.spec.ts%3A10%3A3 › maintenance › a fault is reported%2C repaired%2C approved and closed,line=24,col=40::  2) [mobile] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:%0A        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })%0A        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')%0A%0A    Call log:%0A      - waiting for getByLabel('الآلة')%0A%0A%0A      22 |     await signInAs(reporter, reporterNo);%0A      23 |     await reporter.goto("/m/faults/new");%0A    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });%0A         |                                        ^%0A      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);%0A      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();%0A      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();%0A        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+::error file=tests/e2e/maintenance.spec.ts,title=[mobile] › tests/e2e/maintenance.spec.ts%3A10%3A3 › maintenance › a fault is reported%2C repaired%2C approved and closed,line=24,col=40::  2) [mobile] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:%0A        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })%0A        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')%0A%0A    Call log:%0A      - waiting for getByLabel('الآلة')%0A%0A%0A      22 |     await signInAs(reporter, reporterNo);%0A      23 |     await reporter.goto("/m/faults/new");%0A    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });%0A         |                                        ^%0A      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);%0A      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();%0A      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();%0A        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+·······
+
+  1) [desktop] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed 
+
+    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:
+        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })
+        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')
+
+    Call log:
+      - waiting for getByLabel('الآلة')
+
+
+      22 |     await signInAs(reporter, reporterNo);
+      23 |     await reporter.goto("/m/faults/new");
+    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });
+         |                                        ^
+      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);
+      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();
+      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();
+        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+
+    Error Context: test-results/maintenance-maintenance-a--51bbe-epaired-approved-and-closed-desktop/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:
+        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })
+        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')
+
+    Call log:
+      - waiting for getByLabel('الآلة')
+
+
+      22 |     await signInAs(reporter, reporterNo);
+      23 |     await reporter.goto("/m/faults/new");
+    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });
+         |                                        ^
+      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);
+      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();
+      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();
+        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+
+    Error Context: test-results/maintenance-maintenance-a--51bbe-epaired-approved-and-closed-desktop-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/maintenance-maintenance-a--51bbe-epaired-approved-and-closed-desktop-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/maintenance-maintenance-a--51bbe-epaired-approved-and-closed-desktop-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:
+        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })
+        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')
+
+    Call log:
+      - waiting for getByLabel('الآلة')
+
+
+      22 |     await signInAs(reporter, reporterNo);
+      23 |     await reporter.goto("/m/faults/new");
+    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });
+         |                                        ^
+      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);
+      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();
+      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();
+        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+
+    Error Context: test-results/maintenance-maintenance-a--51bbe-epaired-approved-and-closed-desktop-retry2/error-context.md
+
+  2) [mobile] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed 
+
+    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:
+        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })
+        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')
+
+    Call log:
+      - waiting for getByLabel('الآلة')
+
+
+      22 |     await signInAs(reporter, reporterNo);
+      23 |     await reporter.goto("/m/faults/new");
+    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });
+         |                                        ^
+      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);
+      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();
+      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();
+        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+
+    Error Context: test-results/maintenance-maintenance-a--51bbe-epaired-approved-and-closed-mobile/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:
+        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })
+        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')
+
+    Call log:
+      - waiting for getByLabel('الآلة')
+
+
+      22 |     await signInAs(reporter, reporterNo);
+      23 |     await reporter.goto("/m/faults/new");
+    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });
+         |                                        ^
+      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);
+      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();
+      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();
+        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+
+    Error Context: test-results/maintenance-maintenance-a--51bbe-epaired-approved-and-closed-mobile-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/maintenance-maintenance-a--51bbe-epaired-approved-and-closed-mobile-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/maintenance-maintenance-a--51bbe-epaired-approved-and-closed-mobile-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: locator.selectOption: Error: strict mode violation: getByLabel('الآلة') resolved to 2 elements:
+        1) <select name="machineId" id="fault-machine" data-size="default" data-slot="native-select" class="h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 ps-2.5 pe-8 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-inv…>…</select> aka getByLabel('الآلة', { exact: true })
+        2) <input name="stopped" type="checkbox" class="size-5 accent-destructive"/> aka getByLabel('الآلة متوقفة عن العمل بسبب هذا العطل')
+
+    Call log:
+      - waiting for getByLabel('الآلة')
+
+
+      22 |     await signInAs(reporter, reporterNo);
+      23 |     await reporter.goto("/m/faults/new");
+    > 24 |     await reporter.getByLabel("الآلة").selectOption({ index: 1 });
+         |                                        ^
+      25 |     await reporter.getByLabel("ما المشكلة؟").fill(description);
+      26 |     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();
+      27 |     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();
+        at /home/runner/work/green-o/green-o/tests/e2e/maintenance.spec.ts:24:40
+
+    Error Context: test-results/maintenance-maintenance-a--51bbe-epaired-approved-and-closed-mobile-retry2/error-context.md
+
+  2 failed
+    [desktop] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed 
+    [mobile] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed 
+  28 passed (34.3s)
+::notice title=🎭 Playwright Run Summary::  2 failed%0A    [desktop] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed %0A    [mobile] › tests/e2e/maintenance.spec.ts:10:3 › maintenance › a fault is reported, repaired, approved and closed %0A  28 passed (34.3s)
