@@ -1,0 +1,23 @@
+Target: local stack (127.0.0.1:54322)
+Linting schema: public
+Linting schema: private
+Linting schema: audit
+[
+  {
+    "function": "public.pm_next_occurrence",
+    "issues": [
+      {
+        "level": "warning",
+        "message": "routine is marked as IMMUTABLE, but expression is STABLE",
+        "statement": {
+          "lineNumber": "19",
+          "text": "assignment"
+        },
+        "hint": "When you fix this issue, please, recheck other functions that uses this function.",
+        "detail": "there is a risk of unwanted behave",
+        "context": "at assignment to variable \"v_age\" declared on line 6",
+        "sqlState": "00000"
+      }
+    ]
+  }
+]
