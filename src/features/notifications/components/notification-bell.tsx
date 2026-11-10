@@ -1,5 +1,6 @@
 "use client";
 
+import type { RealtimeChannel } from "@supabase/supabase-js";
 import { BellIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -21,8 +22,17 @@ export function NotificationBell({
 }) {
   const [unread, setUnread] = useState(initialUnread);
 
+  // When the server sends a fresh count (after any action), take it.
+  const [serverCount, setServerCount] = useState(initialUnread);
+  if (serverCount !== initialUnread) {
+    setServerCount(initialUnread);
+    setUnread(initialUnread);
+  }
+
   useEffect(() => {
     const supabase = createClient();
+    let channel: RealtimeChannel | null = null;
+    let cancelled = false;
 
     async function refreshCount() {
       const { count } = await supabase
@@ -32,36 +42,46 @@ export function NotificationBell({
       if (typeof count === "number") setUnread(count);
     }
 
-    const channel = supabase
-      .channel(`notifications:${userId}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "notifications",
-          filter: `user_id=eq.${userId}`,
-        },
-        (payload) => {
-          const row = payload.new as NotificationRow;
-          setUnread((count) => count + 1);
-          toast(row.title, { description: row.body ?? undefined });
-        },
-      )
-      .on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "notifications",
-          filter: `user_id=eq.${userId}`,
-        },
-        () => void refreshCount(),
-      )
-      .subscribe();
+    async function subscribe() {
+      // Realtime checks row level security with this token; without it the
+      // channel joins anonymously and receives nothing.
+      const { data } = await supabase.auth.getSession();
+      await supabase.realtime.setAuth(data.session?.access_token ?? null);
+      if (cancelled) return;
 
+      channel = supabase
+        .channel(`notifications:${userId}`)
+        .on(
+          "postgres_changes",
+          {
+            event: "INSERT",
+            schema: "public",
+            table: "notifications",
+            filter: `user_id=eq.${userId}`,
+          },
+          (payload) => {
+            const row = payload.new as NotificationRow;
+            setUnread((count) => count + 1);
+            toast(row.title, { description: row.body ?? undefined });
+          },
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "UPDATE",
+            schema: "public",
+            table: "notifications",
+            filter: `user_id=eq.${userId}`,
+          },
+          () => void refreshCount(),
+        )
+        .subscribe();
+    }
+
+    void subscribe();
     return () => {
-      void supabase.removeChannel(channel);
+      cancelled = true;
+      if (channel) void supabase.removeChannel(channel);
     };
   }, [userId]);
 

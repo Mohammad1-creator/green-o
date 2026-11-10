@@ -129,7 +129,9 @@ isOneToOne: false
 { Args: { "p_department_id": string,"p_role": Database["public"]['Enums']["app_role"] }; Returns: boolean
                            },
 "claim_push_batch":
-{ Args: { "p_ids": string[] }; Returns: { "body": string | null,"id": string,"title": string,"url": string | null,"user_id": string }[]
+{ Args: { "p_ids": (string)[] }; Returns: {
+              "body": string,"id": string,"title": string,"url": string,"user_id": string
+            }[]
                            },
 "configure_push_dispatch":
 { Args: { "p_secret": string,"p_url": string,"p_vercel_bypass"?: string }; Returns: undefined
@@ -140,11 +142,11 @@ isOneToOne: false
 "environment_marker":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
-"mark_local_environment":
-{ Args: Record<PropertyKey, never>; Returns: string
-                           },
 "mark_all_notifications_read":
 { Args: Record<PropertyKey, never>; Returns: number
+                           },
+"mark_local_environment":
+{ Args: Record<PropertyKey, never>; Returns: string
                            },
 "record_push_failure":
 { Args: { "p_error": string,"p_id": string }; Returns: undefined
@@ -279,7 +281,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"]
+            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"push_status": ["pending", "sent", "failed", "skipped"]
           }
         }
 } as const

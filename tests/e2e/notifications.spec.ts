@@ -22,6 +22,8 @@ test.describe("notifications", () => {
     await expect(
       page.getByRole("heading", { name: "الإشعارات", level: 1 }),
     ).toBeVisible();
+    // The list streams in with the device card; wait for it before counting.
+    await expect(page.getByText("إشعارات هذا الجهاز")).toBeVisible();
     const items = page
       .getByRole("list", { name: "الإشعارات" })
       .getByRole("listitem");
