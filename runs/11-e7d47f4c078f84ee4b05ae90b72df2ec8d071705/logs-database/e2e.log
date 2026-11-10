@@ -1,0 +1,193 @@
+
+> green-o@0.1.0 test:e2e
+> playwright test
+
+
+Running 26 tests using 2 workers
+··············×·×··F
+::error file=tests/e2e/tasks.spec.ts,title=[desktop] › tests/e2e/tasks.spec.ts%3A10%3A3 › tasks › a task goes from creation to approval%2C with one return for follow-up,line=31,col=54::  1) [desktop] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up %0A    Error: expect(locator).toBeVisible() failed%0A%0A    Locator: getByText('أُنشئت المهمة')%0A    Expected: visible%0A    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:%0A        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')%0A        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })%0A%0A    Call log:%0A      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms%0A      - waiting for getByText('أُنشئت المهمة')%0A%0A%0A      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });%0A      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();%0A    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();%0A         |                                                      ^%0A      32 |     const taskUrl = new URL(manager.url());%0A      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";%0A      34 |%0A        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+::error file=tests/e2e/tasks.spec.ts,title=[desktop] › tests/e2e/tasks.spec.ts%3A10%3A3 › tasks › a task goes from creation to approval%2C with one return for follow-up,line=31,col=54::  1) [desktop] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: expect(locator).toBeVisible() failed%0A%0A    Locator: getByText('أُنشئت المهمة')%0A    Expected: visible%0A    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:%0A        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')%0A        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })%0A%0A    Call log:%0A      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms%0A      - waiting for getByText('أُنشئت المهمة')%0A%0A%0A      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });%0A      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();%0A    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();%0A         |                                                      ^%0A      32 |     const taskUrl = new URL(manager.url());%0A      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";%0A      34 |%0A        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+::error file=tests/e2e/tasks.spec.ts,title=[desktop] › tests/e2e/tasks.spec.ts%3A10%3A3 › tasks › a task goes from creation to approval%2C with one return for follow-up,line=31,col=54::  1) [desktop] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: expect(locator).toBeVisible() failed%0A%0A    Locator: getByText('أُنشئت المهمة')%0A    Expected: visible%0A    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:%0A        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')%0A        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })%0A%0A    Call log:%0A      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms%0A      - waiting for getByText('أُنشئت المهمة')%0A%0A%0A      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });%0A      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();%0A    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();%0A         |                                                      ^%0A      32 |     const taskUrl = new URL(manager.url());%0A      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";%0A      34 |%0A        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+·······××F
+::error file=tests/e2e/tasks.spec.ts,title=[mobile] › tests/e2e/tasks.spec.ts%3A10%3A3 › tasks › a task goes from creation to approval%2C with one return for follow-up,line=31,col=54::  2) [mobile] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up %0A    Error: expect(locator).toBeVisible() failed%0A%0A    Locator: getByText('أُنشئت المهمة')%0A    Expected: visible%0A    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:%0A        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')%0A        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })%0A%0A    Call log:%0A      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms%0A      - waiting for getByText('أُنشئت المهمة')%0A%0A%0A      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });%0A      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();%0A    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();%0A         |                                                      ^%0A      32 |     const taskUrl = new URL(manager.url());%0A      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";%0A      34 |%0A        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+::error file=tests/e2e/tasks.spec.ts,title=[mobile] › tests/e2e/tasks.spec.ts%3A10%3A3 › tasks › a task goes from creation to approval%2C with one return for follow-up,line=31,col=54::  2) [mobile] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: expect(locator).toBeVisible() failed%0A%0A    Locator: getByText('أُنشئت المهمة')%0A    Expected: visible%0A    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:%0A        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')%0A        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })%0A%0A    Call log:%0A      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms%0A      - waiting for getByText('أُنشئت المهمة')%0A%0A%0A      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });%0A      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();%0A    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();%0A         |                                                      ^%0A      32 |     const taskUrl = new URL(manager.url());%0A      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";%0A      34 |%0A        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+::error file=tests/e2e/tasks.spec.ts,title=[mobile] › tests/e2e/tasks.spec.ts%3A10%3A3 › tasks › a task goes from creation to approval%2C with one return for follow-up,line=31,col=54::  2) [mobile] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: expect(locator).toBeVisible() failed%0A%0A    Locator: getByText('أُنشئت المهمة')%0A    Expected: visible%0A    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:%0A        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')%0A        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })%0A%0A    Call log:%0A      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms%0A      - waiting for getByText('أُنشئت المهمة')%0A%0A%0A      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });%0A      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();%0A    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();%0A         |                                                      ^%0A      32 |     const taskUrl = new URL(manager.url());%0A      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";%0A      34 |%0A        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+
+
+  1) [desktop] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('أُنشئت المهمة')
+    Expected: visible
+    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:
+        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')
+        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })
+
+    Call log:
+      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms
+      - waiting for getByText('أُنشئت المهمة')
+
+
+      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });
+      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();
+    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();
+         |                                                      ^
+      32 |     const taskUrl = new URL(manager.url());
+      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";
+      34 |
+        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+
+    Error Context: test-results/tasks-tasks-a-task-goes-fr-45f3f-th-one-return-for-follow-up-desktop/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('أُنشئت المهمة')
+    Expected: visible
+    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:
+        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')
+        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })
+
+    Call log:
+      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms
+      - waiting for getByText('أُنشئت المهمة')
+
+
+      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });
+      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();
+    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();
+         |                                                      ^
+      32 |     const taskUrl = new URL(manager.url());
+      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";
+      34 |
+        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+
+    Error Context: test-results/tasks-tasks-a-task-goes-fr-45f3f-th-one-return-for-follow-up-desktop-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/tasks-tasks-a-task-goes-fr-45f3f-th-one-return-for-follow-up-desktop-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/tasks-tasks-a-task-goes-fr-45f3f-th-one-return-for-follow-up-desktop-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('أُنشئت المهمة')
+    Expected: visible
+    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:
+        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')
+        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })
+
+    Call log:
+      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms
+      - waiting for getByText('أُنشئت المهمة')
+
+
+      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });
+      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();
+    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();
+         |                                                      ^
+      32 |     const taskUrl = new URL(manager.url());
+      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";
+      34 |
+        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+
+    Error Context: test-results/tasks-tasks-a-task-goes-fr-45f3f-th-one-return-for-follow-up-desktop-retry2/error-context.md
+
+  2) [mobile] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('أُنشئت المهمة')
+    Expected: visible
+    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:
+        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')
+        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })
+
+    Call log:
+      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms
+      - waiting for getByText('أُنشئت المهمة')
+
+
+      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });
+      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();
+    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();
+         |                                                      ^
+      32 |     const taskUrl = new URL(manager.url());
+      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";
+      34 |
+        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+
+    Error Context: test-results/tasks-tasks-a-task-goes-fr-45f3f-th-one-return-for-follow-up-mobile/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('أُنشئت المهمة')
+    Expected: visible
+    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:
+        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')
+        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })
+
+    Call log:
+      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms
+      - waiting for getByText('أُنشئت المهمة')
+
+
+      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });
+      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();
+    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();
+         |                                                      ^
+      32 |     const taskUrl = new URL(manager.url());
+      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";
+      34 |
+        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+
+    Error Context: test-results/tasks-tasks-a-task-goes-fr-45f3f-th-one-return-for-follow-up-mobile-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/tasks-tasks-a-task-goes-fr-45f3f-th-one-return-for-follow-up-mobile-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/tasks-tasks-a-task-goes-fr-45f3f-th-one-return-for-follow-up-mobile-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('أُنشئت المهمة')
+    Expected: visible
+    Error: strict mode violation: getByText('أُنشئت المهمة') resolved to 2 elements:
+        1) <div data-slot="alert-description" class="text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4">أُنشئت المهمة وأُرسل إشعار للمسند إليهم.</div> aka getByText('أُنشئت المهمة وأُرسل إشعار للمسند إليهم')
+        2) <p class="text-sm font-medium">أُنشئت المهمة</p> aka getByText('أُنشئت المهمة', { exact: true })
+
+    Call log:
+      - Expect "toBeVisible" getByText('أُنشئت المهمة') with timeout 5000ms
+      - waiting for getByText('أُنشئت المهمة')
+
+
+      29 |     await manager.getByLabel("الموظف").selectOption({ label: technician.name });
+      30 |     await manager.getByRole("button", { name: "إنشاء المهمة" }).click();
+    > 31 |     await expect(manager.getByText("أُنشئت المهمة")).toBeVisible();
+         |                                                      ^
+      32 |     const taskUrl = new URL(manager.url());
+      33 |     const taskId = taskUrl.pathname.split("/").pop() ?? "";
+      34 |
+        at /home/runner/work/green-o/green-o/tests/e2e/tasks.spec.ts:31:54
+
+    Error Context: test-results/tasks-tasks-a-task-goes-fr-45f3f-th-one-return-for-follow-up-mobile-retry2/error-context.md
+
+  2 failed
+    [desktop] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up 
+    [mobile] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up 
+  24 passed (28.7s)
+::notice title=🎭 Playwright Run Summary::  2 failed%0A    [desktop] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up %0A    [mobile] › tests/e2e/tasks.spec.ts:10:3 › tasks › a task goes from creation to approval, with one return for follow-up %0A  24 passed (28.7s)

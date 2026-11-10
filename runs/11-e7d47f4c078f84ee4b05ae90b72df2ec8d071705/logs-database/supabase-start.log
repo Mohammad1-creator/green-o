@@ -1,0 +1,304 @@
+2.8.1: Pulling from supabase/kong
+v0.100.0: Pulling from supabase/postgres-meta
+v2.197.0: Pulling from supabase/gotrue
+v16.5: Pulling from supabase/postgrest
+17.11.0.018: Pulling from supabase/postgres
+v2.154.0: Pulling from supabase/realtime
+c8706a120d79: Pulling fs layer
+814dd06d26c7: Pulling fs layer
+213ec9aee27d: Pulling fs layer
+a70653f7a2d5: Pulling fs layer
+531e3bd93090: Pulling fs layer
+d22c69a95cf4: Pulling fs layer
+86db7dae1346: Pulling fs layer
+2cfab517365c: Pulling fs layer
+ae5d6c6b373f: Pulling fs layer
+6de2243f7511: Pulling fs layer
+3d7229f68518: Pulling fs layer
+a8de9fa05220: Pulling fs layer
+7fd1ebe418b5: Pulling fs layer
+f0400f4b55b0: Pulling fs layer
+c0cb7126d877: Pulling fs layer
+74c409e3506a: Pulling fs layer
+55afa1ecc21d: Pulling fs layer
+e5d190db8191: Pulling fs layer
+71eb50013731: Pulling fs layer
+f30f4fcb85f4: Pulling fs layer
+558da21df5ff: Pulling fs layer
+b6cb2d7131ef: Pulling fs layer
+ee70790e49f2: Pulling fs layer
+55b3e3c4d2d2: Pulling fs layer
+0a88acd31a7e: Pulling fs layer
+a278b50bba20: Pulling fs layer
+b2ae74461bfa: Pulling fs layer
+7e6d01e66c1c: Pulling fs layer
+fa33d6f02ba2: Pulling fs layer
+4eeff15172a8: Pulling fs layer
+0620d22b0132: Pulling fs layer
+4d67901a1695: Pulling fs layer
+e8a84a3e8749: Pulling fs layer
+cad2b0c06910: Pulling fs layer
+21c9ccd4d650: Pulling fs layer
+5e9b4a97f639: Pulling fs layer
+8a2ae6d764fb: Pulling fs layer
+9d4f5a31dafe: Pulling fs layer
+eedd6c22469d: Pulling fs layer
+db04625bb825: Pulling fs layer
+60bf8bfe16a7: Pulling fs layer
+f013a10a80d8: Pulling fs layer
+c358fb44e004: Pulling fs layer
+98c87e7d48da: Pulling fs layer
+a65000170b43: Pulling fs layer
+f764dee38eb9: Pulling fs layer
+22f6016db27a: Pulling fs layer
+75fff1994592: Pulling fs layer
+a70653f7a2d5: Download complete
+814dd06d26c7: Download complete
+558da21df5ff: Download complete
+0a88acd31a7e: Download complete
+ee70790e49f2: Download complete
+b2ae74461bfa: Download complete
+7e6d01e66c1c: Download complete
+a278b50bba20: Download complete
+74c409e3506a: Download complete
+f30f4fcb85f4: Download complete
+86db7dae1346: Download complete
+71eb50013731: Download complete
+a8de9fa05220: Download complete
+213ec9aee27d: Download complete
+c0cb7126d877: Download complete
+f0400f4b55b0: Download complete
+2cfab517365c: Download complete
+6de2243f7511: Download complete
+c8706a120d79: Download complete
+c358fb44e004: Download complete
+55b3e3c4d2d2: Download complete
+4eeff15172a8: Download complete
+4d67901a1695: Download complete
+5e9b4a97f639: Download complete
+22f6016db27a: Download complete
+f764dee38eb9: Download complete
+e8a84a3e8749: Download complete
+21c9ccd4d650: Download complete
+8a2ae6d764fb: Download complete
+55afa1ecc21d: Download complete
+60bf8bfe16a7: Download complete
+98c87e7d48da: Download complete
+44136fa355b3: Already exists
+75fff1994592: Download complete
+3d7229f68518: Download complete
+cad2b0c06910: Download complete
+eedd6c22469d: Download complete
+a65000170b43: Download complete
+fa33d6f02ba2: Download complete
+0620d22b0132: Download complete
+9d4f5a31dafe: Download complete
+db04625bb825: Download complete
+f013a10a80d8: Download complete
+v1.90.1: Pulling from supabase/storage-api
+44136fa355b3: Already exists
+4f4fb700ef54: Pulling fs layer
+062e450697fa: Pulling fs layer
+aadc1df55248: Pulling fs layer
+ae8863254b88: Pulling fs layer
+188279791455: Pulling fs layer
+78b3f7edad35: Pulling fs layer
+e87ae8c8f0b6: Pulling fs layer
+c8643991b1ea: Pulling fs layer
+16c36e0c68b5: Pulling fs layer
+632438462ff3: Pulling fs layer
+6f54f1dd9f06: Pulling fs layer
+ac69af806a7e: Pulling fs layer
+f1b6bcd7648d: Download complete
+f2ba4e98874d: Pulling fs layer
+4f4fb700ef54: Already exists
+632438462ff3: Download complete
+44136fa355b3: Already exists
+d52e69874cb5: Download complete
+7fd1ebe418b5: Download complete
+e5d190db8191: Download complete
+41e9f49dd3b3: Download complete
+e87ae8c8f0b6: Download complete
+188279791455: Download complete
+213ec9aee27d: Pull complete
+78b3f7edad35: Download complete
+16c36e0c68b5: Download complete
+ac69af806a7e: Download complete
+ae5d6c6b373f: Download complete
+71eb50013731: Pull complete
+a70653f7a2d5: Pull complete
+c8643991b1ea: Download complete
+fab7ead19d67: Pulling fs layer
+33481234c54b: Pulling fs layer
+579f8f5b671b: Pulling fs layer
+55afa1ecc21d: Pull complete
+46f115b2e1ef: Pulling fs layer
+f76f6799fcd0: Pulling fs layer
+685243d7de60: Pulling fs layer
+edeba950eb1a: Pulling fs layer
+111b01c580b5: Pulling fs layer
+93d564aadd8f: Pulling fs layer
+7b229517ed22: Pulling fs layer
+18b6b0747bdd: Pulling fs layer
+e6974051c57c: Pulling fs layer
+e731957ed974: Pulling fs layer
+5e9b4a97f639: Pull complete
+3d37f703c164: Download complete
+74c409e3506a: Pull complete
+111b01c580b5: Download complete
+f76f6799fcd0: Download complete
+edeba950eb1a: Download complete
+93d564aadd8f: Download complete
+fab7ead19d67: Download complete
+46f115b2e1ef: Download complete
+33481234c54b: Download complete
+18b6b0747bdd: Download complete
+44136fa355b3: Already exists
+7b229517ed22: Download complete
+578cc33ed3b5: Download complete
+8a2ae6d764fb: Pull complete
+6f54f1dd9f06: Download complete
+f764dee38eb9: Pull complete
+531e3bd93090: Download complete
+7b229517ed22: Pull complete
+d22c69a95cf4: Download complete
+579f8f5b671b: Download complete
+f2ba4e98874d: Download complete
+062e450697fa: Download complete
+ae8863254b88: Download complete
+f2ba4e98874d: Pull complete
+Digest: sha256:<hex>
+Status: Downloaded newer image for public.ecr.aws/supabase/postgrest:v16.5
+public.ecr.aws/supabase/postgrest:v16.5
+aadc1df55248: Download complete
+e731957ed974: Download complete
+e5d190db8191: Pull complete
+f30f4fcb85f4: Pull complete
+685243d7de60: Download complete
+c0cb7126d877: Pull complete
+Digest: sha256:<hex>
+Status: Downloaded newer image for public.ecr.aws/supabase/gotrue:v2.197.0
+public.ecr.aws/supabase/gotrue:v2.197.0
+e6974051c57c: Download complete
+f0400f4b55b0: Pull complete
+7fd1ebe418b5: Pull complete
+062e450697fa: Pull complete
+b6cb2d7131ef: Download complete
+814dd06d26c7: Pull complete
+531e3bd93090: Pull complete
+Digest: sha256:<hex>
+Status: Downloaded newer image for public.ecr.aws/supabase/kong:2.8.1
+public.ecr.aws/supabase/kong:2.8.1
+46f115b2e1ef: Pull complete
+e731957ed974: Pull complete
+d22c69a95cf4: Pull complete
+a8de9fa05220: Pull complete
+2cfab517365c: Pull complete
+3d7229f68518: Pull complete
+86db7dae1346: Pull complete
+aadc1df55248: Pull complete
+ae8863254b88: Pull complete
+188279791455: Pull complete
+78b3f7edad35: Pull complete
+632438462ff3: Pull complete
+e87ae8c8f0b6: Pull complete
+16c36e0c68b5: Pull complete
+c8643991b1ea: Pull complete
+fab7ead19d67: Pull complete
+18b6b0747bdd: Pull complete
+e6974051c57c: Pull complete
+edeba950eb1a: Pull complete
+ae5d6c6b373f: Pull complete
+6de2243f7511: Pull complete
+c8706a120d79: Pull complete
+Digest: sha256:<hex>
+Status: Downloaded newer image for public.ecr.aws/supabase/postgres-meta:v0.100.0
+public.ecr.aws/supabase/postgres-meta:v0.100.0
+4f4fb700ef54: Pull complete
+ac69af806a7e: Pull complete
+6f54f1dd9f06: Pull complete
+Digest: sha256:<hex>
+Status: Downloaded newer image for public.ecr.aws/supabase/realtime:v2.154.0
+public.ecr.aws/supabase/realtime:v2.154.0
+579f8f5b671b: Pull complete
+f76f6799fcd0: Pull complete
+ee70790e49f2: Pull complete
+a278b50bba20: Pull complete
+b6cb2d7131ef: Pull complete
+b2ae74461bfa: Pull complete
+0a88acd31a7e: Pull complete
+7e6d01e66c1c: Pull complete
+55b3e3c4d2d2: Pull complete
+4eeff15172a8: Pull complete
+e8a84a3e8749: Pull complete
+21c9ccd4d650: Pull complete
+60bf8bfe16a7: Pull complete
+eedd6c22469d: Pull complete
+a65000170b43: Pull complete
+fa33d6f02ba2: Pull complete
+0620d22b0132: Pull complete
+9d4f5a31dafe: Pull complete
+db04625bb825: Pull complete
+f013a10a80d8: Pull complete
+4d67901a1695: Pull complete
+cad2b0c06910: Pull complete
+c358fb44e004: Pull complete
+75fff1994592: Pull complete
+558da21df5ff: Pull complete
+22f6016db27a: Pull complete
+98c87e7d48da: Pull complete
+Digest: sha256:<hex>
+Status: Downloaded newer image for public.ecr.aws/supabase/postgres:17.11.0.018
+public.ecr.aws/supabase/postgres:17.11.0.018
+685243d7de60: Pull complete
+111b01c580b5: Pull complete
+93d564aadd8f: Pull complete
+33481234c54b: Pull complete
+Digest: sha256:<hex>
+Status: Downloaded newer image for public.ecr.aws/supabase/storage-api:v1.90.1
+public.ecr.aws/supabase/storage-api:v1.90.1
+Starting database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20261110120000_foundation.sql...
+Applying migration 20261110130000_notifications.sql...
+Applying migration 20261110140000_tasks.sql...
+Starting containers...
+Waiting for health checks...
+Started supabase local development setup.
+
+
+╭─────────────────────────────────────────────────╮
+│ 🌐 APIs                                         │
+├─────────────┬───────────────────────────────────┤
+│ Project URL │ http://127.0.0.1:54321            │
+│ REST        │ http://127.0.0.1:54321/rest/v1    │
+│ GraphQL     │ http://127.0.0.1:54321/graphql/v1 │
+╰─────────────┴───────────────────────────────────╯
+
+╭───────────────────────────────────────────────────────────────╮
+│ ⛁ Database                                                    │
+├─────┬─────────────────────────────────────────────────────────┤
+│ URL │ postgresql://postgres:postgres@127.0.0.1:54322/postgres │
+╰─────┴─────────────────────────────────────────────────────────╯
+
+╭──────────────────────────────────────────────────────────────╮
+│ 🔑 Authentication Keys                                       │
+├─────────────┬────────────────────────────────────────────────┤
+│ Publishable │ sb_publishable_<hidden> │
+│ Secret      │ sb_secret_<hidden>      │
+╰─────────────┴────────────────────────────────────────────────╯
+
+╭───────────────────────────────────────────────────────────────────────────────╮
+│ 📦 Storage (S3)                                                               │
+├────────────┬──────────────────────────────────────────────────────────────────┤
+│ URL        │ http://127.0.0.1:54321/storage/v1/s3                             │
+│ Access Key │ <hex>                                 │
+│ Secret Key │ <hex> │
+│ Region     │ local                                                            │
+╰────────────┴──────────────────────────────────────────────────────────────────╯
+Local dev security notice
+All services bind to 0.0.0.0 (network-accessible, not just localhost)
+API keys and JWT secrets are shared defaults. Do not use in production
+Studio, pgMeta (/pg/*), and analytics have no authentication
+
