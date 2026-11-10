@@ -1,0 +1,456 @@
+
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+
+export type Database = {
+  
+  "public": {
+          Tables: {
+            "app_settings": {
+                  Row: {
+                    "factory_name": string,"id": boolean,"timezone": string,"updated_at": string,"updated_by": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "factory_name"?: string,"id"?: boolean,"timezone"?: string,"updated_at"?: string,"updated_by"?: string | null
+                  }
+                  Update: {
+                    "factory_name"?: string,"id"?: boolean,"timezone"?: string,"updated_at"?: string,"updated_by"?: string | null
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"departments": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"id": string,"is_active": boolean,"name": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"id"?: string,"is_active"?: boolean,"name": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"id"?: string,"is_active"?: boolean,"name"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"employee_details": {
+                  Row: {
+                    "employee_no": string,"job_title": string | null,"notes": string | null,"phone": string | null,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "employee_no": string,"job_title"?: string | null,"notes"?: string | null,"phone"?: string | null,"updated_at"?: string,"user_id": string
+                  }
+                  Update: {
+                    "employee_no"?: string,"job_title"?: string | null,"notes"?: string | null,"phone"?: string | null,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "employee_details_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: true
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"notifications": {
+                  Row: {
+                    "body": string | null,"created_at": string,"id": string,"push_attempts": number,"push_error": string | null,"push_status": Database["public"]['Enums']["push_status"],"read_at": string | null,"title": string,"type": string,"url": string | null,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body"?: string | null,"created_at"?: string,"id"?: string,"push_attempts"?: number,"push_error"?: string | null,"push_status"?: Database["public"]['Enums']["push_status"],"read_at"?: string | null,"title": string,"type": string,"url"?: string | null,"user_id": string
+                  }
+                  Update: {
+                    "body"?: string | null,"created_at"?: string,"id"?: string,"push_attempts"?: number,"push_error"?: string | null,"push_status"?: Database["public"]['Enums']["push_status"],"read_at"?: string | null,"title"?: string,"type"?: string,"url"?: string | null,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notifications_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"profiles": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"department_id": string | null,"full_name": string,"id": string,"is_active": boolean,"role": Database["public"]['Enums']["app_role"],"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"department_id"?: string | null,"full_name": string,"id": string,"is_active"?: boolean,"role": Database["public"]['Enums']["app_role"],"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"department_id"?: string | null,"full_name"?: string,"id"?: string,"is_active"?: boolean,"role"?: Database["public"]['Enums']["app_role"],"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "profiles_department_id_fkey"
+      columns: ["department_id"]
+isOneToOne: false
+      referencedRelation: "departments"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"push_subscriptions": {
+                  Row: {
+                    "auth": string,"created_at": string,"endpoint": string,"id": string,"last_success_at": string | null,"p256dh": string,"user_agent": string | null,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "auth": string,"created_at"?: string,"endpoint": string,"id"?: string,"last_success_at"?: string | null,"p256dh": string,"user_agent"?: string | null,"user_id": string
+                  }
+                  Update: {
+                    "auth"?: string,"created_at"?: string,"endpoint"?: string,"id"?: string,"last_success_at"?: string | null,"p256dh"?: string,"user_agent"?: string | null,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "push_subscriptions_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"task_assignees": {
+                  Row: {
+                    "acknowledged_at": string | null,"created_at": string,"seen_at": string | null,"task_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "acknowledged_at"?: string | null,"created_at"?: string,"seen_at"?: string | null,"task_id": string,"user_id": string
+                  }
+                  Update: {
+                    "acknowledged_at"?: string | null,"created_at"?: string,"seen_at"?: string | null,"task_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "task_assignees_task_id_fkey"
+      columns: ["task_id"]
+isOneToOne: false
+      referencedRelation: "tasks"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_assignees_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"task_events": {
+                  Row: {
+                    "actor_id": string | null,"created_at": string,"event": string,"from_status": Database["public"]['Enums']["task_status"] | null,"id": number,"note": string | null,"task_id": string,"to_status": Database["public"]['Enums']["task_status"] | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "actor_id"?: string | null,"created_at"?: string,"event": string,"from_status"?: Database["public"]['Enums']["task_status"] | null,"id"?: never,"note"?: string | null,"task_id": string,"to_status"?: Database["public"]['Enums']["task_status"] | null
+                  }
+                  Update: {
+                    "actor_id"?: string | null,"created_at"?: string,"event"?: string,"from_status"?: Database["public"]['Enums']["task_status"] | null,"id"?: never,"note"?: string | null,"task_id"?: string,"to_status"?: Database["public"]['Enums']["task_status"] | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "task_events_actor_id_fkey"
+      columns: ["actor_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_events_task_id_fkey"
+      columns: ["task_id"]
+isOneToOne: false
+      referencedRelation: "tasks"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"tasks": {
+                  Row: {
+                    "approved_by": string | null,"assigned_team_id": string | null,"cancel_reason": string | null,"cancelled_at": string | null,"completed_at": string | null,"created_at": string,"created_by": string | null,"department_id": string,"description": string | null,"due_at": string | null,"id": string,"kind": Database["public"]['Enums']["task_kind"],"number": number,"status": Database["public"]['Enums']["task_status"],"submitted_at": string | null,"title": string,"updated_at": string,"is_overdue": boolean | null
+                  }
+                  ComputedFields: "is_overdue"
+                  Insert: {
+                    "approved_by"?: string | null,"assigned_team_id"?: string | null,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id": string,"description"?: string | null,"due_at"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["task_kind"],"number"?: number,"status"?: Database["public"]['Enums']["task_status"],"submitted_at"?: string | null,"title": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "approved_by"?: string | null,"assigned_team_id"?: string | null,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id"?: string,"description"?: string | null,"due_at"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["task_kind"],"number"?: number,"status"?: Database["public"]['Enums']["task_status"],"submitted_at"?: string | null,"title"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "tasks_approved_by_fkey"
+      columns: ["approved_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "tasks_assigned_team_id_fkey"
+      columns: ["assigned_team_id"]
+isOneToOne: false
+      referencedRelation: "teams"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "tasks_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "tasks_department_id_fkey"
+      columns: ["department_id"]
+isOneToOne: false
+      referencedRelation: "departments"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"team_members": {
+                  Row: {
+                    "created_at": string,"team_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"team_id": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"team_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "team_members_team_id_fkey"
+      columns: ["team_id"]
+isOneToOne: false
+      referencedRelation: "teams"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "team_members_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"teams": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"department_id": string,"id": string,"is_active": boolean,"name": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"department_id": string,"id"?: string,"is_active"?: boolean,"name": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"department_id"?: string,"id"?: string,"is_active"?: boolean,"name"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "teams_department_id_fkey"
+      columns: ["department_id"]
+isOneToOne: false
+      referencedRelation: "departments"
+      referencedColumns: ["id"]
+    }
+                  ]
+                }
+          }
+          Views: {
+            [_ in never]: never
+          }
+          Functions: {
+            "acknowledge_task":
+{ Args: { "p_task_id": string }; Returns: undefined
+                           },
+"approve_task":
+{ Args: { "p_task_id": string }; Returns: undefined
+                           },
+"authorize_password_reset":
+{ Args: { "p_user_id": string }; Returns: undefined
+                           },
+"bootstrap_general_manager":
+{ Args: { "p_employee_no": string,"p_full_name": string,"p_user_id": string }; Returns: undefined
+                           },
+"can_manage_account":
+{ Args: { "p_department_id": string,"p_role": Database["public"]['Enums']["app_role"] }; Returns: boolean
+                           },
+"cancel_task":
+{ Args: { "p_reason": string,"p_task_id": string }; Returns: undefined
+                           },
+"claim_push_batch":
+{ Args: { "p_ids": (string)[] }; Returns: {
+              "body": string,"id": string,"title": string,"url": string,"user_id": string
+            }[]
+                           },
+"configure_push_dispatch":
+{ Args: { "p_secret": string,"p_url": string,"p_vercel_bypass"?: string }; Returns: undefined
+                           },
+"create_task":
+{ Args: { "p_assignee_ids"?: (string)[],"p_department_id"?: string,"p_description"?: string,"p_due_at"?: string,"p_team_id"?: string,"p_title": string }; Returns: string
+                           },
+"create_user_profile":
+{ Args: { "p_department_id": string,"p_employee_no": string,"p_full_name": string,"p_job_title"?: string,"p_phone"?: string,"p_role": Database["public"]['Enums']["app_role"],"p_user_id": string }; Returns: undefined
+                           },
+"environment_marker":
+{ Args: Record<PropertyKey, never>; Returns: string
+                           },
+"is_overdue":
+{ Args: { "t": Omit<Database["public"]['Tables']["tasks"]['Row'], Database["public"]['Tables']["tasks"]['ComputedFields']> }; Returns: boolean
+                           },
+"mark_all_notifications_read":
+{ Args: Record<PropertyKey, never>; Returns: number
+                           },
+"mark_local_environment":
+{ Args: Record<PropertyKey, never>; Returns: string
+                           },
+"mark_task_seen":
+{ Args: { "p_task_id": string }; Returns: undefined
+                           },
+"reassign_task":
+{ Args: { "p_assignee_ids"?: (string)[],"p_task_id": string,"p_team_id"?: string }; Returns: undefined
+                           },
+"record_push_failure":
+{ Args: { "p_error": string,"p_id": string }; Returns: undefined
+                           },
+"register_push_subscription":
+{ Args: { "p_auth": string,"p_endpoint": string,"p_p256dh": string,"p_user_agent"?: string }; Returns: undefined
+                           },
+"return_task":
+{ Args: { "p_reason": string,"p_task_id": string }; Returns: undefined
+                           },
+"send_test_notification":
+{ Args: Record<PropertyKey, never>; Returns: string
+                           },
+"set_user_active":
+{ Args: { "p_active": boolean,"p_user_id": string }; Returns: undefined
+                           },
+"start_task":
+{ Args: { "p_task_id": string }; Returns: undefined
+                           },
+"submit_task":
+{ Args: { "p_note"?: string,"p_task_id": string }; Returns: undefined
+                           },
+"update_task":
+{ Args: { "p_description"?: string,"p_due_at"?: string,"p_task_id": string,"p_title": string }; Returns: undefined
+                           },
+"update_user_profile":
+{ Args: { "p_department_id": string,"p_employee_no": string,"p_full_name": string,"p_job_title"?: string,"p_notes"?: string,"p_phone"?: string,"p_role": Database["public"]['Enums']["app_role"],"p_user_id": string }; Returns: undefined
+                           }
+          }
+          Enums: {
+            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","push_status": "pending"|"sent"|"failed"|"skipped","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
+          }
+          CompositeTypes: {
+            [_ in never]: never
+          }
+        }
+}
+
+type DatabaseWithoutInternals = Omit<Database, '__InternalSupabase'>
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+  ? (DefaultSchema["Tables"] & DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+  ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+  ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never
+> = DefaultSchemaEnumNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+  ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+  : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+  ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+  : never
+
+export const Constants = {
+  "public": {
+          Enums: {
+            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"push_status": ["pending", "sent", "failed", "skipped"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
+          }
+        }
+} as const
