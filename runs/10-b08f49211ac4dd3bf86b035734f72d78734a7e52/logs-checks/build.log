@@ -1,0 +1,47 @@
+
+> green-o@0.1.0 build
+> next build
+
+▲ Next.js 16.4.6 (Turbopack)
+✓ Running next.config.ts took 25ms
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.4s
+  Running TypeScript ...
+  Finished TypeScript in 4.3s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/32) ...
+  Generating static pages using 3 workers (8/32) 
+  Generating static pages using 3 workers (16/32) 
+  Generating static pages using 3 workers (24/32) 
+Error: Route "/m/tasks/[id]": Next.js encountered URL data `usePathname()` in a Client Component outside of `<Suspense>`.
+
+This blocks prerendering because the value is only available at runtime.
+
+Ways to fix this:
+  - [stream] Wrap the component in `<Suspense fallback={...}>` so the hook value streams in after prerendering
+  - [block] Set `export const instant = false` to allow a blocking route
+
+Learn more: https://nextjs.org/docs/messages/blocking-prerender-client-hook
+    at <unknown> (src/components/mobile/bottom-nav.tsx:20:20)
+    at div (<anonymous>)
+    at body (<anonymous>)
+    at html (<anonymous>)
+  18 | /** Thumb-friendly navigation that clears the iPhone home indicator. */
+  19 | export function BottomNav() {
+> 20 |   const pathname = usePathname();
+     |                    ^
+  21 |
+  22 |   return (
+  23 |     <nav {
+  digest: 'CLIENT_HOOK_DYNAMIC'
+}
+To get a more detailed stack trace and pinpoint the issue, try one of the following:
+  - Start the app in development mode by running `next dev`, then open "/m/tasks/[id]" in your browser to investigate the error.
+  - Rerun the production build with `next build --debug-prerender` to generate better stack traces.
+Error occurred prerendering page "/m/tasks/[id]". Read more: https://nextjs.org/docs/messages/prerender-error
+Export encountered an error on /m/tasks/[id]/page: /m/tasks/[id], exiting the build.
+⨯ Next.js build worker exited with code: 1 and signal: null
