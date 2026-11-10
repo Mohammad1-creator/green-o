@@ -74,3 +74,15 @@ export function dateToZonedLocal(
 export function zonedToday(timeZone: string, now: Date = new Date()): string {
   return dateToZonedLocal(now, timeZone).slice(0, 10);
 }
+
+/** "2026-11-12" moved by a number of days (negative goes back). */
+export function addDays(date: string, days: number): string {
+  const [year, month, day] = date.split("-").map(Number) as [
+    number,
+    number,
+    number,
+  ];
+  return new Date(Date.UTC(year, month - 1, day + days))
+    .toISOString()
+    .slice(0, 10);
+}

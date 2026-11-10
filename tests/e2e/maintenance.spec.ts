@@ -21,7 +21,9 @@ test.describe("maintenance", () => {
     const reporter = await (await browser.newContext()).newPage();
     await signInAs(reporter, reporterNo);
     await reporter.goto("/m/faults/new");
-    await reporter.getByLabel("الآلة").selectOption({ index: 1 });
+    await reporter
+      .getByLabel("الآلة", { exact: true })
+      .selectOption({ index: 1 });
     await reporter.getByLabel("ما المشكلة؟").fill(description);
     await reporter.getByLabel("الآلة متوقفة عن العمل بسبب هذا العطل").check();
     await reporter.getByRole("button", { name: "إرسال البلاغ" }).click();
@@ -43,7 +45,9 @@ test.describe("maintenance", () => {
     const manager = await (await browser.newContext()).newPage();
     await signInAs(manager, DEMO.maintenanceManager);
     await manager.goto(`/admin/maintenance/faults/${faultId}`);
-    await manager.getByLabel("الموظف").selectOption({ label: technician.name });
+    await manager
+      .getByLabel("الموظف", { exact: true })
+      .selectOption({ label: technician.name });
     await manager.getByRole("button", { name: "إسناد الإصلاح" }).click();
     await expect(manager).toHaveURL(/\/admin\/tasks\/[0-9a-f-]+\?created=1/);
     const taskId = new URL(manager.url()).pathname.split("/").pop() ?? "";

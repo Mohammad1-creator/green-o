@@ -44,3 +44,33 @@ export function isFaultView(value: unknown): value is FaultView {
 export function faultCode(number: number): string {
   return `F-${String(number).padStart(6, "0")}`;
 }
+
+export type IntervalUnit = "day" | "week" | "month";
+
+export const INTERVAL_UNITS: readonly IntervalUnit[] = ["day", "week", "month"];
+
+/** For the "every N ..." picker. */
+export const INTERVAL_UNIT_LABELS: Record<IntervalUnit, string> = {
+  day: "يوم",
+  week: "أسبوع",
+  month: "شهر",
+};
+
+// Arabic counted nouns: 1 and 2 have their own forms, 3–10 take the
+// plural, 11 and above take the singular accusative.
+const COUNTED: Record<
+  IntervalUnit,
+  { one: string; two: string; few: string; many: string }
+> = {
+  day: { one: "كل يوم", two: "كل يومين", few: "أيام", many: "يوماً" },
+  week: { one: "كل أسبوع", two: "كل أسبوعين", few: "أسابيع", many: "أسبوعاً" },
+  month: { one: "كل شهر", two: "كل شهرين", few: "أشهر", many: "شهراً" },
+};
+
+/** "كل أسبوع", "كل شهرين", "كل 3 أشهر", "كل 14 يوماً". */
+export function intervalLabel(unit: IntervalUnit, count: number): string {
+  const forms = COUNTED[unit];
+  if (count === 1) return forms.one;
+  if (count === 2) return forms.two;
+  return `كل ${count} ${count <= 10 ? forms.few : forms.many}`;
+}

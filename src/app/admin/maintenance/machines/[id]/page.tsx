@@ -15,6 +15,8 @@ import {
 } from "@/features/maintenance/components/badges";
 import { MachineForm } from "@/features/maintenance/components/maintenance-forms";
 import { faultCode } from "@/features/maintenance/labels";
+import { PmPlanTable } from "@/features/maintenance/components/pm-plan-list";
+import { listPmPlans } from "@/features/maintenance/pm-queries";
 import { getMachine, listMachineFaults } from "@/features/maintenance/queries";
 import { listDepartments } from "@/features/users/queries";
 import { requireRole } from "@/lib/auth/dal";
@@ -47,9 +49,10 @@ async function MachineDetails({
   const [{ id }, query] = await Promise.all([params, searchParams]);
   if (!z.uuid().safeParse(id).success) notFound();
 
-  const [machine, faults, departments, settings] = await Promise.all([
+  const [machine, faults, plans, departments, settings] = await Promise.all([
     getMachine(id),
     listMachineFaults(id),
+    listPmPlans({ machineId: id }),
     listDepartments({ activeOnly: true }),
     getFactorySettings(),
   ]);
@@ -81,48 +84,75 @@ async function MachineDetails({
       ) : null}
 
       <div className="grid gap-6 lg:grid-cols-[3fr_2fr]">
-        <Card>
-          <CardHeader>
-            <CardTitle>سجل الأعطال والإصلاحات</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {faults.length === 0 ? (
-              <p className="text-sm text-muted-foreground">
-                لا توجد أعطال مسجلة.
-              </p>
-            ) : (
-              <ul className="divide-y" aria-label="سجل الأعطال">
-                {faults.map((fault) => (
-                  <li key={fault.id} className="space-y-1 py-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Link
-                        href={`/admin/maintenance/faults/${fault.id}`}
-                        className="font-medium hover:underline"
-                        dir="ltr"
-                      >
-                        {faultCode(fault.number)}
-                      </Link>
-                      <FaultStatusBadge
-                        status={fault.status}
-                        stopped={fault.machine_stopped}
-                      />
-                    </div>
-                    <p className="text-sm">{fault.description}</p>
-                    {fault.resolution_notes ? (
-                      <p className="text-sm text-muted-foreground">
-                        الإصلاح: {fault.resolution_notes}
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>سجل الأعطال والإصلاحات</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {faults.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  لا توجد أعطال مسجلة.
+                </p>
+              ) : (
+                <ul className="divide-y" aria-label="سجل الأعطال">
+                  {faults.map((fault) => (
+                    <li key={fault.id} className="space-y-1 py-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Link
+                          href={`/admin/maintenance/faults/${fault.id}`}
+                          className="font-medium hover:underline"
+                          dir="ltr"
+                        >
+                          {faultCode(fault.number)}
+                        </Link>
+                        <FaultStatusBadge
+                          status={fault.status}
+                          stopped={fault.machine_stopped}
+                        />
+                      </div>
+                      <p className="text-sm">{fault.description}</p>
+                      {fault.resolution_notes ? (
+                        <p className="text-sm text-muted-foreground">
+                          الإصلاح: {fault.resolution_notes}
+                        </p>
+                      ) : null}
+                      <p className="text-xs text-muted-foreground">
+                        {fault.reporter?.full_name} ·{" "}
+                        {formatDateTime(fault.created_at, settings.timeZone)}
                       </p>
-                    ) : null}
-                    <p className="text-xs text-muted-foreground">
-                      {fault.reporter?.full_name} ·{" "}
-                      {formatDateTime(fault.created_at, settings.timeZone)}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </CardContent>
-        </Card>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>الصيانة الوقائية</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {plans.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  لا توجد خطط صيانة وقائية لهذه الآلة.
+                </p>
+              ) : (
+                <PmPlanTable
+                  plans={plans}
+                  label="خطط الصيانة الوقائية"
+                  showMachine={false}
+                />
+              )}
+              <Link
+                href={`/admin/maintenance/preventive?machine=${machine.id}#new-plan`}
+                className={buttonVariants({ variant: "outline", size: "sm" })}
+              >
+                إضافة خطة لهذه الآلة
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
 
         <Card>
           <CardHeader>

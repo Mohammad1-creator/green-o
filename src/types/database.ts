@@ -169,6 +169,44 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"pm_plans": {
+                  Row: {
+                    "assignee_team_id": string | null,"assignee_user_id": string | null,"created_at": string,"created_by": string | null,"department_id": string,"id": string,"instructions": string | null,"interval_count": number,"interval_unit": Database["public"]['Enums']["interval_unit"],"is_active": boolean,"last_generated_at": string | null,"lead_days": number,"machine_id": string,"next_due_date": string,"start_date": string,"title": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "assignee_team_id"?: string | null,"assignee_user_id"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id": string,"id"?: string,"instructions"?: string | null,"interval_count": number,"interval_unit": Database["public"]['Enums']["interval_unit"],"is_active"?: boolean,"last_generated_at"?: string | null,"lead_days"?: number,"machine_id": string,"next_due_date": string,"start_date": string,"title": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "assignee_team_id"?: string | null,"assignee_user_id"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id"?: string,"id"?: string,"instructions"?: string | null,"interval_count"?: number,"interval_unit"?: Database["public"]['Enums']["interval_unit"],"is_active"?: boolean,"last_generated_at"?: string | null,"lead_days"?: number,"machine_id"?: string,"next_due_date"?: string,"start_date"?: string,"title"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "pm_plans_assignee_team_id_fkey"
+      columns: ["assignee_team_id"]
+isOneToOne: false
+      referencedRelation: "teams"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "pm_plans_assignee_user_id_fkey"
+      columns: ["assignee_user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "pm_plans_department_id_fkey"
+      columns: ["department_id"]
+isOneToOne: false
+      referencedRelation: "departments"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "pm_plans_machine_id_fkey"
+      columns: ["machine_id"]
+isOneToOne: false
+      referencedRelation: "machines"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"profiles": {
                   Row: {
                     "created_at": string,"created_by": string | null,"department_id": string | null,"full_name": string,"id": string,"is_active": boolean,"role": Database["public"]['Enums']["app_role"],"updated_at": string
@@ -315,14 +353,14 @@ isOneToOne: false
                   ]
                 },"tasks": {
                   Row: {
-                    "approved_by": string | null,"assigned_team_id": string | null,"cancel_reason": string | null,"cancelled_at": string | null,"completed_at": string | null,"created_at": string,"created_by": string | null,"department_id": string,"description": string | null,"due_at": string | null,"fault_report_id": string | null,"id": string,"kind": Database["public"]['Enums']["task_kind"],"number": number,"status": Database["public"]['Enums']["task_status"],"submitted_at": string | null,"title": string,"updated_at": string,"is_overdue": boolean | null
+                    "approved_by": string | null,"assigned_team_id": string | null,"cancel_reason": string | null,"cancelled_at": string | null,"completed_at": string | null,"created_at": string,"created_by": string | null,"department_id": string,"description": string | null,"due_at": string | null,"fault_report_id": string | null,"id": string,"kind": Database["public"]['Enums']["task_kind"],"number": number,"pm_due_date": string | null,"pm_plan_id": string | null,"status": Database["public"]['Enums']["task_status"],"submitted_at": string | null,"title": string,"updated_at": string,"is_overdue": boolean | null
                   }
                   ComputedFields: "is_overdue"
                   Insert: {
-                    "approved_by"?: string | null,"assigned_team_id"?: string | null,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id": string,"description"?: string | null,"due_at"?: string | null,"fault_report_id"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["task_kind"],"number"?: number,"status"?: Database["public"]['Enums']["task_status"],"submitted_at"?: string | null,"title": string,"updated_at"?: string
+                    "approved_by"?: string | null,"assigned_team_id"?: string | null,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id": string,"description"?: string | null,"due_at"?: string | null,"fault_report_id"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["task_kind"],"number"?: number,"pm_due_date"?: string | null,"pm_plan_id"?: string | null,"status"?: Database["public"]['Enums']["task_status"],"submitted_at"?: string | null,"title": string,"updated_at"?: string
                   }
                   Update: {
-                    "approved_by"?: string | null,"assigned_team_id"?: string | null,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id"?: string,"description"?: string | null,"due_at"?: string | null,"fault_report_id"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["task_kind"],"number"?: number,"status"?: Database["public"]['Enums']["task_status"],"submitted_at"?: string | null,"title"?: string,"updated_at"?: string
+                    "approved_by"?: string | null,"assigned_team_id"?: string | null,"cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id"?: string,"description"?: string | null,"due_at"?: string | null,"fault_report_id"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["task_kind"],"number"?: number,"pm_due_date"?: string | null,"pm_plan_id"?: string | null,"status"?: Database["public"]['Enums']["task_status"],"submitted_at"?: string | null,"title"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     {
@@ -354,6 +392,12 @@ isOneToOne: false
       columns: ["fault_report_id"]
 isOneToOne: false
       referencedRelation: "fault_reports"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "tasks_pm_plan_id_fkey"
+      columns: ["pm_plan_id"]
+isOneToOne: false
+      referencedRelation: "pm_plans"
       referencedColumns: ["id"]
     }
                   ]
@@ -444,6 +488,9 @@ isOneToOne: false
 "configure_push_dispatch":
 { Args: { "p_secret": string,"p_url": string,"p_vercel_bypass"?: string }; Returns: undefined
                            },
+"create_pm_plan":
+{ Args: { "p_assignee_user_id"?: string,"p_instructions": string,"p_interval_count": number,"p_interval_unit": Database["public"]['Enums']["interval_unit"],"p_lead_days"?: number,"p_machine_id": string,"p_start_date": string,"p_team_id"?: string,"p_title": string }; Returns: string
+                           },
 "create_task":
 { Args: { "p_assignee_ids"?: (string)[],"p_department_id"?: string,"p_description"?: string,"p_due_at"?: string,"p_team_id"?: string,"p_title": string }; Returns: string
                            },
@@ -471,6 +518,9 @@ isOneToOne: false
 "mark_task_seen":
 { Args: { "p_task_id": string }; Returns: undefined
                            },
+"pm_next_occurrence":
+{ Args: { "p_count": number,"p_on_or_after": string,"p_start": string,"p_unit": Database["public"]['Enums']["interval_unit"] }; Returns: string
+                           },
 "reassign_task":
 { Args: { "p_assignee_ids"?: (string)[],"p_task_id": string,"p_team_id"?: string }; Returns: undefined
                            },
@@ -495,8 +545,14 @@ isOneToOne: false
 "return_task":
 { Args: { "p_reason": string,"p_task_id": string }; Returns: undefined
                            },
+"run_pm_generation_now":
+{ Args: Record<PropertyKey, never>; Returns: number
+                           },
 "send_test_notification":
 { Args: Record<PropertyKey, never>; Returns: string
+                           },
+"set_pm_plan_active":
+{ Args: { "p_active": boolean,"p_plan_id": string }; Returns: undefined
                            },
 "set_user_active":
 { Args: { "p_active": boolean,"p_user_id": string }; Returns: undefined
@@ -507,6 +563,9 @@ isOneToOne: false
 "submit_task":
 { Args: { "p_note"?: string,"p_task_id": string }; Returns: undefined
                            },
+"update_pm_plan":
+{ Args: { "p_assignee_user_id"?: string,"p_instructions": string,"p_interval_count": number,"p_interval_unit": Database["public"]['Enums']["interval_unit"],"p_lead_days"?: number,"p_plan_id": string,"p_start_date": string,"p_team_id"?: string,"p_title": string }; Returns: undefined
+                           },
 "update_task":
 { Args: { "p_description"?: string,"p_due_at"?: string,"p_task_id": string,"p_title": string }; Returns: undefined
                            },
@@ -515,7 +574,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","fault_status": "open"|"assigned"|"resolved"|"rejected","machine_status": "operational"|"down"|"under_maintenance"|"retired","push_status": "pending"|"sent"|"failed"|"skipped","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
+            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","push_status": "pending"|"sent"|"failed"|"skipped","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -631,7 +690,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"fault_status": ["open", "assigned", "resolved", "rejected"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"push_status": ["pending", "sent", "failed", "skipped"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
+            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"push_status": ["pending", "sent", "failed", "skipped"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
           }
         }
 } as const

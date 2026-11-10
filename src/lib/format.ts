@@ -70,9 +70,32 @@ export function formatTime(
   }).format(toDate(value));
 }
 
+const CALENDAR_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+/**
+ * A calendar date without a time ("2026-11-12", as Postgres sends a date
+ * column) → "12 نوفمبر 2026". It is not an instant, so no time zone applies.
+ */
+export function formatCalendarDate(value: string): string {
+  if (!CALENDAR_DATE.test(value)) {
+    throw new RangeError(`Invalid calendar date: ${value}`);
+  }
+  return formatDate(`${value}T12:00:00Z`, "UTC");
+}
+
 const numberFormatter = new Intl.NumberFormat(APP_LOCALE, {
   maximumFractionDigits: 3,
 });
+
+const percentFormatter = new Intl.NumberFormat(APP_LOCALE, {
+  style: "percent",
+  maximumFractionDigits: 0,
+});
+
+/** 0.8 → "80%". */
+export function formatPercent(ratio: number): string {
+  return percentFormatter.format(ratio);
+}
 
 /** "1,234,567.891" — quantities may be decimal, so up to 3 fraction digits. */
 export function formatNumber(value: number): string {

@@ -21,12 +21,16 @@ export function AssignmentFields({
   teams,
   errors,
   defaultMode = "person",
+  defaultAssigneeId,
+  defaultTeamId,
 }: {
   departmentId: string;
   people: AssignOption[];
   teams: AssignOption[];
   errors?: { assigneeId?: string; teamId?: string };
   defaultMode?: "person" | "team";
+  defaultAssigneeId?: string | null;
+  defaultTeamId?: string | null;
 }) {
   const [mode, setMode] = useState<"person" | "team">(defaultMode);
   const departmentPeople = people.filter(
@@ -71,7 +75,7 @@ export function AssignmentFields({
             id="assigneeId"
             name="assigneeId"
             className="w-full"
-            defaultValue=""
+            defaultValue={defaultAssigneeId ?? ""}
           >
             <NativeSelectOption value="">اختر الموظف</NativeSelectOption>
             {departmentPeople.map((person) => (
@@ -89,7 +93,7 @@ export function AssignmentFields({
             id="teamId"
             name="teamId"
             className="w-full"
-            defaultValue=""
+            defaultValue={defaultTeamId ?? ""}
           >
             <NativeSelectOption value="">اختر الفريق</NativeSelectOption>
             {departmentTeams.map((team) => (

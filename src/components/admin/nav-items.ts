@@ -53,6 +53,12 @@ export const ADMIN_NAV: readonly NavItem[] = [
     roles: MAINTENANCE,
   },
   {
+    href: "/admin/maintenance/preventive",
+    label: "الصيانة الوقائية",
+    icon: "preventive",
+    roles: MAINTENANCE,
+  },
+  {
     href: "/admin/users",
     label: "المستخدمون",
     icon: "users",
