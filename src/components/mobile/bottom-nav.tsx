@@ -15,10 +15,8 @@ function isActive(pathname: string, href: string) {
   return href === "/m" ? pathname === "/m" : pathname.startsWith(href);
 }
 
-/** Thumb-friendly navigation that clears the iPhone home indicator. */
-export function BottomNav() {
-  const pathname = usePathname();
-
+/** The bar itself; activeHref is null while the current URL is unknown. */
+export function BottomNavBar({ pathname }: { pathname: string | null }) {
   return (
     <nav
       aria-label="التنقل"
@@ -26,7 +24,7 @@ export function BottomNav() {
     >
       <ul className="mx-auto flex max-w-lg">
         {ITEMS.map(({ href, label, icon: Icon }) => {
-          const active = isActive(pathname, href);
+          const active = pathname !== null && isActive(pathname, href);
           return (
             <li key={href} className="flex-1">
               <Link
@@ -46,4 +44,12 @@ export function BottomNav() {
       </ul>
     </nav>
   );
+}
+
+/**
+ * Thumb-friendly navigation that clears the iPhone home indicator. Reads the
+ * URL, so the layout renders it inside <Suspense> with BottomNavBar as fallback.
+ */
+export function BottomNav() {
+  return <BottomNavBar pathname={usePathname()} />;
 }
