@@ -85,7 +85,7 @@ reset role; select tests.clear_claims();
 -- 7-11: assigning workers ------------------------------------------------------------
 select tests.authenticate_as('00000000-0000-4000-8000-000000000802');
 select lives_ok(
-  $ select public.assign_stage_workers((select id from tests.o_ids where name = 'os1'), array['00000000-0000-4000-8000-000000000804']::uuid[]) $,
+  $$ select public.assign_stage_workers((select id from tests.o_ids where name = 'os1'), array['00000000-0000-4000-8000-000000000804']::uuid[]) $$,
   'the production manager assigns workers to a stage'
 );
 select public.assign_stage_workers((select id from tests.o_ids where name = 'os2'), array['00000000-0000-4000-8000-000000000805']::uuid[]);
@@ -262,7 +262,7 @@ reset role; select tests.clear_claims();
 select tests.authenticate_as('00000000-0000-4000-8000-000000000802');
 select public.close_order_stage((select id from tests.o_ids where name = 'os2'));
 select lives_ok(
-  $ select public.close_order_stage((select id from tests.o_ids where name = 'os3')) $,
+  $$ select public.close_order_stage((select id from tests.o_ids where name = 'os3')) $$,
   'closing the last stage'
 );
 reset role; select tests.clear_claims();
