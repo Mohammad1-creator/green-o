@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/native-select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { ActionForm } from "@/components/action-form";
 import { type ActionState, firstFieldError } from "@/lib/action-state";
 
 import {
@@ -111,7 +112,7 @@ export function CreateTaskForm({
   const [departmentId, setDepartmentId] = useState(fixedDepartmentId ?? "");
 
   return (
-    <form action={formAction} noValidate>
+    <ActionForm action={formAction} noValidate>
       <FieldGroup>
         <TaskTextFields state={state} />
         {fixedDepartmentId ? null : (
@@ -155,7 +156,7 @@ export function CreateTaskForm({
           <SubmitButton pending={pending}>إنشاء المهمة</SubmitButton>
         </div>
       </FieldGroup>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -171,7 +172,7 @@ export function EditTaskForm({
     null,
   );
   return (
-    <form action={formAction} noValidate>
+    <ActionForm action={formAction} noValidate>
       <input type="hidden" name="taskId" value={taskId} />
       <FieldGroup>
         <TaskTextFields state={state} defaults={defaults} />
@@ -180,7 +181,7 @@ export function EditTaskForm({
           <SubmitButton pending={pending}>حفظ التعديلات</SubmitButton>
         </div>
       </FieldGroup>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -202,7 +203,7 @@ export function ReassignTaskForm({
     null,
   );
   return (
-    <form action={formAction} className="space-y-3" noValidate>
+    <ActionForm action={formAction} className="space-y-3" noValidate>
       <input type="hidden" name="taskId" value={taskId} />
       <AssignmentFields
         departmentId={departmentId}
@@ -216,6 +217,6 @@ export function ReassignTaskForm({
       />
       <FormMessage state={state} />
       <SubmitButton pending={pending}>تغيير الإسناد</SubmitButton>
-    </form>
+    </ActionForm>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Trash2Icon } from "lucide-react";
-import { useActionState, useRef } from "react";
+import { useActionState } from "react";
 
 import { FormMessage } from "@/components/form-message";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { ActionForm } from "@/components/action-form";
 import { type ActionState, firstFieldError } from "@/lib/action-state";
 
 import {
@@ -23,15 +24,11 @@ export function CommentForm({ taskId }: { taskId: string }) {
     addCommentAction,
     null,
   );
-  const form = useRef<HTMLFormElement>(null);
-
   return (
-    <form
-      ref={form}
-      action={async (formData) => {
-        await formAction(formData);
-        form.current?.reset();
-      }}
+    <ActionForm
+      action={formAction}
+      state={state}
+      resetOnSuccess
       className="space-y-2"
       noValidate
     >
@@ -52,7 +49,7 @@ export function CommentForm({ taskId }: { taskId: string }) {
         إضافة التعليق
       </Button>
       {state && !state.ok ? <FormMessage state={state} /> : null}
-    </form>
+    </ActionForm>
   );
 }
 
@@ -68,12 +65,7 @@ export function DeletePhotoForm({
     null,
   );
   return (
-    <form
-      action={formAction}
-      onSubmit={(event) => {
-        if (!window.confirm("حذف هذه الصورة نهائياً؟")) event.preventDefault();
-      }}
-    >
+    <ActionForm action={formAction} confirm="حذف هذه الصورة نهائياً؟">
       <input type="hidden" name="taskId" value={taskId} />
       <input type="hidden" name="attachmentId" value={attachmentId} />
       <Button
@@ -86,7 +78,7 @@ export function DeletePhotoForm({
         <Trash2Icon />
       </Button>
       {state && !state.ok ? <FormMessage state={state} /> : null}
-    </form>
+    </ActionForm>
   );
 }
 
@@ -96,7 +88,13 @@ export function AddReminderForm({ taskId }: { taskId: string }) {
     null,
   );
   return (
-    <form action={formAction} className="space-y-2" noValidate>
+    <ActionForm
+      action={formAction}
+      state={state}
+      resetOnSuccess
+      className="space-y-2"
+      noValidate
+    >
       <input type="hidden" name="taskId" value={taskId} />
       <Field data-invalid={Boolean(firstFieldError(state, "remindAt"))}>
         <FieldLabel htmlFor={`reminder-${taskId}`}>
@@ -118,7 +116,7 @@ export function AddReminderForm({ taskId }: { taskId: string }) {
         <FieldError>{firstFieldError(state, "remindAt")}</FieldError>
       </Field>
       <FormMessage state={state} />
-    </form>
+    </ActionForm>
   );
 }
 
@@ -134,12 +132,12 @@ export function DeleteReminderForm({
     null,
   );
   return (
-    <form action={formAction}>
+    <ActionForm action={formAction}>
       <input type="hidden" name="taskId" value={taskId} />
       <input type="hidden" name="reminderId" value={reminderId} />
       <Button type="submit" variant="ghost" size="sm" disabled={pending}>
         حذف
       </Button>
-    </form>
+    </ActionForm>
   );
 }

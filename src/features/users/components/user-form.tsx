@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/native-select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { ActionForm } from "@/components/action-form";
 import { type ActionState, firstFieldError } from "@/lib/action-state";
 import { APP_ROLES, type AppRole, ROLE_LABELS } from "@/lib/auth/roles";
 import { suggestPassword } from "@/lib/auth/suggest-password";
@@ -65,7 +66,7 @@ export function UserForm({
   const needsDepartment = role !== "general_manager";
 
   return (
-    <form action={formAction} noValidate>
+    <ActionForm action={formAction} noValidate>
       {defaults?.userId ? (
         <input type="hidden" name="userId" value={defaults.userId} />
       ) : null}
@@ -236,6 +237,6 @@ export function UserForm({
           </Button>
         </div>
       </FieldGroup>
-    </form>
+    </ActionForm>
   );
 }

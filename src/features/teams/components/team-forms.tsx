@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { ActionForm } from "@/components/action-form";
 import {
   NativeSelect,
   NativeSelectOption,
@@ -33,7 +34,13 @@ export function CreateTeamForm({
   );
 
   return (
-    <form action={formAction} className="space-y-3" noValidate>
+    <ActionForm
+      action={formAction}
+      state={state}
+      resetOnSuccess
+      className="space-y-3"
+      noValidate
+    >
       <div className="flex flex-wrap items-end gap-3">
         <Field
           className="min-w-56 flex-1"
@@ -72,7 +79,7 @@ export function CreateTeamForm({
           firstFieldError(state, "departmentId")}
       </FieldError>
       <FormMessage state={state} />
-    </form>
+    </ActionForm>
   );
 }
 
@@ -116,7 +123,10 @@ export function TeamCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-5">
-        <form action={updateAction} className="flex flex-wrap items-end gap-2">
+        <ActionForm
+          action={updateAction}
+          className="flex flex-wrap items-end gap-2"
+        >
           <input type="hidden" name="teamId" value={team.id} />
           <Field className="min-w-56 flex-1">
             <FieldLabel htmlFor={`team-name-${team.id}`}>الاسم</FieldLabel>
@@ -130,10 +140,10 @@ export function TeamCard({
           <Button type="submit" variant="outline" disabled={updating}>
             حفظ الاسم
           </Button>
-        </form>
+        </ActionForm>
         <FormMessage state={updateState} />
 
-        <form action={membersAction} className="space-y-3">
+        <ActionForm action={membersAction} className="space-y-3">
           <input type="hidden" name="teamId" value={team.id} />
           <fieldset>
             <legend className="mb-2 text-sm font-medium">الأعضاء</legend>
@@ -164,16 +174,16 @@ export function TeamCard({
             حفظ الأعضاء
           </Button>
           <FormMessage state={membersState} />
-        </form>
+        </ActionForm>
 
-        <form action={updateAction}>
+        <ActionForm action={updateAction}>
           <input type="hidden" name="teamId" value={team.id} />
           <input type="hidden" name="name" value={team.name} />
           <input type="hidden" name="active" value={String(!team.is_active)} />
           <Button type="submit" variant="ghost" size="sm" disabled={updating}>
             {team.is_active ? "إيقاف الفريق" : "تفعيل الفريق"}
           </Button>
-        </form>
+        </ActionForm>
       </CardContent>
     </Card>
   );

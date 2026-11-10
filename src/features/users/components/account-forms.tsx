@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { ActionForm } from "@/components/action-form";
 import { type ActionState, firstFieldError } from "@/lib/action-state";
 import { suggestPassword } from "@/lib/auth/suggest-password";
 
@@ -25,17 +26,14 @@ export function UserStatusForm({
   );
 
   return (
-    <form
+    <ActionForm
       action={formAction}
       className="space-y-3"
-      onSubmit={(event) => {
-        if (
-          isActive &&
-          !window.confirm("إيقاف الحساب يمنع صاحبه من الدخول فوراً. متابعة؟")
-        ) {
-          event.preventDefault();
-        }
-      }}
+      confirm={
+        isActive
+          ? "إيقاف الحساب يمنع صاحبه من الدخول فوراً. متابعة؟"
+          : undefined
+      }
     >
       <input type="hidden" name="userId" value={userId} />
       <input type="hidden" name="active" value={isActive ? "false" : "true"} />
@@ -53,7 +51,7 @@ export function UserStatusForm({
         {pending ? <Spinner /> : null}
         {isActive ? "إيقاف الحساب" : "تفعيل الحساب"}
       </Button>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -71,7 +69,7 @@ export function PasswordResetForm({
   const [password, setPassword] = useState("");
 
   return (
-    <form action={formAction} className="space-y-3" noValidate>
+    <ActionForm action={formAction} className="space-y-3" noValidate>
       <input type="hidden" name="userId" value={userId} />
       <input type="hidden" name="employeeNo" value={employeeNo} />
       <Field data-invalid={Boolean(firstFieldError(state, "password"))}>
@@ -101,6 +99,6 @@ export function PasswordResetForm({
         {pending ? <Spinner /> : null}
         تغيير كلمة المرور
       </Button>
-    </form>
+    </ActionForm>
   );
 }

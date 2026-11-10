@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { ActionForm } from "@/components/action-form";
 import { type ActionState, firstFieldError } from "@/lib/action-state";
 
 import { updateSettingsAction } from "../actions";
@@ -44,7 +45,7 @@ export function SettingsForm({
   );
 
   return (
-    <form action={formAction} noValidate>
+    <ActionForm action={formAction} noValidate>
       <FieldGroup>
         <Field data-invalid={Boolean(firstFieldError(state, "factoryName"))}>
           <FieldLabel htmlFor="factoryName">اسم المصنع</FieldLabel>
@@ -88,6 +89,6 @@ export function SettingsForm({
           </Button>
         </div>
       </FieldGroup>
-    </form>
+    </ActionForm>
   );
 }

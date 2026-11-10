@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { ActionForm } from "@/components/action-form";
 import { type ActionState, firstFieldError } from "@/lib/action-state";
 
 import {
@@ -22,7 +23,13 @@ export function CreateDepartmentForm() {
   );
 
   return (
-    <form action={formAction} className="space-y-3" noValidate>
+    <ActionForm
+      action={formAction}
+      state={state}
+      resetOnSuccess
+      className="space-y-3"
+      noValidate
+    >
       <Field data-invalid={Boolean(firstFieldError(state, "name"))}>
         <FieldLabel htmlFor="new-department">اسم القسم الجديد</FieldLabel>
         <div className="flex gap-2">
@@ -35,7 +42,7 @@ export function CreateDepartmentForm() {
         <FieldError>{firstFieldError(state, "name")}</FieldError>
       </Field>
       <FormMessage state={state} />
-    </form>
+    </ActionForm>
   );
 }
 
@@ -62,7 +69,7 @@ export function DepartmentRow({
   return (
     <li className="space-y-2 rounded-lg border p-4">
       <div className="flex flex-wrap items-end gap-3">
-        <form
+        <ActionForm
           action={renameAction}
           className="flex min-w-64 flex-1 items-end gap-2"
         >
@@ -76,8 +83,8 @@ export function DepartmentRow({
           <Button type="submit" variant="outline" disabled={renaming}>
             حفظ الاسم
           </Button>
-        </form>
-        <form action={statusAction}>
+        </ActionForm>
+        <ActionForm action={statusAction}>
           <input type="hidden" name="departmentId" value={id} />
           <input
             type="hidden"
@@ -91,7 +98,7 @@ export function DepartmentRow({
           >
             {isActive ? "إيقاف القسم" : "تفعيل القسم"}
           </Button>
-        </form>
+        </ActionForm>
       </div>
       <p className="text-xs text-muted-foreground">
         {memberCount} مستخدم{isActive ? "" : " · القسم موقوف"}

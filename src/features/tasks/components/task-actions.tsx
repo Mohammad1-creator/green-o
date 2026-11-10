@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { ActionForm } from "@/components/action-form";
 import { type ActionState, firstFieldError } from "@/lib/action-state";
 
 import {
@@ -40,7 +41,7 @@ function OneClick({
     null,
   );
   return (
-    <form action={formAction} className="space-y-2">
+    <ActionForm action={formAction} className="space-y-2">
       <input type="hidden" name="taskId" value={taskId} />
       <Button
         type="submit"
@@ -53,7 +54,7 @@ function OneClick({
         {label}
       </Button>
       <FormMessage state={state} />
-    </form>
+    </ActionForm>
   );
 }
 
@@ -82,7 +83,7 @@ function WithText({
   );
   const fieldId = `${name}-${button}`;
   return (
-    <form action={formAction} className="space-y-2" noValidate>
+    <ActionForm action={formAction} className="space-y-2" noValidate>
       <input type="hidden" name="taskId" value={taskId} />
       <Field data-invalid={Boolean(firstFieldError(state, name))}>
         <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>
@@ -104,7 +105,7 @@ function WithText({
         {button}
       </Button>
       <FormMessage state={state} />
-    </form>
+    </ActionForm>
   );
 }
 

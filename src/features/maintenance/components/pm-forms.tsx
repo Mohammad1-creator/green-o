@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/native-select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { ActionForm } from "@/components/action-form";
 import {
   type AssignOption,
   AssignmentFields,
@@ -80,7 +81,7 @@ export function PmPlanForm({
   const error = (name: string) => firstFieldError(state, name);
 
   return (
-    <form action={formAction} noValidate>
+    <ActionForm action={formAction} noValidate>
       {defaults ? (
         <input type="hidden" name="planId" value={defaults.id} />
       ) : null}
@@ -254,7 +255,7 @@ export function PmPlanForm({
           </Button>
         </div>
       </FieldGroup>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -270,7 +271,7 @@ export function PmPlanActiveForm({
     null,
   );
   return (
-    <form action={formAction} className="space-y-3">
+    <ActionForm action={formAction} className="space-y-3">
       <input type="hidden" name="planId" value={planId} />
       <input type="hidden" name="active" value={isActive ? "false" : "true"} />
       <p className="text-sm text-muted-foreground">
@@ -287,7 +288,7 @@ export function PmPlanActiveForm({
         {isActive ? "إيقاف الخطة" : "تفعيل الخطة"}
       </Button>
       <FormMessage state={state} />
-    </form>
+    </ActionForm>
   );
 }
 
@@ -297,7 +298,7 @@ export function RunPmNowForm() {
     null,
   );
   return (
-    <form action={formAction} className="space-y-3">
+    <ActionForm action={formAction} className="space-y-3">
       <p className="text-sm text-muted-foreground">
         الجدولة تعمل كل ساعة. هذا الزر ينشئ المهام المستحقة فوراً لتجربة الخطط،
         وهو غير متاح في بيئة الإنتاج.
@@ -307,6 +308,6 @@ export function RunPmNowForm() {
         تشغيل الآن
       </Button>
       <FormMessage state={state} />
-    </form>
+    </ActionForm>
   );
 }

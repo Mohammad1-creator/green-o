@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/native-select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { ActionForm } from "@/components/action-form";
 import {
   type AssignOption,
   AssignmentFields,
@@ -96,7 +97,7 @@ export function MachineForm({
     null,
   );
   return (
-    <form action={formAction} noValidate>
+    <ActionForm action={formAction} noValidate>
       {defaults?.id ? (
         <input type="hidden" name="machineId" value={defaults.id} />
       ) : null}
@@ -200,7 +201,7 @@ export function MachineForm({
           </Button>
         </div>
       </FieldGroup>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -216,7 +217,7 @@ export function FaultReportForm({
     null,
   );
   return (
-    <form action={formAction} noValidate>
+    <ActionForm action={formAction} noValidate>
       <input type="hidden" name="origin" value={origin} />
       <FieldGroup>
         <Field data-invalid={Boolean(firstFieldError(state, "machineId"))}>
@@ -262,7 +263,7 @@ export function FaultReportForm({
           إرسال البلاغ
         </Button>
       </FieldGroup>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -284,7 +285,7 @@ export function AssignRepairForm({
     null,
   );
   return (
-    <form action={formAction} noValidate>
+    <ActionForm action={formAction} noValidate>
       <input type="hidden" name="faultId" value={faultId} />
       <FieldGroup>
         <Field>
@@ -325,7 +326,7 @@ export function AssignRepairForm({
           </Button>
         </div>
       </FieldGroup>
-    </form>
+    </ActionForm>
   );
 }
 
@@ -335,7 +336,7 @@ export function RejectFaultForm({ faultId }: { faultId: string }) {
     null,
   );
   return (
-    <form action={formAction} className="space-y-2" noValidate>
+    <ActionForm action={formAction} className="space-y-2" noValidate>
       <input type="hidden" name="faultId" value={faultId} />
       <Field data-invalid={Boolean(firstFieldError(state, "reason"))}>
         <FieldLabel htmlFor="reject-reason">سبب الرفض</FieldLabel>
@@ -346,6 +347,6 @@ export function RejectFaultForm({ faultId }: { faultId: string }) {
         رفض البلاغ
       </Button>
       <FormMessage state={state} />
-    </form>
+    </ActionForm>
   );
 }
