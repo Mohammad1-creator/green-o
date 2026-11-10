@@ -1,0 +1,41 @@
+
+> green-o@0.1.0 test:e2e
+> playwright test
+
+
+Running 40 tests using 2 workers
+······························×··±
+::error file=tests/e2e/notifications.spec.ts,title=[mobile] › tests/e2e/notifications.spec.ts%3A10%3A3 › notifications › a test notification appears in the list and in the bell,line=34,col=25::  1) [mobile] › tests/e2e/notifications.spec.ts:10:3 › notifications › a test notification appears in the list and in the bell %0A    Error: expect(locator).toHaveCount(expected) failed%0A%0A    Locator:  getByRole('list', { name: 'الإشعارات' }).getByRole('listitem')%0A    Expected: 1%0A    Received: 2%0A    Timeout:  5000ms%0A%0A    Call log:%0A      - Expect "toHaveCount" getByRole('list', { name: 'الإشعارات' }).getByRole('listitem') with timeout 5000ms%0A      - waiting for getByRole('list', { name: 'الإشعارات' }).getByRole('listitem')%0A        14 × locator resolved to 2 elements%0A           - unexpected value "2"%0A%0A%0A      32 |     await page.getByRole("button", { name: "إرسال إشعار تجريبي" }).click();%0A      33 |     await expect(page.getByText("أُرسل إشعار تجريبي")).toBeVisible();%0A    > 34 |     await expect(items).toHaveCount(before + 1);%0A         |                         ^%0A      35 |     await expect(items.first()).toContainText("إشعار تجريبي");%0A      36 |%0A      37 |     // The bell picks the new notification up live (Supabase Realtime).%0A        at /home/runner/work/green-o/green-o/tests/e2e/notifications.spec.ts:34:25
+·······
+
+  1) [mobile] › tests/e2e/notifications.spec.ts:10:3 › notifications › a test notification appears in the list and in the bell 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('list', { name: 'الإشعارات' }).getByRole('listitem')
+    Expected: 1
+    Received: 2
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('list', { name: 'الإشعارات' }).getByRole('listitem') with timeout 5000ms
+      - waiting for getByRole('list', { name: 'الإشعارات' }).getByRole('listitem')
+        14 × locator resolved to 2 elements
+           - unexpected value "2"
+
+
+      32 |     await page.getByRole("button", { name: "إرسال إشعار تجريبي" }).click();
+      33 |     await expect(page.getByText("أُرسل إشعار تجريبي")).toBeVisible();
+    > 34 |     await expect(items).toHaveCount(before + 1);
+         |                         ^
+      35 |     await expect(items.first()).toContainText("إشعار تجريبي");
+      36 |
+      37 |     // The bell picks the new notification up live (Supabase Realtime).
+        at /home/runner/work/green-o/green-o/tests/e2e/notifications.spec.ts:34:25
+
+    Error Context: test-results/notifications-notification-0170d-in-the-list-and-in-the-bell-mobile/error-context.md
+
+  1 flaky
+    [mobile] › tests/e2e/notifications.spec.ts:10:3 › notifications › a test notification appears in the list and in the bell 
+  39 passed (53.4s)
+::notice title=🎭 Playwright Run Summary::  1 flaky%0A    [mobile] › tests/e2e/notifications.spec.ts:10:3 › notifications › a test notification appears in the list and in the bell %0A  39 passed (53.4s)
