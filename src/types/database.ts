@@ -189,6 +189,64 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"order_stage_assignees": {
+                  Row: {
+                    "assigned_at": string,"assigned_by": string | null,"order_stage_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "assigned_at"?: string,"assigned_by"?: string | null,"order_stage_id": string,"user_id": string
+                  }
+                  Update: {
+                    "assigned_at"?: string,"assigned_by"?: string | null,"order_stage_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "order_stage_assignees_order_stage_id_fkey"
+      columns: ["order_stage_id"]
+isOneToOne: false
+      referencedRelation: "order_stages"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "order_stage_assignees_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"order_stages": {
+                  Row: {
+                    "closed_at": string | null,"closed_by": string | null,"defect_qty": number,"good_qty": number,"id": string,"order_id": string,"seq": number,"stage_id": string,"status": Database["public"]['Enums']["order_stage_status"],"updated_at": string,"available_qty": number | null,"input_qty": number | null
+                  }
+                  ComputedFields: "available_qty" | "input_qty"
+                  Insert: {
+                    "closed_at"?: string | null,"closed_by"?: string | null,"defect_qty"?: number,"good_qty"?: number,"id"?: string,"order_id": string,"seq": number,"stage_id": string,"status"?: Database["public"]['Enums']["order_stage_status"],"updated_at"?: string
+                  }
+                  Update: {
+                    "closed_at"?: string | null,"closed_by"?: string | null,"defect_qty"?: number,"good_qty"?: number,"id"?: string,"order_id"?: string,"seq"?: number,"stage_id"?: string,"status"?: Database["public"]['Enums']["order_stage_status"],"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "order_stages_closed_by_fkey"
+      columns: ["closed_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "order_stages_order_id_fkey"
+      columns: ["order_id"]
+isOneToOne: false
+      referencedRelation: "production_orders"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "order_stages_stage_id_fkey"
+      columns: ["stage_id"]
+isOneToOne: false
+      referencedRelation: "stages"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"pm_plans": {
                   Row: {
                     "assignee_team_id": string | null,"assignee_user_id": string | null,"created_at": string,"created_by": string | null,"department_id": string,"id": string,"instructions": string | null,"interval_count": number,"interval_unit": Database["public"]['Enums']["interval_unit"],"is_active": boolean,"last_generated_at": string | null,"lead_days": number,"machine_id": string,"next_due_date": string,"start_date": string,"title": string,"updated_at": string
@@ -250,6 +308,32 @@ isOneToOne: false
       columns: ["stage_id"]
 isOneToOne: false
       referencedRelation: "stages"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"production_orders": {
+                  Row: {
+                    "cancel_reason": string | null,"cancelled_at": string | null,"completed_at": string | null,"created_at": string,"created_by": string | null,"department_id": string,"due_date": string | null,"id": string,"notes": string | null,"number": number,"product_id": string,"quantity": number,"status": Database["public"]['Enums']["order_status"],"unit": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id": string,"due_date"?: string | null,"id"?: string,"notes"?: string | null,"number"?: number,"product_id": string,"quantity": number,"status"?: Database["public"]['Enums']["order_status"],"unit": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "cancel_reason"?: string | null,"cancelled_at"?: string | null,"completed_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"department_id"?: string,"due_date"?: string | null,"id"?: string,"notes"?: string | null,"number"?: number,"product_id"?: string,"quantity"?: number,"status"?: Database["public"]['Enums']["order_status"],"unit"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "production_orders_department_id_fkey"
+      columns: ["department_id"]
+isOneToOne: false
+      referencedRelation: "departments"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "production_orders_product_id_fkey"
+      columns: ["product_id"]
+isOneToOne: false
+      referencedRelation: "products"
       referencedColumns: ["id"]
     }
                   ]
@@ -320,6 +404,50 @@ isOneToOne: false
                   }
                   Relationships: [
                     
+                  ]
+                },"stage_entries": {
+                  Row: {
+                    "created_at": string,"defect_qty": number,"defect_type_id": string | null,"good_qty": number,"id": string,"note": string | null,"order_stage_id": string,"recorded_by": string,"void_reason": string | null,"voided_at": string | null,"voided_by": string | null,"worker_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"defect_qty"?: number,"defect_type_id"?: string | null,"good_qty"?: number,"id"?: string,"note"?: string | null,"order_stage_id": string,"recorded_by": string,"void_reason"?: string | null,"voided_at"?: string | null,"voided_by"?: string | null,"worker_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"defect_qty"?: number,"defect_type_id"?: string | null,"good_qty"?: number,"id"?: string,"note"?: string | null,"order_stage_id"?: string,"recorded_by"?: string,"void_reason"?: string | null,"voided_at"?: string | null,"voided_by"?: string | null,"worker_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "stage_entries_defect_type_id_fkey"
+      columns: ["defect_type_id"]
+isOneToOne: false
+      referencedRelation: "defect_types"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "stage_entries_order_stage_id_fkey"
+      columns: ["order_stage_id"]
+isOneToOne: false
+      referencedRelation: "order_stages"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "stage_entries_recorded_by_fkey"
+      columns: ["recorded_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "stage_entries_voided_by_fkey"
+      columns: ["voided_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "stage_entries_worker_id_fkey"
+      columns: ["worker_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"stages": {
                   Row: {
@@ -556,14 +684,23 @@ isOneToOne: false
 "assign_fault_repair":
 { Args: { "p_assignee_ids"?: (string)[],"p_description"?: string,"p_due_at"?: string,"p_fault_id": string,"p_team_id"?: string,"p_title"?: string }; Returns: string
                            },
+"assign_stage_workers":
+{ Args: { "p_order_stage_id": string,"p_user_ids": (string)[] }; Returns: undefined
+                           },
 "authorize_password_reset":
 { Args: { "p_user_id": string }; Returns: undefined
+                           },
+"available_qty":
+{ Args: { "s": Omit<Database["public"]['Tables']["order_stages"]['Row'], Database["public"]['Tables']["order_stages"]['ComputedFields']> }; Returns: number
                            },
 "bootstrap_general_manager":
 { Args: { "p_employee_no": string,"p_full_name": string,"p_user_id": string }; Returns: undefined
                            },
 "can_manage_account":
 { Args: { "p_department_id": string,"p_role": Database["public"]['Enums']["app_role"] }; Returns: boolean
+                           },
+"cancel_production_order":
+{ Args: { "p_order_id": string,"p_reason": string }; Returns: undefined
                            },
 "cancel_task":
 { Args: { "p_reason": string,"p_task_id": string }; Returns: undefined
@@ -573,11 +710,17 @@ isOneToOne: false
               "body": string,"id": string,"title": string,"url": string,"user_id": string
             }[]
                            },
+"close_order_stage":
+{ Args: { "p_order_stage_id": string }; Returns: undefined
+                           },
 "configure_push_dispatch":
 { Args: { "p_secret": string,"p_url": string,"p_vercel_bypass"?: string }; Returns: undefined
                            },
 "create_pm_plan":
 { Args: { "p_assignee_user_id"?: string,"p_instructions": string,"p_interval_count": number,"p_interval_unit": Database["public"]['Enums']["interval_unit"],"p_lead_days"?: number,"p_machine_id": string,"p_start_date": string,"p_team_id"?: string,"p_title": string }; Returns: string
+                           },
+"create_production_order":
+{ Args: { "p_department_id"?: string,"p_due_date"?: string,"p_notes"?: string,"p_product_id": string,"p_quantity": number }; Returns: string
                            },
 "create_task":
 { Args: { "p_assignee_ids"?: (string)[],"p_department_id"?: string,"p_description"?: string,"p_due_at"?: string,"p_team_id"?: string,"p_title": string }; Returns: string
@@ -590,6 +733,9 @@ isOneToOne: false
                            },
 "environment_marker":
 { Args: Record<PropertyKey, never>; Returns: string
+                           },
+"input_qty":
+{ Args: { "s": Omit<Database["public"]['Tables']["order_stages"]['Row'], Database["public"]['Tables']["order_stages"]['ComputedFields']> }; Returns: number
                            },
 "is_overdue":
 { Args: { "t": Omit<Database["public"]['Tables']["tasks"]['Row'], Database["public"]['Tables']["tasks"]['ComputedFields']> }; Returns: boolean
@@ -606,6 +752,9 @@ isOneToOne: false
 "mark_task_seen":
 { Args: { "p_task_id": string }; Returns: undefined
                            },
+"order_code":
+{ Args: { "p_number": number }; Returns: string
+                           },
 "pm_next_occurrence":
 { Args: { "p_count": number,"p_on_or_after": string,"p_start": string,"p_unit": Database["public"]['Enums']["interval_unit"] }; Returns: string
                            },
@@ -614,6 +763,9 @@ isOneToOne: false
                            },
 "record_push_failure":
 { Args: { "p_error": string,"p_id": string }; Returns: undefined
+                           },
+"record_stage_entry":
+{ Args: { "p_defect_qty"?: number,"p_defect_type_id"?: string,"p_good_qty": number,"p_note"?: string,"p_order_stage_id": string,"p_worker_id"?: string }; Returns: string
                            },
 "register_fault_attachment":
 { Args: { "p_fault_id": string,"p_mime_type": string,"p_path": string,"p_size_bytes": number }; Returns: string
@@ -657,15 +809,21 @@ isOneToOne: false
 "update_pm_plan":
 { Args: { "p_assignee_user_id"?: string,"p_instructions": string,"p_interval_count": number,"p_interval_unit": Database["public"]['Enums']["interval_unit"],"p_lead_days"?: number,"p_plan_id": string,"p_start_date": string,"p_team_id"?: string,"p_title": string }; Returns: undefined
                            },
+"update_production_order":
+{ Args: { "p_due_date"?: string,"p_notes"?: string,"p_order_id": string,"p_quantity": number }; Returns: undefined
+                           },
 "update_task":
 { Args: { "p_description"?: string,"p_due_at"?: string,"p_task_id": string,"p_title": string }; Returns: undefined
                            },
 "update_user_profile":
 { Args: { "p_department_id": string,"p_employee_no": string,"p_full_name": string,"p_job_title"?: string,"p_notes"?: string,"p_phone"?: string,"p_role": Database["public"]['Enums']["app_role"],"p_user_id": string }; Returns: undefined
+                           },
+"void_stage_entry":
+{ Args: { "p_entry_id": string,"p_reason": string }; Returns: undefined
                            }
           }
           Enums: {
-            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","push_status": "pending"|"sent"|"failed"|"skipped","spec_type": "text"|"number"|"select"|"boolean","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
+            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","order_stage_status": "pending"|"active"|"closed","order_status": "open"|"in_progress"|"completed"|"cancelled","push_status": "pending"|"sent"|"failed"|"skipped","spec_type": "text"|"number"|"select"|"boolean","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -781,7 +939,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"push_status": ["pending", "sent", "failed", "skipped"],"spec_type": ["text", "number", "select", "boolean"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
+            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"order_stage_status": ["pending", "active", "closed"],"order_status": ["open", "in_progress", "completed", "cancelled"],"push_status": ["pending", "sent", "failed", "skipped"],"spec_type": ["text", "number", "select", "boolean"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
           }
         }
 } as const

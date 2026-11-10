@@ -63,6 +63,12 @@ export const ADMIN_NAV: readonly NavItem[] = [
     roles: MAINTENANCE,
   },
   {
+    href: "/admin/production/orders",
+    label: "أوامر الإنتاج",
+    icon: "orders",
+    roles: PRODUCTION,
+  },
+  {
     href: "/admin/production/products",
     label: "المنتجات",
     icon: "products",
