@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 type Item = { href: string; label: string; icon: LucideIcon };
 
 const ITEMS: Item[] = [
-  { href: "/m", label: "الرئيسية", icon: HomeIcon },
+  { href: "/m", label: "مهامي", icon: HomeIcon },
   { href: "/m/account", label: "حسابي", icon: UserRoundIcon },
 ];
 

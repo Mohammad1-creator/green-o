@@ -30,6 +30,13 @@ const GM: readonly AppRole[] = ["general_manager"];
 export const ADMIN_NAV: readonly NavItem[] = [
   { href: "/admin", label: "الرئيسية", icon: "home", roles: MANAGER_ROLES },
   {
+    href: "/admin/tasks",
+    label: "المهام",
+    icon: "tasks",
+    roles: MANAGER_ROLES,
+  },
+  { href: "/admin/teams", label: "الفرق", icon: "teams", roles: MANAGER_ROLES },
+  {
     href: "/admin/users",
     label: "المستخدمون",
     icon: "users",
