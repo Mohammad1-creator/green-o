@@ -63,6 +63,26 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"defect_types": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"id": string,"is_active": boolean,"name": string,"stage_id": string | null,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"id"?: string,"is_active"?: boolean,"name": string,"stage_id"?: string | null,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"id"?: string,"is_active"?: boolean,"name"?: string,"stage_id"?: string | null,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "defect_types_stage_id_fkey"
+      columns: ["stage_id"]
+isOneToOne: false
+      referencedRelation: "stages"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"departments": {
                   Row: {
                     "created_at": string,"created_by": string | null,"id": string,"is_active": boolean,"name": string,"updated_at": string
@@ -207,6 +227,46 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"product_route_steps": {
+                  Row: {
+                    "product_id": string,"seq": number,"stage_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "product_id": string,"seq": number,"stage_id": string
+                  }
+                  Update: {
+                    "product_id"?: string,"seq"?: number,"stage_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "product_route_steps_product_id_fkey"
+      columns: ["product_id"]
+isOneToOne: false
+      referencedRelation: "products"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "product_route_steps_stage_id_fkey"
+      columns: ["stage_id"]
+isOneToOne: false
+      referencedRelation: "stages"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"products": {
+                  Row: {
+                    "code": string,"created_at": string,"created_by": string | null,"id": string,"is_active": boolean,"name": string,"notes": string | null,"specs": NonNullable<Json>,"unit": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "code": string,"created_at"?: string,"created_by"?: string | null,"id"?: string,"is_active"?: boolean,"name": string,"notes"?: string | null,"specs"?: NonNullable<Json>,"unit": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "code"?: string,"created_at"?: string,"created_by"?: string | null,"id"?: string,"is_active"?: boolean,"name"?: string,"notes"?: string | null,"specs"?: NonNullable<Json>,"unit"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"profiles": {
                   Row: {
                     "created_at": string,"created_by": string | null,"department_id": string | null,"full_name": string,"id": string,"is_active": boolean,"role": Database["public"]['Enums']["app_role"],"updated_at": string
@@ -246,6 +306,34 @@ isOneToOne: false
       referencedRelation: "profiles"
       referencedColumns: ["id"]
     }
+                  ]
+                },"spec_definitions": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"data_type": Database["public"]['Enums']["spec_type"],"id": string,"is_active": boolean,"is_required": boolean,"label": string,"max_value": number | null,"min_value": number | null,"options": (string)[] | null,"sort_order": number,"unit": string | null,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"data_type": Database["public"]['Enums']["spec_type"],"id"?: string,"is_active"?: boolean,"is_required"?: boolean,"label": string,"max_value"?: number | null,"min_value"?: number | null,"options"?: (string)[] | null,"sort_order"?: number,"unit"?: string | null,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"data_type"?: Database["public"]['Enums']["spec_type"],"id"?: string,"is_active"?: boolean,"is_required"?: boolean,"label"?: string,"max_value"?: number | null,"min_value"?: number | null,"options"?: (string)[] | null,"sort_order"?: number,"unit"?: string | null,"updated_at"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"stages": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"id": string,"is_active": boolean,"name": string,"sort_order": number,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"id"?: string,"is_active"?: boolean,"name": string,"sort_order"?: number,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"id"?: string,"is_active"?: boolean,"name"?: string,"sort_order"?: number,"updated_at"?: string
+                  }
+                  Relationships: [
+                    
                   ]
                 },"task_assignees": {
                   Row: {
@@ -554,6 +642,9 @@ isOneToOne: false
 "set_pm_plan_active":
 { Args: { "p_active": boolean,"p_plan_id": string }; Returns: undefined
                            },
+"set_product_route":
+{ Args: { "p_product_id": string,"p_stage_ids": (string)[] }; Returns: undefined
+                           },
 "set_user_active":
 { Args: { "p_active": boolean,"p_user_id": string }; Returns: undefined
                            },
@@ -574,7 +665,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","push_status": "pending"|"sent"|"failed"|"skipped","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
+            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","push_status": "pending"|"sent"|"failed"|"skipped","spec_type": "text"|"number"|"select"|"boolean","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -690,7 +781,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"push_status": ["pending", "sent", "failed", "skipped"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
+            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"push_status": ["pending", "sent", "failed", "skipped"],"spec_type": ["text", "number", "select", "boolean"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
           }
         }
 } as const

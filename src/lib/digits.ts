@@ -15,3 +15,14 @@ export function toWesternDigits(value: string): string {
     return String(code - zero);
   });
 }
+
+const DECIMAL = /^-?\d+(\.\d+)?$/;
+
+/**
+ * "12.5", "١٢٫٥" or "12,5" → 12.5. Arabic keyboards type "٫" or "," as the
+ * decimal point. Returns null when the text is not a plain number.
+ */
+export function parseDecimal(value: string): number | null {
+  const normalized = toWesternDigits(value.trim()).replace(/[٫,]/g, ".");
+  return DECIMAL.test(normalized) ? Number(normalized) : null;
+}

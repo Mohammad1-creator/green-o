@@ -29,6 +29,10 @@ const MAINTENANCE: readonly AppRole[] = [
   "general_manager",
   "maintenance_manager",
 ];
+const PRODUCTION: readonly AppRole[] = [
+  "general_manager",
+  "production_manager",
+];
 
 /** Admin sidebar, in display order. Each item lists the roles that see it. */
 export const ADMIN_NAV: readonly NavItem[] = [
@@ -57,6 +61,18 @@ export const ADMIN_NAV: readonly NavItem[] = [
     label: "الصيانة الوقائية",
     icon: "preventive",
     roles: MAINTENANCE,
+  },
+  {
+    href: "/admin/production/products",
+    label: "المنتجات",
+    icon: "products",
+    roles: MANAGER_ROLES,
+  },
+  {
+    href: "/admin/production/settings",
+    label: "إعدادات الإنتاج",
+    icon: "production-settings",
+    roles: PRODUCTION,
   },
   {
     href: "/admin/users",
