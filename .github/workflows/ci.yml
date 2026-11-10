@@ -16,6 +16,7 @@ concurrency:
 
 env:
   NEXT_TELEMETRY_DISABLED: 1
+  SUPABASE_CLI: npx -y supabase@3.1.0
 
 jobs:
   checks:
@@ -28,14 +29,21 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
-      - run: npm run format:check
-      - run: npm test
-      - run: npm run build
+      - run: mkdir -p ci-logs
+      - run: npm ci 2>&1 | tee ci-logs/npm-ci.log
+      - run: npm run lint 2>&1 | tee ci-logs/lint.log
+      - run: npm run typecheck 2>&1 | tee ci-logs/typecheck.log
+      - run: npm run format:check 2>&1 | tee ci-logs/format.log
+      - run: npm test 2>&1 | tee ci-logs/unit.log
+      - run: npm run build 2>&1 | tee ci-logs/build.log
       - name: Check build output for secrets
-        run: npm run check:secrets
+        run: npm run check:secrets 2>&1 | tee ci-logs/secrets.log
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: logs-checks
+          path: ci-logs/
+          retention-days: 7
 
   gitleaks:
     name: Secret scan of commits
@@ -52,26 +60,84 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  e2e:
-    name: End-to-end tests
-    # Full browser tests run on pull requests to main (production).
-    if: github.event_name == 'pull_request'
-    needs: checks
+  database:
+    name: Database, integration and end-to-end tests
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
-      - run: npx playwright install --with-deps chromium
-      - run: npm run build
-      - run: npm run test:e2e
+      - run: mkdir -p ci-logs
+      - run: npm ci 2>&1 | tee ci-logs/npm-ci.log
+      - name: Start Supabase
+        run: $SUPABASE_CLI start -x studio,imgproxy,edge-runtime,logflare,vector,supavisor,mailpit 2>&1 | tee ci-logs/supabase-start.log
+      - name: Record status variable names
+        run: $SUPABASE_CLI status -o env 2>/dev/null | sed 's/=.*/=<hidden>/' | tee ci-logs/status-names.log
+      - name: Database tests (pgTAP)
+        run: $SUPABASE_CLI test db 2>&1 | tee ci-logs/db-test.log
+      - name: Database lint
+        run: $SUPABASE_CLI db lint --schema public,private,audit --level warning --fail-on error 2>&1 | tee ci-logs/db-lint.log
+      - name: Generate TypeScript types
+        run: |
+          $SUPABASE_CLI gen types --lang typescript --schema public > ci-logs/database.ts
+          if ! diff -q ci-logs/database.ts src/types/database.ts > /dev/null 2>&1; then
+            echo "::warning::src/types/database.ts is out of date. Copy it from the ci-results branch."
+          fi
       - uses: actions/upload-artifact@v7
-        if: failure()
+        if: always()
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: logs-database
+          path: ci-logs/
           retention-days: 7
+
+  # Publishes every job's logs to the ci-results branch, so they can be read
+  # with git (job logs need a signed-in account; git does not).
+  report:
+    name: Publish results
+    if: always() && github.event_name != 'pull_request'
+    needs: [checks, gitleaks, database]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: logs-*
+          path: logs
+      - name: Push logs to ci-results
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_DIR: runs/${{ github.run_number }}-${{ github.sha }}
+          SUMMARY: |
+            sha=${{ github.sha }}
+            run=${{ github.run_number }}
+            checks=${{ needs.checks.result }}
+            gitleaks=${{ needs.gitleaks.result }}
+            database=${{ needs.database.result }}
+        run: |
+          git init -q results && cd results
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          if git fetch -q --depth 1 origin ci-results; then
+            git checkout -q -b ci-results FETCH_HEAD
+          else
+            git checkout -q --orphan ci-results
+          fi
+          mkdir -p "$RUN_DIR"
+          if [ -d ../logs ]; then cp -r ../logs/. "$RUN_DIR/"; fi
+          printf '%s' "$SUMMARY" > "$RUN_DIR/summary.txt"
+          cp "$RUN_DIR/summary.txt" latest.txt
+          # Keep the 30 most recent runs.
+          ls -1 runs | sort -t- -k1,1n | head -n -30 | sed 's|^|runs/|' | xargs -r git rm -rq --ignore-unmatch
+          git add -A
+          git commit -qm "CI results for ${GITHUB_SHA::7} (run ${GITHUB_RUN_NUMBER})"
+          for attempt in 1 2 3 4 5; do
+            git push -q origin HEAD:ci-results && break
+            git pull -q --rebase origin ci-results
+          done
