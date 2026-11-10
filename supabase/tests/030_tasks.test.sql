@@ -27,8 +27,8 @@ grant select on tests.task_ids to authenticated;
 -- 1-5: teams ------------------------------------------------------------------------
 select tests.authenticate_as('00000000-0000-4000-8000-000000000302');
 select lives_ok(
-  $$ insert into public.teams (id, department_id, name)
-     values ('00000000-0000-4000-8000-0000000003f1', '00000000-0000-4000-8000-0000000003d1', 'فريق الصيانة أ') $$,
+  $$ insert into public.teams (department_id, name)
+     values ('00000000-0000-4000-8000-0000000003d1', 'اختبار: فريق الصيانة أ') $$,
   'a department manager creates a team in their department'
 );
 select throws_ok(
@@ -36,22 +36,25 @@ select throws_ok(
   '42501', null,
   'but not in another department'
 );
+reset role; select tests.clear_claims();
+insert into tests.task_ids select 'teamA', id from public.teams where name = 'اختبار: فريق الصيانة أ';
+select tests.authenticate_as('00000000-0000-4000-8000-000000000302');
 select lives_ok(
   $$ insert into public.team_members (team_id, user_id) values
-     ('00000000-0000-4000-8000-0000000003f1', '00000000-0000-4000-8000-000000000304'),
-     ('00000000-0000-4000-8000-0000000003f1', '00000000-0000-4000-8000-000000000305') $$,
+     ((select id from tests.task_ids where name = 'teamA'), '00000000-0000-4000-8000-000000000304'),
+     ((select id from tests.task_ids where name = 'teamA'), '00000000-0000-4000-8000-000000000305') $$,
   'and adds two employees'
 );
 select throws_ok(
   $$ insert into public.team_members (team_id, user_id) values
-     ('00000000-0000-4000-8000-0000000003f1', '00000000-0000-4000-8000-000000000306') $$,
+     ((select id from tests.task_ids where name = 'teamA'), '00000000-0000-4000-8000-000000000306') $$,
   'P0001', null,
   'a team member must come from the team''s department'
 );
 
 reset role; select tests.clear_claims();
 select tests.authenticate_as('00000000-0000-4000-8000-000000000306');
-select is((select count(*)::int from public.teams where id = '00000000-0000-4000-8000-0000000003f1'), 0,
+select is((select count(*)::int from public.teams where id = (select id from tests.task_ids where name = 'teamA')), 0,
   'employees of other departments do not see the team');
 
 -- 6-14: creating tasks ----------------------------------------------------------------
@@ -64,7 +67,7 @@ select lives_ok(
 );
 select lives_ok(
   $$ select public.create_task('اختبار: مهمة الفريق', null, null, null, null,
-       '00000000-0000-4000-8000-0000000003f1') $$,
+       (select id from tests.task_ids where name = 'teamA')) $$,
   'and a task for a team'
 );
 select throws_ok(
@@ -81,7 +84,7 @@ select throws_ok(
 );
 select throws_ok(
   $$ select public.create_task('مهمة', null, null, null,
-       array['00000000-0000-4000-8000-000000000304']::uuid[], '00000000-0000-4000-8000-0000000003f1') $$,
+       array['00000000-0000-4000-8000-000000000304']::uuid[], (select id from tests.task_ids where name = 'teamA')) $$,
   'P0001', null,
   'a task goes to a person or a team, not both'
 );
