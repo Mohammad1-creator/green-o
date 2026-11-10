@@ -38,6 +38,9 @@ jobs:
       - run: npm run build 2>&1 | tee ci-logs/build.log
       - name: Check build output for secrets
         run: npm run check:secrets 2>&1 | tee ci-logs/secrets.log
+      - name: Annotate failures
+        if: failure()
+        run: bash scripts/ci/annotate-failures.sh
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -72,20 +75,25 @@ jobs:
           cache: npm
       - run: mkdir -p ci-logs
       - run: npm ci 2>&1 | tee ci-logs/npm-ci.log
+      # Logs are published to a public branch, so keys printed by the CLI
+      # (local demo keys, but still key-shaped) are masked first.
       - name: Start Supabase
-        run: $SUPABASE_CLI start -x studio,imgproxy,edge-runtime,logflare,vector,supavisor,mailpit 2>&1 | tee ci-logs/supabase-start.log
+        run: $SUPABASE_CLI start -x studio,imgproxy,edge-runtime,logflare,vector,supavisor,mailpit 2>&1 | node scripts/ci/redact.mjs | tee ci-logs/supabase-start.log
       - name: Record status variable names
         run: $SUPABASE_CLI status -o env 2>/dev/null | sed 's/=.*/=<hidden>/' | tee ci-logs/status-names.log
       - name: Database tests (pgTAP)
-        run: $SUPABASE_CLI test db 2>&1 | tee ci-logs/db-test.log
+        run: $SUPABASE_CLI test db 2>&1 | node scripts/ci/redact.mjs | tee ci-logs/db-test.log
       - name: Database lint
-        run: $SUPABASE_CLI db lint --schema public,private,audit --level warning --fail-on error 2>&1 | tee ci-logs/db-lint.log
+        run: $SUPABASE_CLI db lint --schema public,private,audit --level warning --fail-on error 2>&1 | node scripts/ci/redact.mjs | tee ci-logs/db-lint.log
       - name: Generate TypeScript types
         run: |
           $SUPABASE_CLI gen types --lang typescript --schema public > ci-logs/database.ts
           if ! diff -q ci-logs/database.ts src/types/database.ts > /dev/null 2>&1; then
             echo "::warning::src/types/database.ts is out of date. Copy it from the ci-results branch."
           fi
+      - name: Annotate failures
+        if: failure()
+        run: bash scripts/ci/annotate-failures.sh
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -124,7 +132,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
-          if git fetch -q --depth 1 origin ci-results; then
+          if git fetch -q --depth 1 origin ci-results 2>/dev/null; then
             git checkout -q -b ci-results FETCH_HEAD
           else
             git checkout -q --orphan ci-results
@@ -138,6 +146,9 @@ jobs:
           git add -A
           git commit -qm "CI results for ${GITHUB_SHA::7} (run ${GITHUB_RUN_NUMBER})"
           for attempt in 1 2 3 4 5; do
-            git push -q origin HEAD:ci-results && break
-            git pull -q --rebase origin ci-results
+            if out=$(git push -q origin HEAD:ci-results 2>&1); then exit 0; fi
+            out=$(printf '%s' "$out" | sed 's/x-access-token:[^@]*@//g' | tr '\n' ' ' | cut -c1-1500)
+            echo "::warning title=Push attempt ${attempt} failed::${out}"
+            git pull -q --rebase origin ci-results 2>/dev/null || true
           done
+          exit 1
