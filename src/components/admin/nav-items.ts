@@ -98,6 +98,7 @@ export const ADMIN_NAV: readonly NavItem[] = [
     icon: "departments",
     roles: GM,
   },
+  { href: "/admin/audit", label: "سجل التدقيق", icon: "audit", roles: GM },
   { href: "/admin/settings", label: "الإعدادات", icon: "settings", roles: GM },
 ];
 

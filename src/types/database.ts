@@ -63,6 +63,20 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"backup_runs": {
+                  Row: {
+                    "audit_last_hash": string | null,"audit_last_id": number | null,"created_at": string,"database_bytes": number | null,"environment": string,"error": string | null,"finished_at": string,"id": string,"location": string | null,"run_url": string | null,"started_at": string,"status": Database["public"]['Enums']["backup_status"],"storage_bytes": number | null,"storage_files": number | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "audit_last_hash"?: string | null,"audit_last_id"?: number | null,"created_at"?: string,"database_bytes"?: number | null,"environment": string,"error"?: string | null,"finished_at"?: string,"id"?: string,"location"?: string | null,"run_url"?: string | null,"started_at": string,"status": Database["public"]['Enums']["backup_status"],"storage_bytes"?: number | null,"storage_files"?: number | null
+                  }
+                  Update: {
+                    "audit_last_hash"?: string | null,"audit_last_id"?: number | null,"created_at"?: string,"database_bytes"?: number | null,"environment"?: string,"error"?: string | null,"finished_at"?: string,"id"?: string,"location"?: string | null,"run_url"?: string | null,"started_at"?: string,"status"?: Database["public"]['Enums']["backup_status"],"storage_bytes"?: number | null,"storage_files"?: number | null
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"defect_types": {
                   Row: {
                     "created_at": string,"created_by": string | null,"id": string,"is_active": boolean,"name": string,"stage_id": string | null,"updated_at": string
@@ -687,6 +701,26 @@ isOneToOne: false
 "assign_stage_workers":
 { Args: { "p_order_stage_id": string,"p_user_ids": (string)[] }; Returns: undefined
                            },
+"audit_chain_head":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "last_hash": string,"last_id": number
+            }[]
+                           },
+"audit_chain_status":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "checked_at": string,"checked_rows": number,"first_bad_id": number,"ok": boolean,"problem": string
+            }[]
+                           },
+"audit_chain_verify":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "checked_rows": number,"first_bad_id": number,"last_hash": string,"last_id": number,"ok": boolean,"problem": string
+            }[]
+                           },
+"audit_tables":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "entries": number,"table_name": string
+            }[]
+                           },
 "authorize_password_reset":
 { Args: { "p_user_id": string }; Returns: undefined
                            },
@@ -740,6 +774,11 @@ isOneToOne: false
 "is_overdue":
 { Args: { "t": Omit<Database["public"]['Tables']["tasks"]['Row'], Database["public"]['Tables']["tasks"]['ComputedFields']> }; Returns: boolean
                            },
+"list_audit_log":
+{ Args: { "p_action"?: string,"p_actor_id"?: string,"p_before_id"?: number,"p_from"?: string,"p_limit"?: number,"p_record_id"?: string,"p_table"?: string,"p_to"?: string }; Returns: {
+              "action": string,"actor_id": string,"actor_name": string,"changed_fields": (string)[],"id": number,"new_data": Json,"occurred_at": string,"old_data": Json,"record_id": string,"table_name": string
+            }[]
+                           },
 "mark_all_notifications_read":
 { Args: Record<PropertyKey, never>; Returns: number
                            },
@@ -760,6 +799,9 @@ isOneToOne: false
                            },
 "reassign_task":
 { Args: { "p_assignee_ids"?: (string)[],"p_task_id": string,"p_team_id"?: string }; Returns: undefined
+                           },
+"record_backup_run":
+{ Args: { "p_audit_last_hash"?: string,"p_audit_last_id"?: number,"p_database_bytes"?: number,"p_error"?: string,"p_location"?: string,"p_run_url"?: string,"p_started_at": string,"p_status": Database["public"]['Enums']["backup_status"],"p_storage_bytes"?: number,"p_storage_files"?: number }; Returns: string
                            },
 "record_push_failure":
 { Args: { "p_error": string,"p_id": string }; Returns: undefined
@@ -845,6 +887,11 @@ isOneToOne: false
 "return_task":
 { Args: { "p_reason": string,"p_task_id": string }; Returns: undefined
                            },
+"run_audit_chain_check":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "checked_at": string,"checked_rows": number,"first_bad_id": number,"ok": boolean,"problem": string
+            }[]
+                           },
 "run_pm_generation_now":
 { Args: Record<PropertyKey, never>; Returns: number
                            },
@@ -883,7 +930,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","order_stage_status": "pending"|"active"|"closed","order_status": "open"|"in_progress"|"completed"|"cancelled","push_status": "pending"|"sent"|"failed"|"skipped","spec_type": "text"|"number"|"select"|"boolean","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
+            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","backup_status": "succeeded"|"failed","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","order_stage_status": "pending"|"active"|"closed","order_status": "open"|"in_progress"|"completed"|"cancelled","push_status": "pending"|"sent"|"failed"|"skipped","spec_type": "text"|"number"|"select"|"boolean","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -999,7 +1046,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"order_stage_status": ["pending", "active", "closed"],"order_status": ["open", "in_progress", "completed", "cancelled"],"push_status": ["pending", "sent", "failed", "skipped"],"spec_type": ["text", "number", "select", "boolean"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
+            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"backup_status": ["succeeded", "failed"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"order_stage_status": ["pending", "active", "closed"],"order_status": ["open", "in_progress", "completed", "cancelled"],"push_status": ["pending", "sent", "failed", "skipped"],"spec_type": ["text", "number", "select", "boolean"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
           }
         }
 } as const
