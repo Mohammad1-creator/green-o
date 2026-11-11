@@ -1,0 +1,74 @@
+name: Deploy
+
+# Applies new database migrations, then (production) deploys the app, so
+# the database is always updated before the code that needs it.
+#   dev:  after CI passes on the dev branch -> the dev project.
+#   main: on every push to main -> the "production" environment, which can
+#         require an approval -> the prod project -> Vercel deploy hook.
+# Migrations never run with seed data. Setup: docs/deploy.md, section 8.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [dev]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.event_name == 'workflow_run' && 'dev' || github.ref_name }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  deploy:
+    name: Migrate and deploy
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: ${{ (github.event_name == 'workflow_run' || github.ref_name != 'main') && 'development' || 'production' }}
+    env:
+      DATABASE_URL: ${{ secrets.DEPLOY_DATABASE_URL }}
+      VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+      EXPECTED_ENV: ${{ (github.event_name == 'workflow_run' || github.ref_name != 'main') && 'dev' || 'prod' }}
+    steps:
+      - name: Check the configuration
+        id: config
+        run: |
+          if [[ -z "$DATABASE_URL" ]]; then
+            echo "::warning::DEPLOY_DATABASE_URL is not set for this environment yet. See docs/deploy.md, section 8."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v7
+        if: steps.config.outputs.ready == 'true'
+        with:
+          # After CI, deploy exactly the commit CI tested.
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - name: Check the database is the expected environment
+        if: steps.config.outputs.ready == 'true'
+        run: |
+          marker=$(psql "$DATABASE_URL" -tAc "select env from private.environment_marker where id" 2>/dev/null || echo "missing")
+          if [[ "$marker" != "$EXPECTED_ENV" && "$marker" != "missing" ]]; then
+            echo "::error::This database is marked '$marker', expected '$EXPECTED_ENV'. Refusing to migrate."
+            exit 1
+          fi
+      - name: Apply migrations
+        if: steps.config.outputs.ready == 'true'
+        run: npx -y supabase@3.1.0 db push --yes --remote="$DATABASE_URL" 2>&1 | node scripts/ci/redact.mjs
+      - name: Deploy the app (production)
+        if: steps.config.outputs.ready == 'true' && env.EXPECTED_ENV == 'prod'
+        run: |
+          if [[ -z "$VERCEL_DEPLOY_HOOK" ]]; then
+            echo "::warning::VERCEL_DEPLOY_HOOK is not set; deploy the app from Vercel."
+            exit 0
+          fi
+          curl -fsS -X POST "$VERCEL_DEPLOY_HOOK" > /dev/null
+          echo "Vercel deployment started."

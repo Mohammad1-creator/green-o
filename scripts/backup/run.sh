@@ -29,9 +29,9 @@ dir="$work/$name"
 mkdir -p "$dir"
 
 echo "== database"
-$cli db dump --db-url "$DATABASE_URL" -f "$dir/roles.sql" --role-only
-$cli db dump --db-url "$DATABASE_URL" -f "$dir/schema.sql"
-$cli db dump --db-url "$DATABASE_URL" -f "$dir/data.sql" --use-copy --data-only
+$cli db dump --remote="$DATABASE_URL" -f "$dir/roles.sql" --role-only
+$cli db dump --remote="$DATABASE_URL" -f "$dir/schema.sql"
+$cli db dump --remote="$DATABASE_URL" -f "$dir/data.sql" --use-copy --data-only
 
 echo "== storage"
 node scripts/backup/storage.mts download "$dir/storage"

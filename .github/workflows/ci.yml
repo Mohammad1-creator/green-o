@@ -36,6 +36,8 @@ jobs:
           cache: npm
       - run: mkdir -p ci-logs
       - run: npm ci 2>&1 | tee ci-logs/npm-ci.log
+      - name: Known vulnerabilities in production dependencies
+        run: npm audit --omit=dev --audit-level=moderate 2>&1 | tee ci-logs/audit.log
       - run: npm run lint 2>&1 | tee ci-logs/lint.log
       - run: npm run typecheck 2>&1 | tee ci-logs/typecheck.log
       - run: npm run format:check 2>&1 | tee ci-logs/format.log

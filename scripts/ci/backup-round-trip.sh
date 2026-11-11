@@ -15,6 +15,7 @@ export BACKUP_AGE_RECIPIENT
 export BACKUP_OUT_DIR="$RUNNER_TEMP/backup-out"
 unset BACKUP_S3_BUCKET
 
+node scripts/ci/storage-probe.mjs put
 bash scripts/backup/run.sh
 
 archive=$(ls "$BACKUP_OUT_DIR"/*.tar.gz.age)
@@ -31,6 +32,10 @@ grep -q 'COPY "public"."departments"\|COPY public.departments' "$folder/data.sql
 grep -q 'COPY "auth"."users"\|COPY auth.users' "$folder/data.sql" \
   || { echo "data.sql has no login accounts"; exit 1; }
 
+grep -q "\"path\": \"ci/round-trip.png\"" "$folder/storage/storage-manifest.json" \
+  || { echo "The Storage copy is missing the probe image"; exit 1; }
+
 node scripts/backup/verify-restore.mts "$folder" --same-project
+node scripts/ci/storage-probe.mjs remove
 rm -rf "$RUNNER_TEMP/restored" "$RUNNER_TEMP/backup.tar.gz" "$BACKUP_OUT_DIR" "$key"
 echo "Backup round trip passed."
