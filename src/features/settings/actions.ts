@@ -9,6 +9,7 @@ import { toUserMessage } from "@/lib/errors";
 import { isValidTimeZone } from "@/lib/format";
 import { SETTINGS_CACHE_TAG } from "@/lib/settings";
 import { createClient } from "@/lib/supabase/server";
+import { isTopRole } from "@/lib/auth/roles";
 
 const settingsSchema = z.object({
   factoryName: z
@@ -28,7 +29,7 @@ export async function updateSettingsAction(
   formData: FormData,
 ): Promise<ActionState> {
   const user = await getCurrentUser();
-  if (user?.role !== "general_manager") {
+  if (!isTopRole(user?.role)) {
     return { ok: false, message: "ليست لديك صلاحية لهذا الإجراء" };
   }
 

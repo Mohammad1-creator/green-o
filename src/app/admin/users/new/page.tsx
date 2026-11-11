@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { UserForm } from "@/features/users/components/user-form";
 import { listDepartments } from "@/features/users/queries";
 import { requireManager } from "@/lib/auth/dal";
+import { isTopRole } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "إضافة مستخدم",
@@ -37,10 +38,9 @@ export default function NewUserPage() {
 
 async function NewUserForm() {
   const viewer = await requireManager();
-  const departments =
-    viewer.role === "general_manager"
-      ? await listDepartments({ activeOnly: true })
-      : [];
+  const departments = isTopRole(viewer.role)
+    ? await listDepartments({ activeOnly: true })
+    : [];
 
   return (
     <Card className="max-w-2xl">
@@ -51,7 +51,7 @@ async function NewUserForm() {
           viewerDepartmentName={viewer.departmentName}
           departments={departments}
           defaults={
-            viewer.role === "general_manager"
+            isTopRole(viewer.role)
               ? undefined
               : {
                   fullName: "",

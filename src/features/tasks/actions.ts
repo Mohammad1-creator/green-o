@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import { type ActionState, formFields } from "@/lib/action-state";
 import { getCurrentUser } from "@/lib/auth/dal";
-import { isManagerRole } from "@/lib/auth/roles";
+import { isManagerRole, isTopRole } from "@/lib/auth/roles";
 import { toUserMessage } from "@/lib/errors";
 import { getFactorySettings } from "@/lib/settings";
 import { createClient } from "@/lib/supabase/server";
@@ -73,8 +73,7 @@ export async function createTaskAction(
     p_description: input.description ?? undefined,
     p_due_at: (await toDueIso(input.due)) ?? undefined,
     p_department_id:
-      (viewer.role === "general_manager" ? input.departmentId : null) ??
-      undefined,
+      (isTopRole(viewer.role) ? input.departmentId : null) ?? undefined,
     p_assignee_ids:
       input.assignMode === "person" && input.assigneeId
         ? [input.assigneeId]

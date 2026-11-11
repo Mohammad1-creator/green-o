@@ -28,6 +28,7 @@ import { getAppEnv } from "@/lib/env";
 import { formatNumber, formatPercent } from "@/lib/format";
 import { getFactorySettings } from "@/lib/settings";
 import { addDays, zonedToday } from "@/lib/zoned-time";
+import { isTopRole, MAINTENANCE_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "الصيانة الوقائية",
@@ -56,7 +57,7 @@ async function Preventive({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const viewer = await requireRole(["general_manager", "maintenance_manager"]);
+  const viewer = await requireRole(MAINTENANCE_ROLES);
   const [query, settings] = await Promise.all([
     searchParams,
     getFactorySettings(),
@@ -165,7 +166,7 @@ async function Preventive({
                 department_id: team.department_id,
               }))}
               fixedDepartmentId={
-                viewer.role === "general_manager" ? null : viewer.departmentId
+                isTopRole(viewer.role) ? null : viewer.departmentId
               }
               today={today}
             />

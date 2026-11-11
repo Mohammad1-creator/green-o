@@ -18,6 +18,7 @@ import { MachineForm } from "@/features/maintenance/components/maintenance-forms
 import { listMachines } from "@/features/maintenance/queries";
 import { listDepartments } from "@/features/users/queries";
 import { requireRole } from "@/lib/auth/dal";
+import { MAINTENANCE_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "الآلات",
@@ -35,7 +36,7 @@ export default function MachinesPage() {
 }
 
 async function Machines() {
-  await requireRole(["general_manager", "maintenance_manager"]);
+  await requireRole(MAINTENANCE_ROLES);
   const [machines, departments] = await Promise.all([
     listMachines(),
     listDepartments({ activeOnly: true }),

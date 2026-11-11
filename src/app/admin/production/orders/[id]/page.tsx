@@ -35,6 +35,7 @@ import {
 import { requireRole } from "@/lib/auth/dal";
 import { formatCalendarDate, formatDateTime, formatNumber } from "@/lib/format";
 import { getFactorySettings } from "@/lib/settings";
+import { PRODUCTION_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "أمر إنتاج",
@@ -58,7 +59,7 @@ async function Order({
   params: Promise<{ id: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  await requireRole(["general_manager", "production_manager"]);
+  await requireRole(PRODUCTION_ROLES);
   const [{ id }, query] = await Promise.all([params, searchParams]);
   if (!z.uuid().safeParse(id).success) notFound();
 

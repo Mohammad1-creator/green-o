@@ -5,7 +5,7 @@ import { z } from "zod";
 
 import { type ActionState, formFields } from "@/lib/action-state";
 import { getCurrentUser } from "@/lib/auth/dal";
-import { isManagerRole } from "@/lib/auth/roles";
+import { isManagerRole, isTopRole } from "@/lib/auth/roles";
 import { toUserMessage } from "@/lib/errors";
 import { createClient } from "@/lib/supabase/server";
 
@@ -41,10 +41,9 @@ export async function createTeamAction(
   const fields = formFields(formData);
   const parsed = createSchema.safeParse({
     ...fields,
-    departmentId:
-      viewer.role === "general_manager"
-        ? fields.departmentId
-        : viewer.departmentId,
+    departmentId: isTopRole(viewer.role)
+      ? fields.departmentId
+      : viewer.departmentId,
   });
   if (!parsed.success) {
     return {

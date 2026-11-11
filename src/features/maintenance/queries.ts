@@ -83,3 +83,16 @@ export async function getFault(faultId: string) {
   if (error) throw error;
   return data;
 }
+
+/**
+ * The department repair tasks belong to: the viewer's own (the maintenance
+ * manager), or for the developer, who has none, the maintenance department.
+ */
+export async function getRepairDepartment(
+  viewerDepartmentId: string | null,
+): Promise<string | null> {
+  if (viewerDepartmentId) return viewerDepartmentId;
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("maintenance_department");
+  return data ?? null;
+}

@@ -15,10 +15,11 @@ import {
   RejectFaultForm,
 } from "@/features/maintenance/components/maintenance-forms";
 import { faultCode } from "@/features/maintenance/labels";
-import { getFault } from "@/features/maintenance/queries";
+import { getFault, getRepairDepartment } from "@/features/maintenance/queries";
 import { getAssignmentOptions } from "@/features/tasks/queries";
 import { requireManager } from "@/lib/auth/dal";
 import { getFactorySettings } from "@/lib/settings";
+import { canDecideFaults } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "بلاغ عطل",
@@ -52,10 +53,15 @@ async function Fault({
   ]);
   if (!fault) notFound();
 
-  // Only the maintenance manager decides what happens to an open report.
-  const decides =
-    viewer.role === "maintenance_manager" && fault.status === "open";
-  const options = decides ? await getAssignmentOptions(viewer) : null;
+  // Only the maintenance manager (and the developer) decides what happens
+  // to an open report.
+  const decides = canDecideFaults(viewer.role) && fault.status === "open";
+  const [options, repairDepartmentId] = decides
+    ? await Promise.all([
+        getAssignmentOptions(viewer),
+        getRepairDepartment(viewer.departmentId),
+      ])
+    : [null, null];
 
   return (
     <>
@@ -87,7 +93,7 @@ async function Fault({
           taskHref={(taskId) => `/admin/tasks/${taskId}`}
         />
 
-        {decides && options && viewer.departmentId ? (
+        {decides && options && repairDepartmentId ? (
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -96,7 +102,7 @@ async function Fault({
               <CardContent>
                 <AssignRepairForm
                   faultId={fault.id}
-                  departmentId={viewer.departmentId}
+                  departmentId={repairDepartmentId}
                   defaultTitle={`إصلاح: ${fault.machine?.name ?? ""}`}
                   people={options.people.map((p) => ({
                     id: p.id,

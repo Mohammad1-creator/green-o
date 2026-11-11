@@ -24,6 +24,7 @@ import { requireRole } from "@/lib/auth/dal";
 import { formatCalendarDate } from "@/lib/format";
 import { getFactorySettings } from "@/lib/settings";
 import { addDays, zonedToday } from "@/lib/zoned-time";
+import { isTopRole, MAINTENANCE_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "خطة صيانة وقائية",
@@ -47,7 +48,7 @@ async function PmPlan({
   params: Promise<{ id: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const viewer = await requireRole(["general_manager", "maintenance_manager"]);
+  const viewer = await requireRole(MAINTENANCE_ROLES);
   const [{ id }, query] = await Promise.all([params, searchParams]);
   if (!z.uuid().safeParse(id).success) notFound();
 
@@ -193,7 +194,7 @@ async function PmPlan({
                   department_id: team.department_id,
                 }))}
                 fixedDepartmentId={
-                  viewer.role === "general_manager" ? null : viewer.departmentId
+                  isTopRole(viewer.role) ? null : viewer.departmentId
                 }
                 today={today}
               />

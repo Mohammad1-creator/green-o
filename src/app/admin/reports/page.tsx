@@ -16,6 +16,7 @@ import { listDepartments } from "@/features/users/queries";
 import { requireManager } from "@/lib/auth/dal";
 import { getFactorySettings } from "@/lib/settings";
 import { zonedToday } from "@/lib/zoned-time";
+import { isTopRole } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "التقارير",
@@ -43,7 +44,7 @@ async function Reports({
   ]);
   const today = zonedToday(settings.timeZone);
   const period = parsePeriod(query, today);
-  const isGm = viewer.role === "general_manager";
+  const isGm = isTopRole(viewer.role);
   const departmentParam = z.uuid().safeParse(query.department);
   const departmentId =
     isGm && departmentParam.success ? departmentParam.data : null;

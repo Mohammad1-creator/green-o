@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CreateTaskForm } from "@/features/tasks/components/task-forms";
 import { getAssignmentOptions } from "@/features/tasks/queries";
 import { requireManager } from "@/lib/auth/dal";
+import { isTopRole } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "مهمة جديدة",
@@ -55,7 +56,7 @@ async function NewTask() {
             department_id: t.department_id,
           }))}
           fixedDepartmentId={
-            viewer.role === "general_manager" ? null : viewer.departmentId
+            isTopRole(viewer.role) ? null : viewer.departmentId
           }
         />
       </CardContent>

@@ -1,4 +1,5 @@
 export const APP_ROLES = [
+  "developer",
   "general_manager",
   "maintenance_manager",
   "production_manager",
@@ -8,6 +9,7 @@ export const APP_ROLES = [
 export type AppRole = (typeof APP_ROLES)[number];
 
 export const ROLE_LABELS: Record<AppRole, string> = {
+  developer: "المبرمج",
   general_manager: "المدير العام",
   maintenance_manager: "مدير الصيانة",
   production_manager: "مدير الإنتاج",
@@ -15,10 +17,34 @@ export const ROLE_LABELS: Record<AppRole, string> = {
 };
 
 export const MANAGER_ROLES: readonly AppRole[] = [
+  "developer",
   "general_manager",
   "maintenance_manager",
   "production_manager",
 ];
+
+/**
+ * Factory-wide roles: no department, every department in scope. The
+ * developer can do everything the general manager can, and more.
+ */
+export const TOP_ROLES: readonly AppRole[] = ["developer", "general_manager"];
+export const MAINTENANCE_ROLES: readonly AppRole[] = [
+  ...TOP_ROLES,
+  "maintenance_manager",
+];
+export const PRODUCTION_ROLES: readonly AppRole[] = [
+  ...TOP_ROLES,
+  "production_manager",
+];
+
+export function isTopRole(role: AppRole | null | undefined): boolean {
+  return role === "developer" || role === "general_manager";
+}
+
+/** Assigning repairs: the maintenance manager, and the developer. */
+export function canDecideFaults(role: AppRole): boolean {
+  return role === "maintenance_manager" || role === "developer";
+}
 
 export function isAppRole(value: unknown): value is AppRole {
   return APP_ROLES.some((role) => role === value);

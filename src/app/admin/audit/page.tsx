@@ -25,6 +25,7 @@ import {
 import { requireRole } from "@/lib/auth/dal";
 import { formatDateTime, formatNumber } from "@/lib/format";
 import { getFactorySettings } from "@/lib/settings";
+import { TOP_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "سجل التدقيق",
@@ -51,7 +52,7 @@ async function Audit({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  await requireRole(["general_manager"]);
+  await requireRole(TOP_ROLES);
   const [query, settings] = await Promise.all([
     searchParams,
     getFactorySettings(),

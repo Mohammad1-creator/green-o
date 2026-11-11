@@ -13,6 +13,7 @@ import { attachment, toCsv, toXlsx } from "@/features/reports/export";
 import { getCurrentUser } from "@/lib/auth/dal";
 import { formatDateTime } from "@/lib/format";
 import { getFactorySettings } from "@/lib/settings";
+import { isTopRole } from "@/lib/auth/roles";
 
 /** The newest entries at most, so one export stays a sensible size. */
 const MAX_ROWS = 20_000;
@@ -33,7 +34,7 @@ const COLUMNS: ReportColumn[] = [
 export async function GET(request: NextRequest) {
   const user = await getCurrentUser();
   if (!user) return new Response("Unauthorized", { status: 401 });
-  if (user.role !== "general_manager") {
+  if (!isTopRole(user.role)) {
     return new Response("Forbidden", { status: 403 });
   }
 

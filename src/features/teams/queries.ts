@@ -2,6 +2,7 @@ import "server-only";
 
 import type { CurrentUser } from "@/lib/auth/dal";
 import { createClient } from "@/lib/supabase/server";
+import { isTopRole } from "@/lib/auth/roles";
 
 /** Teams the viewer manages, with their members. */
 export async function listManagedTeams(viewer: CurrentUser) {
@@ -13,7 +14,7 @@ export async function listManagedTeams(viewer: CurrentUser) {
     )
     .order("is_active", { ascending: false })
     .order("name");
-  if (viewer.role !== "general_manager") {
+  if (!isTopRole(viewer.role)) {
     if (!viewer.departmentId) return [];
     query = query.eq("department_id", viewer.departmentId);
   }

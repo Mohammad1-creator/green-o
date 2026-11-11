@@ -12,6 +12,7 @@ import { getCurrentUser } from "@/lib/auth/dal";
 import { formatDateTime } from "@/lib/format";
 import { getFactorySettings } from "@/lib/settings";
 import { zonedToday } from "@/lib/zoned-time";
+import { isTopRole } from "@/lib/auth/roles";
 
 /**
  * GET /api/export/<report>?from=&to=&department=&format=csv|xlsx
@@ -35,7 +36,7 @@ export async function GET(
   const period = parsePeriod(query, zonedToday(settings.timeZone));
   const departmentParam = z.uuid().safeParse(query.department);
   const departmentId =
-    user.role === "general_manager" && departmentParam.success
+    isTopRole(user.role) && departmentParam.success
       ? departmentParam.data
       : null;
 

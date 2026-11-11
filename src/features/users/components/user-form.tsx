@@ -20,7 +20,12 @@ import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { ActionForm } from "@/components/action-form";
 import { type ActionState, firstFieldError } from "@/lib/action-state";
-import { APP_ROLES, type AppRole, ROLE_LABELS } from "@/lib/auth/roles";
+import {
+  APP_ROLES,
+  type AppRole,
+  ROLE_LABELS,
+  isTopRole,
+} from "@/lib/auth/roles";
 import { suggestPassword } from "@/lib/auth/suggest-password";
 
 import { createUserAction, updateUserAction } from "../actions";
@@ -59,11 +64,11 @@ export function UserForm({
     action,
     null,
   );
-  const isGm = viewerRole === "general_manager";
+  const isGm = isTopRole(viewerRole);
   const [role, setRole] = useState<AppRole>(defaults?.role ?? "employee");
   const [password, setPassword] = useState("");
   const canChooseRole = isGm && !lockRoleAndDepartment;
-  const needsDepartment = role !== "general_manager";
+  const needsDepartment = !isTopRole(role);
 
   return (
     <ActionForm action={formAction} noValidate>

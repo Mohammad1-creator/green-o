@@ -8,6 +8,7 @@ import { BackupRuns } from "@/features/settings/components/backup-runs";
 import { SettingsForm } from "@/features/settings/components/settings-form";
 import { requireRole } from "@/lib/auth/dal";
 import { createClient } from "@/lib/supabase/server";
+import { TOP_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "الإعدادات",
@@ -25,7 +26,7 @@ export default function SettingsPage() {
 }
 
 async function Settings() {
-  await requireRole(["general_manager"]);
+  await requireRole(TOP_ROLES);
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("app_settings")

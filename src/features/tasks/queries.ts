@@ -4,6 +4,7 @@ import type { CurrentUser } from "@/lib/auth/dal";
 import { createClient } from "@/lib/supabase/server";
 
 import type { TaskStatus } from "./labels";
+import { isTopRole } from "@/lib/auth/roles";
 
 const LIST_COLUMNS =
   "id, number, kind, title, status, due_at, is_overdue, created_at, department_id, department:departments(name), assignees:task_assignees(user_id, person:profiles(full_name))";
@@ -69,9 +70,7 @@ export async function listMyTasks(
 export async function listPendingApprovals(viewer: CurrentUser) {
   const tasks = await listManagedTasks({ statuses: ["pending_approval"] });
   return tasks.filter((task) =>
-    viewer.role === "general_manager"
-      ? true
-      : task.department_id === viewer.departmentId,
+    isTopRole(viewer.role) ? true : task.department_id === viewer.departmentId,
   );
 }
 
@@ -102,7 +101,7 @@ export async function getTaskDetail(taskId: string) {
 /** People and teams a manager can assign work to, grouped by department. */
 export async function getAssignmentOptions(viewer: CurrentUser) {
   const supabase = await createClient();
-  const isGm = viewer.role === "general_manager";
+  const isGm = isTopRole(viewer.role);
 
   const departmentsQuery = supabase
     .from("departments")

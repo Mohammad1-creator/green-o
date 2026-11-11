@@ -7,6 +7,7 @@ import { type ActionState, formFields } from "@/lib/action-state";
 import { getCurrentUser } from "@/lib/auth/dal";
 import { toUserMessage } from "@/lib/errors";
 import { createClient } from "@/lib/supabase/server";
+import { isTopRole } from "@/lib/auth/roles";
 
 const name = z
   .string()
@@ -28,7 +29,7 @@ const NOT_ALLOWED: ActionState = {
 
 async function isGeneralManager() {
   const user = await getCurrentUser();
-  return user?.role === "general_manager";
+  return isTopRole(user?.role);
 }
 
 export async function createDepartmentAction(

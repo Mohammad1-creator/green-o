@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import { type ActionState, formFields } from "@/lib/action-state";
 import { getCurrentUser } from "@/lib/auth/dal";
-import { isManagerRole } from "@/lib/auth/roles";
+import { isManagerRole, isTopRole } from "@/lib/auth/roles";
 import { employeeNumberToEmail } from "@/lib/auth/staff-email";
 import { toUserMessage } from "@/lib/errors";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -50,12 +50,11 @@ export async function createUserAction(
   const input = parsed.data;
 
   // A department manager always creates staff in their own department.
-  const departmentId =
-    input.role === "general_manager"
-      ? null
-      : viewer.role === "general_manager"
-        ? input.departmentId
-        : viewer.departmentId;
+  const departmentId = isTopRole(input.role)
+    ? null
+    : isTopRole(viewer.role)
+      ? input.departmentId
+      : viewer.departmentId;
 
   const supabase = await createClient();
   const { data: allowed } = await supabase.rpc("can_manage_account", {
@@ -126,12 +125,11 @@ export async function updateUserAction(
     };
   }
   const input = parsed.data;
-  const departmentId =
-    input.role === "general_manager"
-      ? null
-      : viewer.role === "general_manager"
-        ? input.departmentId
-        : viewer.departmentId;
+  const departmentId = isTopRole(input.role)
+    ? null
+    : isTopRole(viewer.role)
+      ? input.departmentId
+      : viewer.departmentId;
 
   const supabase = await createClient();
   const { data: before } = await supabase

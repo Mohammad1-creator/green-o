@@ -19,6 +19,7 @@ import {
 import { SPEC_TYPE_LABELS } from "@/features/production/specs";
 import { requireRole } from "@/lib/auth/dal";
 import { formatNumber } from "@/lib/format";
+import { PRODUCTION_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "إعدادات الإنتاج",
@@ -87,7 +88,7 @@ function EditDisclosure({ children }: { children: React.ReactNode }) {
 }
 
 async function Settings() {
-  await requireRole(["general_manager", "production_manager"]);
+  await requireRole(PRODUCTION_ROLES);
   const [definitions, stages, defects] = await Promise.all([
     listSpecDefinitions(),
     listStages(),

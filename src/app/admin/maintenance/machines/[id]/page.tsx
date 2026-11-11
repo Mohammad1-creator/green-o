@@ -22,6 +22,7 @@ import { listDepartments } from "@/features/users/queries";
 import { requireRole } from "@/lib/auth/dal";
 import { formatDateTime } from "@/lib/format";
 import { getFactorySettings } from "@/lib/settings";
+import { MAINTENANCE_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "بيانات الآلة",
@@ -45,7 +46,7 @@ async function MachineDetails({
   params: Promise<{ id: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  await requireRole(["general_manager", "maintenance_manager"]);
+  await requireRole(MAINTENANCE_ROLES);
   const [{ id }, query] = await Promise.all([params, searchParams]);
   if (!z.uuid().safeParse(id).success) notFound();
 

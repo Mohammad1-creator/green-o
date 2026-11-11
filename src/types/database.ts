@@ -823,6 +823,9 @@ isOneToOne: false
 "mark_all_notifications_read":
 { Args: Record<PropertyKey, never>; Returns: number
                            },
+"maintenance_department":
+{ Args: Record<PropertyKey, never>; Returns: string
+                           },
 "mark_attachment_deleted":
 { Args: { "p_attachment_id": string }; Returns: string
                            },
@@ -953,6 +956,9 @@ isOneToOne: false
 "set_user_active":
 { Args: { "p_active": boolean,"p_user_id": string }; Returns: undefined
                            },
+"set_user_role":
+{ Args: { "p_department_id"?: string,"p_role": Database["public"]["Enums"]["app_role"],"p_user_id": string }; Returns: undefined
+                           },
 "start_task":
 { Args: { "p_task_id": string }; Returns: undefined
                            },
@@ -979,7 +985,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "app_role": "general_manager"|"maintenance_manager"|"production_manager"|"employee","backup_status": "succeeded"|"failed","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","order_stage_status": "pending"|"active"|"closed","order_status": "open"|"in_progress"|"completed"|"cancelled","push_status": "pending"|"sent"|"failed"|"skipped","spec_type": "text"|"number"|"select"|"boolean","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
+            "app_role": "developer"|"general_manager"|"maintenance_manager"|"production_manager"|"employee","backup_status": "succeeded"|"failed","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","order_stage_status": "pending"|"active"|"closed","order_status": "open"|"in_progress"|"completed"|"cancelled","push_status": "pending"|"sent"|"failed"|"skipped","spec_type": "text"|"number"|"select"|"boolean","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -1095,7 +1101,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["general_manager", "maintenance_manager", "production_manager", "employee"],"backup_status": ["succeeded", "failed"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"order_stage_status": ["pending", "active", "closed"],"order_status": ["open", "in_progress", "completed", "cancelled"],"push_status": ["pending", "sent", "failed", "skipped"],"spec_type": ["text", "number", "select", "boolean"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
+            "app_role": ["developer", "general_manager", "maintenance_manager", "production_manager", "employee"],"backup_status": ["succeeded", "failed"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"order_stage_status": ["pending", "active", "closed"],"order_status": ["open", "in_progress", "completed", "cancelled"],"push_status": ["pending", "sent", "failed", "skipped"],"spec_type": ["text", "number", "select", "boolean"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
           }
         }
 } as const

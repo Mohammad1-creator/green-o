@@ -1,4 +1,10 @@
-import { type AppRole, MANAGER_ROLES } from "@/lib/auth/roles";
+import {
+  type AppRole,
+  MAINTENANCE_ROLES,
+  MANAGER_ROLES,
+  PRODUCTION_ROLES,
+  TOP_ROLES,
+} from "@/lib/auth/roles";
 
 export type NavIcon =
   | "home"
@@ -13,6 +19,7 @@ export type NavIcon =
   | "reports"
   | "points"
   | "users"
+  | "permissions"
   | "teams"
   | "departments"
   | "audit"
@@ -25,15 +32,9 @@ export type NavItem = {
   roles: readonly AppRole[];
 };
 
-const GM: readonly AppRole[] = ["general_manager"];
-const MAINTENANCE: readonly AppRole[] = [
-  "general_manager",
-  "maintenance_manager",
-];
-const PRODUCTION: readonly AppRole[] = [
-  "general_manager",
-  "production_manager",
-];
+const GM = TOP_ROLES;
+const MAINTENANCE = MAINTENANCE_ROLES;
+const PRODUCTION = PRODUCTION_ROLES;
 
 /** Admin sidebar, in display order. Each item lists the roles that see it. */
 export const ADMIN_NAV: readonly NavItem[] = [
@@ -98,6 +99,12 @@ export const ADMIN_NAV: readonly NavItem[] = [
     label: "المستخدمون",
     icon: "users",
     roles: MANAGER_ROLES,
+  },
+  {
+    href: "/admin/permissions",
+    label: "الصلاحيات",
+    icon: "permissions",
+    roles: GM,
   },
   {
     href: "/admin/departments",

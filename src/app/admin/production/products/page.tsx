@@ -22,6 +22,7 @@ import {
 } from "@/features/production/queries";
 import { formDefinitions } from "@/features/production/specs";
 import { requireManager } from "@/lib/auth/dal";
+import { PRODUCTION_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "المنتجات",
@@ -43,8 +44,7 @@ export default function ProductsPage() {
 
 async function Products() {
   const viewer = await requireManager();
-  const canEdit =
-    viewer.role === "general_manager" || viewer.role === "production_manager";
+  const canEdit = PRODUCTION_ROLES.includes(viewer.role);
   const [products, definitions] = await Promise.all([
     listProducts(),
     canEdit ? listSpecDefinitions() : Promise.resolve([]),

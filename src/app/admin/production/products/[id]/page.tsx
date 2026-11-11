@@ -23,6 +23,7 @@ import {
 import { formDefinitions, formatSpecValue } from "@/features/production/specs";
 import { requireManager } from "@/lib/auth/dal";
 import { formatNumber } from "@/lib/format";
+import { PRODUCTION_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "بيانات المنتج",
@@ -47,8 +48,7 @@ async function Product({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const viewer = await requireManager();
-  const canEdit =
-    viewer.role === "general_manager" || viewer.role === "production_manager";
+  const canEdit = PRODUCTION_ROLES.includes(viewer.role);
   const [{ id }, query] = await Promise.all([params, searchParams]);
   if (!z.uuid().safeParse(id).success) notFound();
 

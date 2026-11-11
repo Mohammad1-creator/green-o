@@ -2,6 +2,7 @@ import { expect, type Page, test } from "@playwright/test";
 
 /** Demo accounts created by scripts/seed-dev.mts. */
 export const DEMO = {
+  developer: "0001",
   generalManager: "1000",
   maintenanceManager: "2000",
   maintenanceTech: "2001",
@@ -9,6 +10,7 @@ export const DEMO = {
   productionManager: "3000",
   productionWorker: "3001",
   productionWorker2: "3002",
+  qualityInspector: "4001",
 } as const;
 
 export const DEMO_PASSWORD = process.env.SEED_PASSWORD ?? "Local-Demo-2026";

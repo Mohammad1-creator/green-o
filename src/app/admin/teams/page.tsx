@@ -11,6 +11,7 @@ import {
 import { listActivePeople, listManagedTeams } from "@/features/teams/queries";
 import { listDepartments } from "@/features/users/queries";
 import { requireManager } from "@/lib/auth/dal";
+import { isTopRole } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "الفرق",
@@ -32,7 +33,7 @@ export default function TeamsPage() {
 
 async function Teams() {
   const viewer = await requireManager();
-  const isGm = viewer.role === "general_manager";
+  const isGm = isTopRole(viewer.role);
   const [teams, departments] = await Promise.all([
     listManagedTeams(viewer),
     isGm ? listDepartments({ activeOnly: true }) : Promise.resolve(null),

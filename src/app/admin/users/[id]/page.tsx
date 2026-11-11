@@ -20,7 +20,7 @@ import {
   listDepartments,
 } from "@/features/users/queries";
 import { requireManager } from "@/lib/auth/dal";
-import { ROLE_LABELS } from "@/lib/auth/roles";
+import { ROLE_LABELS, isTopRole } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "بيانات المستخدم",
@@ -53,7 +53,7 @@ async function UserDetails({
 
   const [canManage, departments] = await Promise.all([
     canManageAccount(user.department_id, user.role),
-    viewer.role === "general_manager"
+    isTopRole(viewer.role)
       ? listDepartments({ activeOnly: true })
       : Promise.resolve([]),
   ]);

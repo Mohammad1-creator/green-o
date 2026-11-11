@@ -26,6 +26,7 @@ import { PrintButton } from "@/features/reports/components/print-button";
 import { requireRole } from "@/lib/auth/dal";
 import { formatCalendarDate, formatDateTime, formatNumber } from "@/lib/format";
 import { getFactorySettings } from "@/lib/settings";
+import { PRODUCTION_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "أمر إنتاج للطباعة",
@@ -42,7 +43,7 @@ export default function PrintOrderPage({
 }
 
 async function PrintOrder({ params }: { params: Promise<{ id: string }> }) {
-  await requireRole(["general_manager", "production_manager"]);
+  await requireRole(PRODUCTION_ROLES);
   const { id } = await params;
   if (!z.uuid().safeParse(id).success) notFound();
 

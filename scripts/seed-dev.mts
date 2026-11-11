@@ -57,7 +57,11 @@ const DEPARTMENTS: Record<DepartmentKey, string> = {
 };
 
 type Role =
-  "general_manager" | "maintenance_manager" | "production_manager" | "employee";
+  | "developer"
+  | "general_manager"
+  | "maintenance_manager"
+  | "production_manager"
+  | "employee";
 
 export const DEMO_USERS: {
   employeeNo: string;
@@ -66,6 +70,13 @@ export const DEMO_USERS: {
   department: DepartmentKey | null;
   jobTitle?: string;
 }[] = [
+  {
+    employeeNo: "0001",
+    fullName: "المبرمج",
+    role: "developer",
+    department: null,
+    jobTitle: "مبرمج النظام",
+  },
   {
     employeeNo: "1000",
     fullName: "سارة الأحمد",
@@ -445,5 +456,5 @@ console.log(
   `Seeded ${Object.keys(DEPARTMENTS).length} departments and ${DEMO_USERS.length} users (${marker}).`,
 );
 console.log(
-  "Sign in with employee number 1000 (general manager), 2000, 3000, 2001, 3001 ...",
+  "Sign in with employee number 0001 (developer), 1000 (general manager), 2000, 3000, 2001, 3001 ...",
 );

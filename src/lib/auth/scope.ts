@@ -1,4 +1,4 @@
-import type { AppRole } from "./roles";
+import { type AppRole, isTopRole } from "./roles";
 
 type Viewer = { role: AppRole; departmentId: string | null };
 
@@ -10,7 +10,7 @@ export function managesDepartment(
   viewer: Viewer,
   departmentId: string | null,
 ): boolean {
-  if (viewer.role === "general_manager") return true;
+  if (isTopRole(viewer.role)) return true;
   return (
     viewer.role !== "employee" &&
     departmentId !== null &&

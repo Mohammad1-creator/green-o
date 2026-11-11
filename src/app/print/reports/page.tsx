@@ -11,6 +11,7 @@ import { requireManager } from "@/lib/auth/dal";
 import { formatDateTime } from "@/lib/format";
 import { getFactorySettings } from "@/lib/settings";
 import { zonedToday } from "@/lib/zoned-time";
+import { isTopRole } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "تقرير للطباعة",
@@ -39,7 +40,7 @@ async function PrintReports({
   const period = parsePeriod(query, zonedToday(settings.timeZone));
   const departmentParam = z.uuid().safeParse(query.department);
   const departmentId =
-    viewer.role === "general_manager" && departmentParam.success
+    isTopRole(viewer.role) && departmentParam.success
       ? departmentParam.data
       : null;
 

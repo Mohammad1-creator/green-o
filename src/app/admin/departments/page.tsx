@@ -10,6 +10,7 @@ import {
 } from "@/features/departments/components/department-forms";
 import { requireRole } from "@/lib/auth/dal";
 import { createClient } from "@/lib/supabase/server";
+import { TOP_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "الأقسام",
@@ -30,7 +31,7 @@ export default function DepartmentsPage() {
 }
 
 async function Departments() {
-  await requireRole(["general_manager"]);
+  await requireRole(TOP_ROLES);
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("departments")

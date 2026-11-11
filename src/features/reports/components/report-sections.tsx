@@ -17,6 +17,7 @@ import {
 } from "../summaries";
 
 import { KpiRow, RankedBars, ReportTable } from "./report-parts";
+import { MAINTENANCE_ROLES, PRODUCTION_ROLES } from "@/lib/auth/roles";
 
 const percentOrDash = (value: number | null) =>
   value === null ? "—" : formatPercent(value);
@@ -66,10 +67,8 @@ export async function ReportSections({
   printable?: boolean;
 }) {
   const input = { period, departmentId };
-  const showMaintenance =
-    viewer.role === "general_manager" || viewer.role === "maintenance_manager";
-  const showProduction =
-    viewer.role === "general_manager" || viewer.role === "production_manager";
+  const showMaintenance = MAINTENANCE_ROLES.includes(viewer.role);
+  const showProduction = PRODUCTION_ROLES.includes(viewer.role);
 
   const [tasks, maintenance, production, tables] = await Promise.all([
     getTaskSummary(period, departmentId),

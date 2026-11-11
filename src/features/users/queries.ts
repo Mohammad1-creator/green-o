@@ -2,6 +2,7 @@ import "server-only";
 
 import type { CurrentUser } from "@/lib/auth/dal";
 import { createClient } from "@/lib/supabase/server";
+import { isTopRole } from "@/lib/auth/roles";
 
 const USER_COLUMNS =
   "id, full_name, role, is_active, department_id, department:departments(name), details:employee_details(employee_no, phone, job_title, notes)";
@@ -15,7 +16,7 @@ export async function listManagedUsers(viewer: CurrentUser) {
     .order("is_active", { ascending: false })
     .order("full_name");
 
-  if (viewer.role !== "general_manager") {
+  if (!isTopRole(viewer.role)) {
     if (!viewer.departmentId) return [];
     query = query.eq("department_id", viewer.departmentId);
   }

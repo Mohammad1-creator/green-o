@@ -1,6 +1,12 @@
 import "server-only";
 
-import type { AppRole } from "@/lib/auth/roles";
+import {
+  type AppRole,
+  MAINTENANCE_ROLES,
+  MANAGER_ROLES,
+  PRODUCTION_ROLES,
+  TOP_ROLES,
+} from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/server";
 
 import type { Period } from "./period";
@@ -25,19 +31,9 @@ export type ReportDefinition = {
   }) => Promise<ReportRow[]>;
 };
 
-const ALL_MANAGERS: readonly AppRole[] = [
-  "general_manager",
-  "maintenance_manager",
-  "production_manager",
-];
-const MAINTENANCE: readonly AppRole[] = [
-  "general_manager",
-  "maintenance_manager",
-];
-const PRODUCTION: readonly AppRole[] = [
-  "general_manager",
-  "production_manager",
-];
+const ALL_MANAGERS = MANAGER_ROLES;
+const MAINTENANCE = MAINTENANCE_ROLES;
+const PRODUCTION = PRODUCTION_ROLES;
 
 /** a / b, or null when b is zero. */
 export function ratio(a: number, b: number): number | null {
@@ -58,7 +54,7 @@ async function rpc<T>(
 export const REPORTS = {
   "tasks-by-department": {
     title: "المهام حسب القسم",
-    roles: ["general_manager"],
+    roles: TOP_ROLES,
     columns: [
       { key: "department_name", label: "القسم", type: "text" },
       { key: "total", label: "المهام", type: "count" },

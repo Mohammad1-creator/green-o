@@ -35,6 +35,7 @@ import { formatCalendarDate, formatNumber } from "@/lib/format";
 import { getFactorySettings } from "@/lib/settings";
 import { cn } from "@/lib/utils";
 import { zonedToday } from "@/lib/zoned-time";
+import { isTopRole, PRODUCTION_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = {
   title: "أوامر الإنتاج",
@@ -61,7 +62,7 @@ async function Orders({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const viewer = await requireRole(["general_manager", "production_manager"]);
+  const viewer = await requireRole(PRODUCTION_ROLES);
   const [query, settings] = await Promise.all([
     searchParams,
     getFactorySettings(),
@@ -168,7 +169,7 @@ async function Orders({
             }))}
             departments={options.departments}
             fixedDepartmentId={
-              viewer.role === "general_manager" ? null : viewer.departmentId
+              isTopRole(viewer.role) ? null : viewer.departmentId
             }
             today={today}
           />
