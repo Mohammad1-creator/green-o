@@ -555,6 +555,44 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"task_points": {
+                  Row: {
+                    "awarded_by": string,"created_at": string,"id": string,"note": string | null,"points": number,"task_id": string,"user_id": string,"void_reason": string | null,"voided_at": string | null,"voided_by": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "awarded_by": string,"created_at"?: string,"id"?: string,"note"?: string | null,"points": number,"task_id": string,"user_id": string,"void_reason"?: string | null,"voided_at"?: string | null,"voided_by"?: string | null
+                  }
+                  Update: {
+                    "awarded_by"?: string,"created_at"?: string,"id"?: string,"note"?: string | null,"points"?: number,"task_id"?: string,"user_id"?: string,"void_reason"?: string | null,"voided_at"?: string | null,"voided_by"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "task_points_awarded_by_fkey"
+      columns: ["awarded_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_points_task_id_fkey"
+      columns: ["task_id"]
+isOneToOne: false
+      referencedRelation: "tasks"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_points_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "task_points_voided_by_fkey"
+      columns: ["voided_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"task_reminders": {
                   Row: {
                     "created_at": string,"created_by": string | null,"id": string,"remind_at": string,"sent_at": string | null,"task_id": string
@@ -721,6 +759,9 @@ isOneToOne: false
               "entries": number,"table_name": string
             }[]
                            },
+"award_task_points":
+{ Args: { "p_note"?: string,"p_points": number[],"p_task_id": string,"p_user_ids": string[] }; Returns: number
+                           },
 "authorize_password_reset":
 { Args: { "p_user_id": string }; Returns: undefined
                            },
@@ -839,6 +880,11 @@ isOneToOne: false
               "avg_repair_hours": number,"avg_response_hours": number,"downtime_hours": number,"open_now": number,"rejected": number,"reported": number,"resolved": number
             }[]
                            },
+"report_points_by_person":
+{ Args: { "p_department_id"?: string,"p_from": string,"p_to": string }; Returns: {
+              "awards": number,"department_name": string,"full_name": string,"points": number,"tasks": number,"user_id": string
+            }[]
+                           },
 "report_pm_compliance":
 { Args: { "p_from": string,"p_to": string }; Returns: {
               "cancelled": number,"due": number,"late": number,"missed": number,"on_time": number
@@ -927,6 +973,9 @@ isOneToOne: false
                            },
 "void_stage_entry":
 { Args: { "p_entry_id": string,"p_reason": string }; Returns: undefined
+                           },
+"void_task_points":
+{ Args: { "p_id": string,"p_reason": string }; Returns: undefined
                            }
           }
           Enums: {

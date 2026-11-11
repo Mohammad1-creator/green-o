@@ -9,6 +9,7 @@ import { PageSkeleton } from "@/components/page-skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TaskPoints } from "@/features/points/components/task-points";
 import { ManagerTaskActions } from "@/features/tasks/components/task-actions";
 import {
   TaskCollaboration,
@@ -198,6 +199,20 @@ async function TaskDetails({
             </CardContent>
           </Card>
         </div>
+
+        {canManage && task.status === "completed" ? (
+          <div className="space-y-6">
+            <TaskPoints
+              taskId={task.id}
+              viewerId={viewer.id}
+              timeZone={tz}
+              assignees={task.assignees.map((assignee) => ({
+                id: assignee.user_id,
+                name: assignee.person?.full_name ?? "",
+              }))}
+            />
+          </div>
+        ) : null}
 
         {canManage && !isFinalStatus(task.status) ? (
           <div className="space-y-6">

@@ -11,6 +11,7 @@ export type NavIcon =
   | "products"
   | "production-settings"
   | "reports"
+  | "points"
   | "users"
   | "teams"
   | "departments"
@@ -84,6 +85,12 @@ export const ADMIN_NAV: readonly NavItem[] = [
     href: "/admin/reports",
     label: "التقارير",
     icon: "reports",
+    roles: MANAGER_ROLES,
+  },
+  {
+    href: "/admin/points",
+    label: "النقاط",
+    icon: "points",
     roles: MANAGER_ROLES,
   },
   {

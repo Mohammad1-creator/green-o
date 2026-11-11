@@ -110,6 +110,34 @@ export const REPORTS = {
         on_time_rate: ratio(row.completed_on_time, row.completed),
       })),
   },
+  "points-by-person": {
+    title: "ترتيب الموظفين بالنقاط",
+    roles: ALL_MANAGERS,
+    columns: [
+      { key: "rank", label: "الترتيب", type: "count" },
+      { key: "full_name", label: "الموظف", type: "text" },
+      { key: "department_name", label: "القسم", type: "text" },
+      { key: "points", label: "النقاط", type: "count" },
+      { key: "tasks", label: "المهام", type: "count" },
+    ],
+    fetch: async ({ period, departmentId }) =>
+      (
+        await rpc((client) =>
+          client.rpc("report_points_by_person", {
+            p_from: period.from,
+            p_to: period.to,
+            p_department_id: departmentId ?? undefined,
+          }),
+        )
+      ).map((row, _index, rows) => ({
+        // Rows come highest first; equal points share a rank: 1, 2, 2, 4.
+        rank: rows.findIndex((other) => other.points === row.points) + 1,
+        full_name: row.full_name,
+        department_name: row.department_name,
+        points: row.points,
+        tasks: row.tasks,
+      })),
+  },
   "tasks-by-team": {
     title: "المهام حسب الفريق",
     roles: ALL_MANAGERS,

@@ -22,6 +22,7 @@ export const TABLE_LABELS: Record<string, string> = {
   "public.order_stages": "مراحل الأوامر",
   "public.order_stage_assignees": "عمال المراحل",
   "public.stage_entries": "إدخالات الكميات",
+  "public.task_points": "نقاط المهام",
 };
 
 export const ACTION_LABELS: Record<string, string> = {
