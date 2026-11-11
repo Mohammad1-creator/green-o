@@ -1,0 +1,9 @@
+
+> green-o@0.1.0 test:e2e
+> playwright test
+
+
+Running 48 tests using 2 workers
+················································
+  48 passed (53.5s)
+::notice title=🎭 Playwright Run Summary::  48 passed (53.5s)
