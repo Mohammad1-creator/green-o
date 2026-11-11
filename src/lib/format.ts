@@ -102,6 +102,24 @@ export function formatNumber(value: number): string {
   return numberFormatter.format(value);
 }
 
+const BYTE_UNITS = ["byte", "kilobyte", "megabyte", "gigabyte"] as const;
+
+/** 1536 → "1.5 كيلوبايت". */
+export function formatBytes(bytes: number): string {
+  let value = bytes;
+  let index = 0;
+  while (value >= 1024 && index < BYTE_UNITS.length - 1) {
+    value /= 1024;
+    index += 1;
+  }
+  return new Intl.NumberFormat(APP_LOCALE, {
+    style: "unit",
+    unit: BYTE_UNITS[index],
+    unitDisplay: "long",
+    maximumFractionDigits: index === 0 ? 0 : 1,
+  }).format(value);
+}
+
 /** True when the runtime knows this IANA time zone (e.g. "Asia/Riyadh"). */
 export function isValidTimeZone(timeZone: string): boolean {
   try {

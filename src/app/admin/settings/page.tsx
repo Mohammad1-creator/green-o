@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { PageHeader } from "@/components/page-header";
 import { PageSkeleton } from "@/components/page-skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BackupRuns } from "@/features/settings/components/backup-runs";
 import { SettingsForm } from "@/features/settings/components/settings-form";
 import { requireRole } from "@/lib/auth/dal";
 import { createClient } from "@/lib/supabase/server";
@@ -33,16 +34,19 @@ async function Settings() {
   if (error) throw error;
 
   return (
-    <Card className="max-w-2xl">
-      <CardHeader>
-        <CardTitle>المصنع</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <SettingsForm
-          factoryName={data.factory_name}
-          timeZone={data.timezone}
-        />
-      </CardContent>
-    </Card>
+    <div className="space-y-6">
+      <Card className="max-w-2xl">
+        <CardHeader>
+          <CardTitle>المصنع</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <SettingsForm
+            factoryName={data.factory_name}
+            timeZone={data.timezone}
+          />
+        </CardContent>
+      </Card>
+      <BackupRuns timeZone={data.timezone} />
+    </div>
   );
 }

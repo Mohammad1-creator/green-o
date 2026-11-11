@@ -1,0 +1,83 @@
+name: Backup
+
+# A daily encrypted backup of the production project (database with
+# logins, Storage files, manifest) to S3-compatible storage outside
+# Supabase. Setup and restore steps: docs/backup-restore.md.
+on:
+  schedule:
+    - cron: "15 21 * * *" # 00:15 in Riyadh
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backup
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  backup:
+    name: Daily encrypted backup
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: production
+    env:
+      DATABASE_URL: ${{ secrets.BACKUP_DATABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ vars.BACKUP_SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.BACKUP_SUPABASE_SECRET_KEY }}
+      # A public key: it can encrypt, never decrypt.
+      BACKUP_AGE_RECIPIENT: ${{ vars.BACKUP_AGE_RECIPIENT }}
+      BACKUP_S3_BUCKET: ${{ vars.BACKUP_S3_BUCKET }}
+      BACKUP_S3_ENDPOINT: ${{ vars.BACKUP_S3_ENDPOINT }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.BACKUP_S3_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKUP_S3_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - name: Check the configuration
+        id: config
+        run: |
+          missing=()
+          for name in DATABASE_URL NEXT_PUBLIC_SUPABASE_URL SUPABASE_SECRET_KEY BACKUP_AGE_RECIPIENT \
+                      BACKUP_S3_BUCKET BACKUP_S3_ENDPOINT AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY; do
+            [[ -n "${!name}" ]] || missing+=("$name")
+          done
+          if (( ${#missing[@]} > 0 )); then
+            echo "::warning::Backups are not set up yet. Missing: ${missing[*]}. See docs/backup-restore.md."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+            echo "BACKUP_STARTED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
+          fi
+      - uses: actions/checkout@v7
+        if: steps.config.outputs.ready == 'true'
+      - uses: actions/setup-node@v7
+        if: steps.config.outputs.ready == 'true'
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install tools
+        if: steps.config.outputs.ready == 'true'
+        run: |
+          npm ci
+          sudo apt-get update -q && sudo apt-get install -y -q age
+      - name: Back up
+        id: backup
+        if: steps.config.outputs.ready == 'true'
+        run: bash scripts/backup/run.sh 2>&1 | node scripts/ci/redact.mjs
+      - name: Record the result
+        if: always() && steps.config.outputs.ready == 'true'
+        env:
+          BACKUP_LOCATION: ${{ steps.backup.outputs.location }}
+          MANIFEST: ${{ steps.backup.outputs.manifest }}
+          OUTCOME: ${{ steps.backup.outcome }}
+        run: |
+          if [[ "$OUTCOME" == "success" && -n "$MANIFEST" ]]; then
+            node scripts/backup/record-run.mts succeeded "$MANIFEST"
+          else
+            node scripts/backup/record-run.mts failed "The backup step ended with: $OUTCOME. See $RUN_URL"
+          fi

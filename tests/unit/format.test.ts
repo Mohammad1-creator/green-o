@@ -57,3 +57,13 @@ describe("isValidTimeZone", () => {
     expect(isValidTimeZone("Mars/Base")).toBe(false);
   });
 });
+
+describe("formatBytes", () => {
+  it("picks a readable unit with Western digits", async () => {
+    const { formatBytes } = await import("@/lib/format");
+    expect(formatBytes(512)).toMatch(/^512 /);
+    expect(formatBytes(1536)).toMatch(/^1\.5 /);
+    expect(formatBytes(5 * 1024 * 1024)).toMatch(/^5 /);
+    expect(formatBytes(1536)).not.toMatch(ARABIC_INDIC_DIGITS);
+  });
+});

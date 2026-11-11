@@ -135,6 +135,8 @@ jobs:
         env:
           APP_ENV: local
         run: npm run test:e2e 2>&1 | node scripts/ci/redact.mjs | tee ci-logs/e2e.log
+      - name: Backup round trip (dump, encrypt, decrypt, verify)
+        run: bash scripts/ci/backup-round-trip.sh 2>&1 | node scripts/ci/redact.mjs | tee ci-logs/backup.log
       - name: Keep page snapshots of failed tests
         if: failure()
         run: |
