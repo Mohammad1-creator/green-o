@@ -1,0 +1,46 @@
+
+Running kernel seems to be up-to-date.
+
+Restarting services...
+
+Service restarts being deferred:
+ systemctl restart hosted-compute-agent.service
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+Probe uploaded.
+== database
+Target: custom Postgres (127.0.0.1:54322)
+Dumping roles from local database...
+Dumped schema to /tmp/tmp.mxnCVhQdCy/green-o-2026-11-11T025311Z/roles.sql.
+Target: custom Postgres (127.0.0.1:54322)
+Dumping schemas from local database...
+Dumped schema to /tmp/tmp.mxnCVhQdCy/green-o-2026-11-11T025311Z/schema.sql.
+Target: custom Postgres (127.0.0.1:54322)
+Dumping data from local database...
+Dumped schema to /tmp/tmp.mxnCVhQdCy/green-o-2026-11-11T025311Z/data.sql.
+== storage
+(node:12329) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/green-o/green-o/src/lib/auth/staff-email-domain.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/runner/work/green-o/green-o/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Downloaded 1 files (70 bytes).
+== manifest
+(node:12341) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/green-o/green-o/src/lib/auth/staff-email-domain.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/runner/work/green-o/green-o/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Manifest: 137 rows counted, audit #468, 1 files.
+== encrypt
+Encrypted archive: 85766 bytes
+Backup green-o-2026-11-11T025311Z done.
+(node:12382) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/green-o/green-o/src/lib/auth/staff-email-domain.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/runner/work/green-o/green-o/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Restore check passed: 17 tables, audit chain intact to #468, 1 files.
+Probe removed.
+Backup round trip passed.
