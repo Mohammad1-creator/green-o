@@ -10,7 +10,10 @@ export const DEMO = {
   productionManager: "3000",
   productionWorker: "3001",
   productionWorker2: "3002",
+  productionWorker3: "3003",
   qualityInspector: "4001",
+  safetyManager: "5000",
+  safetySupervisor: "5001",
 } as const;
 
 export const DEMO_PASSWORD = process.env.SEED_PASSWORD ?? "Local-Demo-2026";

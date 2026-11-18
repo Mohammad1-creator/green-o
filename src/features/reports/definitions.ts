@@ -113,8 +113,11 @@ export const REPORTS = {
       { key: "rank", label: "الترتيب", type: "count" },
       { key: "full_name", label: "الموظف", type: "text" },
       { key: "department_name", label: "القسم", type: "text" },
-      { key: "points", label: "النقاط", type: "count" },
+      { key: "points", label: "الصافي", type: "count" },
+      { key: "awarded", label: "نقاط المهام", type: "count" },
+      { key: "deducted", label: "خصم المخالفات", type: "count" },
       { key: "tasks", label: "المهام", type: "count" },
+      { key: "violations", label: "المخالفات", type: "count" },
     ],
     fetch: async ({ period, departmentId }) =>
       (
@@ -131,7 +134,10 @@ export const REPORTS = {
         full_name: row.full_name,
         department_name: row.department_name,
         points: row.points,
+        awarded: row.awarded,
+        deducted: row.deducted,
         tasks: row.tasks,
+        violations: row.violations,
       })),
   },
   "tasks-by-team": {

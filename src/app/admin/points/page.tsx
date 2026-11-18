@@ -59,7 +59,7 @@ async function Points({
     <>
       <PageHeader
         title="النقاط"
-        description={`${periodLabel(period)}. النقاط تُمنح من صفحة المهمة بعد اكتمالها، والملغاة لا تُحسب.`}
+        description={`${periodLabel(period)}. نقاط المهام تُمنح من صفحة المهمة بعد اكتمالها، وتُخصم منها نقاط المخالفات القائمة. الملغاة لا تُحسب.`}
       />
       <div className="space-y-6">
         <PeriodFilter

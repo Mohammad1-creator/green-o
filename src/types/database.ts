@@ -715,13 +715,72 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"violation_types": {
+                  Row: {
+                    "created_at": string,"description": string | null,"id": string,"is_active": boolean,"name": string,"points": number,"severity": Database["public"]['Enums']["violation_severity"],"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"description"?: string | null,"id"?: string,"is_active"?: boolean,"name": string,"points"?: number,"severity"?: Database["public"]['Enums']["violation_severity"],"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"description"?: string | null,"id"?: string,"is_active"?: boolean,"name"?: string,"points"?: number,"severity"?: Database["public"]['Enums']["violation_severity"],"updated_at"?: string
+                  }
+                  Relationships: []
+                },"violations": {
+                  Row: {
+                    "created_at": string,"decided_at": string | null,"decided_by": string | null,"decision_note": string | null,"description": string,"employee_department_id": string | null,"employee_id": string,"id": string,"location": string | null,"number": number,"objection": string | null,"occurred_at": string,"points": number,"recorded_by": string,"responded_at": string | null,"severity": Database["public"]['Enums']["violation_severity"],"status": Database["public"]['Enums']["violation_status"],"type_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"decided_at"?: string | null,"decided_by"?: string | null,"decision_note"?: string | null,"description": string,"employee_department_id"?: string | null,"employee_id": string,"id"?: string,"location"?: string | null,"number"?: number,"objection"?: string | null,"occurred_at": string,"points": number,"recorded_by": string,"responded_at"?: string | null,"severity": Database["public"]['Enums']["violation_severity"],"status"?: Database["public"]['Enums']["violation_status"],"type_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"decided_at"?: string | null,"decided_by"?: string | null,"decision_note"?: string | null,"description"?: string,"employee_department_id"?: string | null,"employee_id"?: string,"id"?: string,"location"?: string | null,"number"?: number,"objection"?: string | null,"occurred_at"?: string,"points"?: number,"recorded_by"?: string,"responded_at"?: string | null,"severity"?: Database["public"]['Enums']["violation_severity"],"status"?: Database["public"]['Enums']["violation_status"],"type_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "violations_decided_by_fkey"
+      columns: ["decided_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "violations_employee_department_id_fkey"
+      columns: ["employee_department_id"]
+isOneToOne: false
+      referencedRelation: "departments"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "violations_employee_id_fkey"
+      columns: ["employee_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "violations_recorded_by_fkey"
+      columns: ["recorded_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "violations_type_id_fkey"
+      columns: ["type_id"]
+isOneToOne: false
+      referencedRelation: "violation_types"
+      referencedColumns: ["id"]
+    }
+                  ]
                 }
           }
           Views: {
             [_ in never]: never
           }
           Functions: {
-            "acknowledge_task":
+            "accept_violation":
+{ Args: { "p_id": string }; Returns: undefined
+                           },
+"acknowledge_task":
 { Args: { "p_task_id": string }; Returns: undefined
                            },
 "add_task_comment":
@@ -800,8 +859,14 @@ isOneToOne: false
 "create_task":
 { Args: { "p_assignee_ids"?: (string)[],"p_department_id"?: string,"p_description"?: string,"p_due_at"?: string,"p_team_id"?: string,"p_title": string }; Returns: string
                            },
+"cancel_violation":
+{ Args: { "p_id": string,"p_reason": string }; Returns: undefined
+                           },
 "create_user_profile":
 { Args: { "p_department_id": string,"p_employee_no": string,"p_full_name": string,"p_job_title"?: string,"p_phone"?: string,"p_role": Database["public"]['Enums']["app_role"],"p_user_id": string }; Returns: undefined
+                           },
+"decide_violation_objection":
+{ Args: { "p_id": string,"p_note": string,"p_uphold": boolean }; Returns: undefined
                            },
 "delete_task_reminder":
 { Args: { "p_reminder_id": string }; Returns: undefined
@@ -844,6 +909,12 @@ isOneToOne: false
 "reassign_task":
 { Args: { "p_assignee_ids"?: (string)[],"p_task_id": string,"p_team_id"?: string }; Returns: undefined
                            },
+"object_violation":
+{ Args: { "p_id": string,"p_reason": string }; Returns: undefined
+                           },
+"record_violation":
+{ Args: { "p_description": string,"p_employee_id": string,"p_location"?: string,"p_occurred_at"?: string,"p_type_id": string }; Returns: string
+                           },
 "record_backup_run":
 { Args: { "p_audit_last_hash"?: string,"p_audit_last_id"?: number,"p_database_bytes"?: number,"p_error"?: string,"p_location"?: string,"p_run_url"?: string,"p_started_at": string,"p_status": Database["public"]['Enums']["backup_status"],"p_storage_bytes"?: number,"p_storage_files"?: number }; Returns: string
                            },
@@ -885,7 +956,7 @@ isOneToOne: false
                            },
 "report_points_by_person":
 { Args: { "p_department_id"?: string,"p_from": string,"p_to": string }; Returns: {
-              "awards": number,"department_name": string,"full_name": string,"points": number,"tasks": number,"user_id": string
+              "awarded": number,"deducted": number,"department_name": string,"full_name": string,"points": number,"tasks": number,"user_id": string,"violations": number
             }[]
                            },
 "report_pm_compliance":
@@ -977,6 +1048,9 @@ isOneToOne: false
 "update_user_profile":
 { Args: { "p_department_id": string,"p_employee_no": string,"p_full_name": string,"p_job_title"?: string,"p_notes"?: string,"p_phone"?: string,"p_role": Database["public"]['Enums']["app_role"],"p_user_id": string }; Returns: undefined
                            },
+"violation_code":
+{ Args: { "p_number": number }; Returns: string
+                           },
 "void_stage_entry":
 { Args: { "p_entry_id": string,"p_reason": string }; Returns: undefined
                            },
@@ -985,7 +1059,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "app_role": "developer"|"general_manager"|"maintenance_manager"|"production_manager"|"employee","backup_status": "succeeded"|"failed","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","order_stage_status": "pending"|"active"|"closed","order_status": "open"|"in_progress"|"completed"|"cancelled","push_status": "pending"|"sent"|"failed"|"skipped","spec_type": "text"|"number"|"select"|"boolean","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled"
+            "app_role": "developer"|"general_manager"|"maintenance_manager"|"production_manager"|"hse_manager"|"hse_supervisor"|"employee","backup_status": "succeeded"|"failed","fault_status": "open"|"assigned"|"resolved"|"rejected","interval_unit": "day"|"week"|"month","machine_status": "operational"|"down"|"under_maintenance"|"retired","order_stage_status": "pending"|"active"|"closed","order_status": "open"|"in_progress"|"completed"|"cancelled","push_status": "pending"|"sent"|"failed"|"skipped","spec_type": "text"|"number"|"select"|"boolean","task_kind": "general"|"repair"|"preventive","task_status": "new"|"received"|"in_progress"|"pending_approval"|"completed"|"needs_follow_up"|"cancelled","violation_severity": "low"|"medium"|"high"|"critical","violation_status": "pending"|"accepted"|"objected"|"confirmed"|"cancelled"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -1101,7 +1175,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["developer", "general_manager", "maintenance_manager", "production_manager", "employee"],"backup_status": ["succeeded", "failed"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"order_stage_status": ["pending", "active", "closed"],"order_status": ["open", "in_progress", "completed", "cancelled"],"push_status": ["pending", "sent", "failed", "skipped"],"spec_type": ["text", "number", "select", "boolean"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"]
+            "app_role": ["developer", "general_manager", "maintenance_manager", "production_manager", "hse_manager", "hse_supervisor", "employee"],"backup_status": ["succeeded", "failed"],"fault_status": ["open", "assigned", "resolved", "rejected"],"interval_unit": ["day", "week", "month"],"machine_status": ["operational", "down", "under_maintenance", "retired"],"order_stage_status": ["pending", "active", "closed"],"order_status": ["open", "in_progress", "completed", "cancelled"],"push_status": ["pending", "sent", "failed", "skipped"],"spec_type": ["text", "number", "select", "boolean"],"task_kind": ["general", "repair", "preventive"],"task_status": ["new", "received", "in_progress", "pending_approval", "completed", "needs_follow_up", "cancelled"],"violation_severity": ["low", "medium", "high", "critical"],"violation_status": ["pending", "accepted", "objected", "confirmed", "cancelled"]
           }
         }
 } as const

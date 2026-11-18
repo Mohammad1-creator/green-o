@@ -3,6 +3,7 @@ import {
   MAINTENANCE_ROLES,
   MANAGER_ROLES,
   PRODUCTION_ROLES,
+  SAFETY_ROLES,
   TOP_ROLES,
 } from "@/lib/auth/roles";
 
@@ -16,6 +17,8 @@ export type NavIcon =
   | "orders"
   | "products"
   | "production-settings"
+  | "violations"
+  | "violation-types"
   | "reports"
   | "points"
   | "users"
@@ -81,6 +84,18 @@ export const ADMIN_NAV: readonly NavItem[] = [
     label: "إعدادات الإنتاج",
     icon: "production-settings",
     roles: PRODUCTION,
+  },
+  {
+    href: "/admin/safety/violations",
+    label: "مخالفات السلامة",
+    icon: "violations",
+    roles: MANAGER_ROLES,
+  },
+  {
+    href: "/admin/safety/types",
+    label: "أنواع المخالفات",
+    icon: "violation-types",
+    roles: SAFETY_ROLES,
   },
   {
     href: "/admin/reports",

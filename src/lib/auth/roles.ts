@@ -3,6 +3,8 @@ export const APP_ROLES = [
   "general_manager",
   "maintenance_manager",
   "production_manager",
+  "hse_manager",
+  "hse_supervisor",
   "employee",
 ] as const;
 
@@ -13,6 +15,8 @@ export const ROLE_LABELS: Record<AppRole, string> = {
   general_manager: "المدير العام",
   maintenance_manager: "مدير الصيانة",
   production_manager: "مدير الإنتاج",
+  hse_manager: "مدير الصحة والسلامة المهنية",
+  hse_supervisor: "مشرف سلامة",
   employee: "موظف",
 };
 
@@ -21,6 +25,7 @@ export const MANAGER_ROLES: readonly AppRole[] = [
   "general_manager",
   "maintenance_manager",
   "production_manager",
+  "hse_manager",
 ];
 
 /**
@@ -36,6 +41,14 @@ export const PRODUCTION_ROLES: readonly AppRole[] = [
   ...TOP_ROLES,
   "production_manager",
 ];
+
+/** Violation types, objections and cancelling. */
+export const SAFETY_ROLES: readonly AppRole[] = [...TOP_ROLES, "hse_manager"];
+
+/** Recording violations: the safety manager and the safety supervisors. */
+export function canRecordViolations(role: AppRole): boolean {
+  return SAFETY_ROLES.includes(role) || role === "hse_supervisor";
+}
 
 export function isTopRole(role: AppRole | null | undefined): boolean {
   return role === "developer" || role === "general_manager";

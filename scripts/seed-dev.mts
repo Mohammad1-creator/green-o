@@ -48,12 +48,13 @@ if (!password)
     "Set SEED_PASSWORD: demo accounts on the dev project need a private password.",
   );
 
-type DepartmentKey = "maintenance" | "production" | "quality";
+type DepartmentKey = "maintenance" | "production" | "quality" | "safety";
 
 const DEPARTMENTS: Record<DepartmentKey, string> = {
   maintenance: "الصيانة",
   production: "الإنتاج",
   quality: "الجودة",
+  safety: "الصحة والسلامة المهنية",
 };
 
 type Role =
@@ -61,6 +62,8 @@ type Role =
   | "general_manager"
   | "maintenance_manager"
   | "production_manager"
+  | "hse_manager"
+  | "hse_supervisor"
   | "employee";
 
 export const DEMO_USERS: {
@@ -136,6 +139,19 @@ export const DEMO_USERS: {
     role: "employee",
     department: "quality",
     jobTitle: "مراقبة جودة",
+  },
+  {
+    employeeNo: "5000",
+    fullName: "رائد الحسيني",
+    role: "hse_manager",
+    department: "safety",
+  },
+  {
+    employeeNo: "5001",
+    fullName: "سلمى عادل",
+    role: "hse_supervisor",
+    department: "safety",
+    jobTitle: "مشرفة سلامة",
   },
 ];
 
@@ -282,6 +298,18 @@ async function ensureRow(
     .single();
   if (error) throw error;
   return (data as { id: string }).id;
+}
+
+async function ensureViolationTypes(client: SupabaseClient): Promise<void> {
+  const types = [
+    { name: "عدم ارتداء القفازات", severity: "low", points: 5 },
+    { name: "عدم ارتداء الخوذة", severity: "medium", points: 10 },
+    { name: "التدخين في منطقة محظورة", severity: "high", points: 25 },
+    { name: "تشغيل آلة دون حاجز الحماية", severity: "critical", points: 50 },
+  ];
+  for (const type of types) {
+    await ensureRow(client, "violation_types", { name: type.name }, type);
+  }
 }
 
 async function ensureProductionCatalog(client: SupabaseClient): Promise<void> {
@@ -450,11 +478,12 @@ for (const user of DEMO_USERS) {
 }
 await ensureMachines(supabase, departmentIds);
 await ensureProductionCatalog(supabase);
+await ensureViolationTypes(supabase);
 await ensureDemoOrder(supabase, departmentIds);
 
 console.log(
   `Seeded ${Object.keys(DEPARTMENTS).length} departments and ${DEMO_USERS.length} users (${marker}).`,
 );
 console.log(
-  "Sign in with employee number 0001 (developer), 1000 (general manager), 2000, 3000, 2001, 3001 ...",
+  "Sign in with employee number 0001 (developer), 1000 (general manager), 2000, 3000, 5000 (safety), 5001 (safety supervisor), 2001, 3001 ...",
 );

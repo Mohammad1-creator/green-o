@@ -1,4 +1,6 @@
+import { ShieldAlertIcon } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Suspense } from "react";
 
 import { PageSkeleton } from "@/components/page-skeleton";
@@ -8,6 +10,7 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty";
+import { countPendingViolations } from "@/features/safety/queries";
 import { TaskCard } from "@/features/tasks/components/task-card";
 import { listMyTasks, listPendingApprovals } from "@/features/tasks/queries";
 import { requireUser } from "@/lib/auth/dal";
@@ -28,7 +31,7 @@ export default function MobileHomePage() {
 
 async function MyWork() {
   const user = await requireUser();
-  const [tasks, approvals, settings] = await Promise.all([
+  const [tasks, approvals, settings, pendingViolations] = await Promise.all([
     listMyTasks(user.id, [
       "new",
       "received",
@@ -38,11 +41,25 @@ async function MyWork() {
     ]),
     isManagerRole(user.role) ? listPendingApprovals(user) : Promise.resolve([]),
     getFactorySettings(),
+    countPendingViolations(user.id),
   ]);
 
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-bold">مرحباً {user.fullName}</h1>
+
+      {pendingViolations > 0 ? (
+        <Link
+          href="/m/violations"
+          role="alert"
+          className="flex items-center gap-3 rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm font-medium text-destructive"
+        >
+          <ShieldAlertIcon className="size-5 shrink-0" aria-hidden />
+          {pendingViolations === 1
+            ? "سُجّلت عليك مخالفة سلامة بانتظار ردك."
+            : `سُجّلت عليك ${pendingViolations} مخالفات سلامة بانتظار ردك.`}
+        </Link>
+      ) : null}
 
       {approvals.length > 0 ? (
         <section className="space-y-3" aria-labelledby="approvals-heading">

@@ -16,6 +16,7 @@ import {
 } from "@/features/reports/summaries";
 import { type CurrentUser, requireManager } from "@/lib/auth/dal";
 import { formatNumber, formatPercent } from "@/lib/format";
+import { MAINTENANCE_ROLES, PRODUCTION_ROLES } from "@/lib/auth/roles";
 import { getFactorySettings } from "@/lib/settings";
 import { addDays, zonedToday } from "@/lib/zoned-time";
 
@@ -38,12 +39,12 @@ async function WeekAtAGlance({ user }: { user: CurrentUser }) {
   const period = { from: addDays(today, -6), to: today };
   const [tasks, maintenance, production] = await Promise.all([
     getTaskSummary(period, null),
-    user.role === "production_manager"
-      ? Promise.resolve(null)
-      : getMaintenanceSummary(period),
-    user.role === "maintenance_manager"
-      ? Promise.resolve(null)
-      : getProductionSummary(period),
+    MAINTENANCE_ROLES.includes(user.role)
+      ? getMaintenanceSummary(period)
+      : Promise.resolve(null),
+    PRODUCTION_ROLES.includes(user.role)
+      ? getProductionSummary(period)
+      : Promise.resolve(null),
   ]);
   const onTime = ratio(tasks?.completed_on_time ?? 0, tasks?.completed ?? 0);
 
