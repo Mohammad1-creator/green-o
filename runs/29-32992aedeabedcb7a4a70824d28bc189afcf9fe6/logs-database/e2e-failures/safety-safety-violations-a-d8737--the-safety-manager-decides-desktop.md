@@ -1,0 +1,668 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: safety.spec.ts >> safety violations >> a supervisor records a violation, the employee objects, the safety manager decides
+- Location: tests/e2e/safety.spec.ts:10:3
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - status [ref=e2]: "بيئة محلية: البيانات هنا تجريبية وليست بيانات المصنع الحقيقية"
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - link "المصنع" [ref=e6] [cursor=pointer]:
+          - /url: /admin
+        - navigation "القائمة الرئيسية" [ref=e9]:
+          - link "الرئيسية" [ref=e10] [cursor=pointer]:
+            - /url: /admin
+          - link "المهام" [ref=e14] [cursor=pointer]:
+            - /url: /admin/tasks
+          - link "الفرق" [ref=e18] [cursor=pointer]:
+            - /url: /admin/teams
+          - link "بلاغات الأعطال" [ref=e23] [cursor=pointer]:
+            - /url: /admin/maintenance/faults
+          - link "الآلات" [ref=e26] [cursor=pointer]:
+            - /url: /admin/maintenance/machines
+          - link "الصيانة الوقائية" [ref=e38] [cursor=pointer]:
+            - /url: /admin/maintenance/preventive
+          - link "أوامر الإنتاج" [ref=e43] [cursor=pointer]:
+            - /url: /admin/production/orders
+          - link "المنتجات" [ref=e46] [cursor=pointer]:
+            - /url: /admin/production/products
+          - link "إعدادات الإنتاج" [ref=e57] [cursor=pointer]:
+            - /url: /admin/production/settings
+          - link "مخالفات السلامة" [ref=e59] [cursor=pointer]:
+            - /url: /admin/safety/violations
+          - link "أنواع المخالفات" [ref=e62] [cursor=pointer]:
+            - /url: /admin/safety/types
+          - link "التقارير" [ref=e66] [cursor=pointer]:
+            - /url: /admin/reports
+          - link "النقاط" [ref=e69] [cursor=pointer]:
+            - /url: /admin/points
+          - link "المستخدمون" [ref=e76] [cursor=pointer]:
+            - /url: /admin/users
+          - link "الصلاحيات" [ref=e82] [cursor=pointer]:
+            - /url: /admin/permissions
+          - link "الأقسام" [ref=e86] [cursor=pointer]:
+            - /url: /admin/departments
+          - link "سجل التدقيق" [ref=e91] [cursor=pointer]:
+            - /url: /admin/audit
+          - link "الإعدادات" [ref=e95] [cursor=pointer]:
+            - /url: /admin/settings
+    - generic [ref=e99]:
+      - banner [ref=e100]:
+        - generic [ref=e101]:
+          - generic [ref=e102]:
+            - generic [ref=e103]: المبرمج
+            - generic [ref=e104]: المبرمج
+          - link "الإشعارات" [ref=e105] [cursor=pointer]:
+            - /url: /admin/notifications
+          - button "تسجيل الخروج" [ref=e110]
+      - main [ref=e111]:
+        - generic [ref=e113]:
+          - heading "الصلاحيات" [level=1] [ref=e114]
+          - paragraph [ref=e115]: غيّر دور أي مستخدم لتمنحه صلاحيات أو تسحبها منه. يسري التغيير فوراً، ويُسجَّل في سجل التدقيق. لا يمكنك تغيير صلاحياتك بنفسك.
+        - generic [ref=e116]:
+          - generic [ref=e117]:
+            - generic [ref=e118]: ماذا يستطيع كل دور
+            - generic [ref=e121]:
+              - generic [ref=e122]:
+                - term [ref=e123]: المبرمج
+                - definition [ref=e124]: "كل صلاحيات المدير العام، ومعها ما يخص مدير الصيانة وحده: إسناد الإصلاح ورفض البلاغات."
+              - generic [ref=e125]:
+                - term [ref=e126]: المدير العام
+                - definition [ref=e127]: "كل الأقسام: المستخدمون والأدوار، والمهام، والصيانة، والإنتاج، والتقارير، والنقاط، وسجل التدقيق، والإعدادات."
+              - generic [ref=e128]:
+                - term [ref=e129]: مدير الصيانة
+                - definition [ref=e130]: "قسمه فقط: موظفوه وفرقه ومهامه، والآلات والصيانة الوقائية، وإسناد إصلاح الأعطال."
+              - generic [ref=e131]:
+                - term [ref=e132]: مدير الإنتاج
+                - definition [ref=e133]: "قسمه فقط: موظفوه وفرقه ومهامه، والمنتجات وأوامر الإنتاج وتسجيل الكميات."
+              - generic [ref=e134]:
+                - term [ref=e135]: مدير الصحة والسلامة المهنية
+                - definition [ref=e136]: "قسمه (الصحة والسلامة المهنية): موظفوه ومشرفوه وفرقه ومهامه، وأنواع المخالفات، وتسجيل المخالفات على أي موظف، والبت في الاعتراضات."
+              - generic [ref=e137]:
+                - term [ref=e138]: مشرف سلامة
+                - definition [ref=e139]: "تطبيق الجوال: تسجيل مخالفات السلامة على أي موظف ومتابعة ما سجّله، إضافة إلى ما يفعله الموظف."
+              - generic [ref=e140]:
+                - term [ref=e141]: موظف
+                - definition [ref=e142]: "تطبيق الجوال فقط: ما أُسند إليه من مهام ومراحل، والإبلاغ عن الأعطال."
+          - table "أدوار المستخدمين" [ref=e144]:
+            - rowgroup [ref=e145]:
+              - row [ref=e146]:
+                - columnheader "المستخدم" [ref=e147]
+                - columnheader "رقم الموظف" [ref=e148]
+                - columnheader "الدور الحالي" [ref=e149]
+                - columnheader "تغيير الدور" [ref=e150]
+            - rowgroup [ref=e151]:
+              - row [ref=e152]:
+                - cell "اختبار 510325107" [ref=e153]
+                - cell "510325107" [ref=e154]
+                - cell "مدير الإنتاج · قسم اختبار 80f30e97" [ref=e155]:
+                  - text: مدير الإنتاج
+                  - generic [ref=e156]: · قسم اختبار 80f30e97
+                - cell [ref=e157]:
+                  - generic [ref=e158]:
+                    - combobox "دور اختبار 510325107" [ref=e160]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج" [selected]
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف"
+                    - combobox "قسم اختبار 510325107" [ref=e162]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97" [selected]
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e163]:
+                - cell "اختبار 534781460" [ref=e164]
+                - cell "534781460" [ref=e165]
+                - cell "مدير الصيانة · قسم اختبار 1e89f6e6" [ref=e166]:
+                  - text: مدير الصيانة
+                  - generic [ref=e167]: · قسم اختبار 1e89f6e6
+                - cell [ref=e168]:
+                  - generic [ref=e169]:
+                    - combobox "دور اختبار 534781460" [ref=e171]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة" [selected]
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف"
+                    - combobox "قسم اختبار 534781460" [ref=e173]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6" [selected]
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e174]:
+                - cell "اختبار 551313680" [ref=e175]
+                - cell "551313680" [ref=e176]
+                - cell "موظف · قسم اختبار 1e89f6e6" [ref=e177]:
+                  - text: موظف
+                  - generic [ref=e178]: · قسم اختبار 1e89f6e6
+                - cell [ref=e179]:
+                  - generic [ref=e180]:
+                    - combobox "دور اختبار 551313680" [ref=e182]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم اختبار 551313680" [ref=e184]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6" [selected]
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e185]:
+                - cell "اختبار 573021375" [ref=e186]
+                - cell "573021375" [ref=e187]
+                - cell "موظف · قسم اختبار 80f30e97" [ref=e188]:
+                  - text: موظف
+                  - generic [ref=e189]: · قسم اختبار 80f30e97
+                - cell [ref=e190]:
+                  - generic [ref=e191]:
+                    - combobox "دور اختبار 573021375" [ref=e193]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم اختبار 573021375" [ref=e195]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97" [selected]
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e196]:
+                - cell "اختبار 674533014" [ref=e197]
+                - cell "674533014" [ref=e198]
+                - cell "موظف · قسم اختبار 80f30e97" [ref=e199]:
+                  - text: موظف
+                  - generic [ref=e200]: · قسم اختبار 80f30e97
+                - cell [ref=e201]:
+                  - generic [ref=e202]:
+                    - combobox "دور اختبار 674533014" [ref=e204]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم اختبار 674533014" [ref=e206]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97" [selected]
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e207]:
+                - cell "اختبار 736567066" [ref=e208]
+                - cell "736567066" [ref=e209]
+                - cell "موظف · قسم اختبار 1e89f6e6" [ref=e210]:
+                  - text: موظف
+                  - generic [ref=e211]: · قسم اختبار 1e89f6e6
+                - cell [ref=e212]:
+                  - generic [ref=e213]:
+                    - combobox "دور اختبار 736567066" [ref=e215]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم اختبار 736567066" [ref=e217]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6" [selected]
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e218]:
+                - cell "اختبار 751141698" [ref=e219]
+                - cell "751141698" [ref=e220]
+                - cell "موظف · قسم اختبار 6f848a24" [ref=e221]:
+                  - text: موظف
+                  - generic [ref=e222]: · قسم اختبار 6f848a24
+                - cell [ref=e223]:
+                  - generic [ref=e224]:
+                    - combobox "دور اختبار 751141698" [ref=e226]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم اختبار 751141698" [ref=e228]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24" [selected]
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e229]:
+                - cell "المبرمج" [ref=e230]
+                - cell "0001" [ref=e231]
+                - cell "المبرمج" [ref=e232]
+                - cell "أنت" [ref=e233]
+              - row [ref=e234]:
+                - cell "حسن جواد" [ref=e235]
+                - cell "3002" [ref=e236]
+                - cell "موظف · الإنتاج" [ref=e237]:
+                  - text: موظف
+                  - generic [ref=e238]: · الإنتاج
+                - cell [ref=e239]:
+                  - generic [ref=e240]:
+                    - combobox "دور حسن جواد" [ref=e242]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم حسن جواد" [ref=e244]:
+                      - option "اختر القسم"
+                      - option "الإنتاج" [selected]
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e245]:
+                - cell "خالد العلي" [ref=e246]
+                - cell "2000" [ref=e247]
+                - cell "مدير الصيانة · الصيانة" [ref=e248]:
+                  - text: مدير الصيانة
+                  - generic [ref=e249]: · الصيانة
+                - cell [ref=e250]:
+                  - generic [ref=e251]:
+                    - combobox "دور خالد العلي" [ref=e253]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة" [selected]
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف"
+                    - combobox "قسم خالد العلي" [ref=e255]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة" [selected]
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e256]:
+                - cell "رائد الحسيني" [ref=e257]
+                - cell "5000" [ref=e258]
+                - cell "مدير الصحة والسلامة المهنية · الصحة والسلامة المهنية" [ref=e259]:
+                  - text: مدير الصحة والسلامة المهنية
+                  - generic [ref=e260]: · الصحة والسلامة المهنية
+                - cell [ref=e261]:
+                  - generic [ref=e262]:
+                    - combobox "دور رائد الحسيني" [ref=e264]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية" [selected]
+                      - option "مشرف سلامة"
+                      - option "موظف"
+                    - combobox "قسم رائد الحسيني" [ref=e266]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية" [selected]
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e267]:
+                - cell "سارة الأحمد" [ref=e268]
+                - cell "1000" [ref=e269]
+                - cell "المدير العام" [ref=e270]
+                - cell [ref=e271]:
+                  - generic [ref=e272]:
+                    - combobox "دور سارة الأحمد" [ref=e274]:
+                      - option "المبرمج"
+                      - option "المدير العام" [selected]
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف"
+                    - button "حفظ" [disabled]
+              - row [ref=e275]:
+                - cell "سلمى عادل" [ref=e276]
+                - cell "5001" [ref=e277]
+                - cell "مشرف سلامة · الصحة والسلامة المهنية" [ref=e278]:
+                  - text: مشرف سلامة
+                  - generic [ref=e279]: · الصحة والسلامة المهنية
+                - cell [ref=e280]:
+                  - generic [ref=e281]:
+                    - combobox "دور سلمى عادل" [ref=e283]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة" [selected]
+                      - option "موظف"
+                    - combobox "قسم سلمى عادل" [ref=e285]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية" [selected]
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e286]:
+                - cell "علي محمود" [ref=e287]
+                - cell "3001" [ref=e288]
+                - cell "موظف · الإنتاج" [ref=e289]:
+                  - text: موظف
+                  - generic [ref=e290]: · الإنتاج
+                - cell [ref=e291]:
+                  - generic [ref=e292]:
+                    - combobox "دور علي محمود" [ref=e294]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم علي محمود" [ref=e296]:
+                      - option "اختر القسم"
+                      - option "الإنتاج" [selected]
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e297]:
+                - cell "عمر حسن" [ref=e298]
+                - cell "2001" [ref=e299]
+                - cell "موظف · الصيانة" [ref=e300]:
+                  - text: موظف
+                  - generic [ref=e301]: · الصيانة
+                - cell [ref=e302]:
+                  - generic [ref=e303]:
+                    - combobox "دور عمر حسن" [ref=e305]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم عمر حسن" [ref=e307]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة" [selected]
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e308]:
+                - cell "ليلى ناصر" [ref=e309]
+                - cell "3003" [ref=e310]
+                - cell "موظف · الإنتاج" [ref=e311]:
+                  - text: موظف
+                  - generic [ref=e312]: · الإنتاج
+                - cell [ref=e313]:
+                  - generic [ref=e314]:
+                    - combobox "دور ليلى ناصر" [ref=e316]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم ليلى ناصر" [ref=e318]:
+                      - option "اختر القسم"
+                      - option "الإنتاج" [selected]
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e319]:
+                - cell "منى سالم" [ref=e320]
+                - cell "3000" [ref=e321]
+                - cell "مدير الإنتاج · الإنتاج" [ref=e322]:
+                  - text: مدير الإنتاج
+                  - generic [ref=e323]: · الإنتاج
+                - cell [ref=e324]:
+                  - generic [ref=e325]:
+                    - combobox "دور منى سالم" [ref=e327]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج" [selected]
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف"
+                    - combobox "قسم منى سالم" [ref=e329]:
+                      - option "اختر القسم"
+                      - option "الإنتاج" [selected]
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e330]:
+                - cell "موظف اختبار جديد" [ref=e331]
+                - cell "79814304" [ref=e332]
+                - cell "موظف · الصيانة" [ref=e333]:
+                  - text: موظف
+                  - generic [ref=e334]: · الصيانة
+                - cell [ref=e335]:
+                  - generic [ref=e336]:
+                    - combobox "دور موظف اختبار جديد" [ref=e338]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم موظف اختبار جديد" [ref=e340]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة" [selected]
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e341]:
+                - cell "نادية فؤاد" [ref=e342]
+                - cell "4001" [ref=e343]
+                - cell "موظف · الجودة" [ref=e344]:
+                  - text: موظف
+                  - generic [ref=e345]: · الجودة
+                - cell [ref=e346]:
+                  - generic [ref=e347]:
+                    - combobox "دور نادية فؤاد" [ref=e349]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم نادية فؤاد" [ref=e351]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة" [selected]
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+                    - status [ref=e352]: حُفظت الصلاحية
+              - row [ref=e353]:
+                - cell "يوسف كريم" [ref=e354]
+                - cell "2002" [ref=e355]
+                - cell "موظف · الصيانة" [ref=e356]:
+                  - text: موظف
+                  - generic [ref=e357]: · الصيانة
+                - cell [ref=e358]:
+                  - generic [ref=e359]:
+                    - combobox "دور يوسف كريم" [ref=e361]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم يوسف كريم" [ref=e363]:
+                      - option "اختر القسم"
+                      - option "الإنتاج"
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة" [selected]
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+              - row [ref=e364]:
+                - cell "موظف سيُوقف موقوف" [ref=e365]:
+                  - text: موظف سيُوقف
+                  - generic [ref=e366]: موقوف
+                - cell "60925223" [ref=e367]
+                - cell "موظف · الإنتاج" [ref=e368]:
+                  - text: موظف
+                  - generic [ref=e369]: · الإنتاج
+                - cell [ref=e370]:
+                  - generic [ref=e371]:
+                    - combobox "دور موظف سيُوقف" [ref=e373]:
+                      - option "المبرمج"
+                      - option "المدير العام"
+                      - option "مدير الصيانة"
+                      - option "مدير الإنتاج"
+                      - option "مدير الصحة والسلامة المهنية"
+                      - option "مشرف سلامة"
+                      - option "موظف" [selected]
+                    - combobox "قسم موظف سيُوقف" [ref=e375]:
+                      - option "اختر القسم"
+                      - option "الإنتاج" [selected]
+                      - option "الجودة"
+                      - option "الصحة والسلامة المهنية"
+                      - option "الصيانة"
+                      - option "قسم 411874"
+                      - option "قسم اختبار 1e89f6e6"
+                      - option "قسم اختبار 6f848a24"
+                      - option "قسم اختبار 80f30e97"
+                      - option "قسم تدقيق 912802"
+                    - button "حفظ" [disabled]
+  - region "Notifications alt+T"
+  - alert [ref=e376]: الصلاحيات · نظام إدارة المصنع
+```
