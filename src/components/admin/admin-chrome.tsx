@@ -38,7 +38,7 @@ export async function AdminHeader() {
   if (!user) return null;
 
   return (
-    <header className="flex h-14 items-center justify-between gap-3 border-b px-4 lg:px-8">
+    <header className="flex h-14 items-center justify-between gap-3 border-b bg-background px-4 lg:px-8">
       <div className="flex items-center gap-2">
         <MobileNav
           items={navItemsFor(user.role)}

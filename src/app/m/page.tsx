@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 
+import { BrandBackdrop } from "@/components/brand-backdrop";
 import { PageSkeleton } from "@/components/page-skeleton";
 import {
   Empty,
@@ -46,13 +47,16 @@ async function MyWork() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold">مرحباً {user.fullName}</h1>
+      <BrandBackdrop />
+      <h1 className="text-xl font-bold text-white drop-shadow">
+        مرحباً {user.fullName}
+      </h1>
 
       {pendingViolations > 0 ? (
         <Link
           href="/m/violations"
           role="alert"
-          className="flex items-center gap-3 rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm font-medium text-destructive"
+          className="flex items-center gap-3 rounded-xl border border-destructive/40 bg-card p-4 text-sm font-medium text-destructive"
         >
           <ShieldAlertIcon className="size-5 shrink-0" aria-hidden />
           {pendingViolations === 1
@@ -63,7 +67,10 @@ async function MyWork() {
 
       {approvals.length > 0 ? (
         <section className="space-y-3" aria-labelledby="approvals-heading">
-          <h2 id="approvals-heading" className="font-semibold">
+          <h2
+            id="approvals-heading"
+            className="font-semibold text-white drop-shadow"
+          >
             بانتظار اعتمادي ({approvals.length})
           </h2>
           {approvals.map((task) => (
@@ -78,11 +85,14 @@ async function MyWork() {
       ) : null}
 
       <section className="space-y-3" aria-labelledby="my-tasks-heading">
-        <h2 id="my-tasks-heading" className="font-semibold">
+        <h2
+          id="my-tasks-heading"
+          className="font-semibold text-white drop-shadow"
+        >
           مهامي
         </h2>
         {tasks.length === 0 ? (
-          <Empty>
+          <Empty className="border-0 bg-card">
             <EmptyHeader>
               <EmptyTitle>لا توجد مهام مفتوحة</EmptyTitle>
               <EmptyDescription>

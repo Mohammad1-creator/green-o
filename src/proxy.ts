@@ -72,8 +72,8 @@ function redirectKeepingCookies(url: URL, from: NextResponse): NextResponse {
 
 export const config = {
   matcher: [
-    // Everything except static files, metadata files and the push endpoint
+    // Everything except static files (incl. public/brand), metadata files and the push endpoint
     // (called by the database with its own shared secret).
-    "/((?!_next/static|_next/image|favicon.ico|robots.txt|sw.js|manifest.webmanifest|icon|apple-icon|icons/|api/push/).*)",
+    "/((?!_next/static|_next/image|favicon.ico|robots.txt|sw.js|manifest.webmanifest|icon|apple-icon|icons/|brand/|api/push/).*)",
   ],
 };

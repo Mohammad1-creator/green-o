@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import { navItemsFor } from "@/components/admin/nav-items";
-import { PageHeader } from "@/components/page-header";
+import { BrandBackdrop } from "@/components/brand-backdrop";
 import { PageSkeleton } from "@/components/page-skeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
@@ -78,7 +78,7 @@ async function WeekAtAGlance({ user }: { user: CurrentUser }) {
   return (
     <section aria-labelledby="week-heading" className="mb-8 space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 id="week-heading" className="font-semibold">
+        <h2 id="week-heading" className="font-semibold text-white drop-shadow">
           آخر 7 أيام
         </h2>
         <Link
@@ -100,11 +100,12 @@ async function AdminHome() {
   );
 
   return (
-    <>
-      <PageHeader
-        title={`مرحباً ${user.fullName}`}
-        description="اختر ما تريد العمل عليه."
-      />
+    <div>
+      <BrandBackdrop />
+      <div className="mb-6 space-y-1 text-white drop-shadow">
+        <h1 className="text-2xl font-bold">مرحباً {user.fullName}</h1>
+        <p className="text-sm text-white/85">اختر ما تريد العمل عليه.</p>
+      </div>
       <WeekAtAGlance user={user} />
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {shortcuts.map((item) => (
@@ -113,7 +114,7 @@ async function AdminHome() {
             href={item.href}
             className="rounded-xl focus-visible:outline-2"
           >
-            <Card className="h-full transition-colors hover:bg-muted/50">
+            <Card className="h-full transition-colors hover:bg-muted">
               <CardHeader>
                 <CardTitle>{item.label}</CardTitle>
               </CardHeader>
@@ -121,6 +122,6 @@ async function AdminHome() {
           </Link>
         ))}
       </div>
-    </>
+    </div>
   );
 }
