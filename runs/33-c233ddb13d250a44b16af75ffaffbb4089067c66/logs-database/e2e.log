@@ -1,0 +1,134 @@
+
+> green-o@0.1.0 test:e2e
+> playwright test
+
+
+Running 58 tests using 2 workers
+·································×······°······×··T
+::error file=tests/e2e/safety.spec.ts,title=[desktop] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/safety.spec.ts,title=[desktop] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides,line=25,col=43::  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A    Error: locator.selectOption: Test ended.%0A    Call log:%0A      - waiting for getByLabel('الموظف')%0A        - locator resolved to <input dir="ltr" required="" id="employeeNo" data-slot="input" name="employeeNo" inputmode="numeric" autocomplete="username" class="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disable…/>%0A      - attempting select option action%0A        2 × waiting for element to be visible and enabled%0A          - element is not visible%0A        - retrying select option action%0A        - waiting 20ms%0A        2 × waiting for element to be visible and enabled%0A          - element is not visible%0A        - retrying select option action%0A          - waiting 100ms%0A        55 × waiting for element to be visible and enabled%0A           - element is not visible%0A         - retrying select option action%0A           - waiting 500ms%0A        - waiting for element to be visible and enabled%0A%0A%0A      23 |     await supervisor.getByRole("link", { name: "السلامة" }).click();%0A      24 |     await supervisor.getByRole("link", { name: "تسجيل مخالفة" }).click();%0A    > 25 |     await supervisor.getByLabel("الموظف").selectOption({ label: worker.name });%0A         |                                           ^%0A      26 |     await supervisor%0A      27 |       .getByLabel("نوع المخالفة")%0A      28 |       .selectOption({ label: "عدم ارتداء الخوذة · متوسطة · خصم 10" });%0A        at /home/runner/work/green-o/green-o/tests/e2e/safety.spec.ts:25:43
+::error file=tests/e2e/safety.spec.ts,title=[desktop] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/safety.spec.ts,title=[desktop] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+·×·······×T
+::error file=tests/e2e/safety.spec.ts,title=[mobile] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  2) [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/safety.spec.ts,title=[mobile] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides,line=25,col=43::  2) [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A    Error: locator.selectOption: Test ended.%0A    Call log:%0A      - waiting for getByLabel('الموظف')%0A        - locator resolved to <input dir="ltr" required="" id="employeeNo" data-slot="input" name="employeeNo" inputmode="numeric" autocomplete="username" class="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disable…/>%0A      - attempting select option action%0A        2 × waiting for element to be visible and enabled%0A          - element is not visible%0A        - retrying select option action%0A        - waiting 20ms%0A        2 × waiting for element to be visible and enabled%0A          - element is not visible%0A        - retrying select option action%0A          - waiting 100ms%0A        57 × waiting for element to be visible and enabled%0A           - element is not visible%0A         - retrying select option action%0A           - waiting 500ms%0A        - waiting for element to be visible and enabled%0A%0A%0A      23 |     await supervisor.getByRole("link", { name: "السلامة" }).click();%0A      24 |     await supervisor.getByRole("link", { name: "تسجيل مخالفة" }).click();%0A    > 25 |     await supervisor.getByLabel("الموظف").selectOption({ label: worker.name });%0A         |                                           ^%0A      26 |     await supervisor%0A      27 |       .getByLabel("نوع المخالفة")%0A      28 |       .selectOption({ label: "عدم ارتداء الخوذة · متوسطة · خصم 10" });%0A        at /home/runner/work/green-o/green-o/tests/e2e/safety.spec.ts:25:43
+::error file=tests/e2e/safety.spec.ts,title=[mobile] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  2) [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/safety.spec.ts,title=[mobile] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  2) [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+
+
+  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.selectOption: Test ended.
+    Call log:
+      - waiting for getByLabel('الموظف')
+        - locator resolved to <input dir="ltr" required="" id="employeeNo" data-slot="input" name="employeeNo" inputmode="numeric" autocomplete="username" class="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disable…/>
+      - attempting select option action
+        2 × waiting for element to be visible and enabled
+          - element is not visible
+        - retrying select option action
+        - waiting 20ms
+        2 × waiting for element to be visible and enabled
+          - element is not visible
+        - retrying select option action
+          - waiting 100ms
+        55 × waiting for element to be visible and enabled
+           - element is not visible
+         - retrying select option action
+           - waiting 500ms
+        - waiting for element to be visible and enabled
+
+
+      23 |     await supervisor.getByRole("link", { name: "السلامة" }).click();
+      24 |     await supervisor.getByRole("link", { name: "تسجيل مخالفة" }).click();
+    > 25 |     await supervisor.getByLabel("الموظف").selectOption({ label: worker.name });
+         |                                           ^
+      26 |     await supervisor
+      27 |       .getByLabel("نوع المخالفة")
+      28 |       .selectOption({ label: "عدم ارتداء الخوذة · متوسطة · خصم 10" });
+        at /home/runner/work/green-o/green-o/tests/e2e/safety.spec.ts:25:43
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-desktop/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-desktop-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-desktop-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-desktop-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-desktop-retry2/error-context.md
+
+  2) [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.selectOption: Test ended.
+    Call log:
+      - waiting for getByLabel('الموظف')
+        - locator resolved to <input dir="ltr" required="" id="employeeNo" data-slot="input" name="employeeNo" inputmode="numeric" autocomplete="username" class="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disable…/>
+      - attempting select option action
+        2 × waiting for element to be visible and enabled
+          - element is not visible
+        - retrying select option action
+        - waiting 20ms
+        2 × waiting for element to be visible and enabled
+          - element is not visible
+        - retrying select option action
+          - waiting 100ms
+        57 × waiting for element to be visible and enabled
+           - element is not visible
+         - retrying select option action
+           - waiting 500ms
+        - waiting for element to be visible and enabled
+
+
+      23 |     await supervisor.getByRole("link", { name: "السلامة" }).click();
+      24 |     await supervisor.getByRole("link", { name: "تسجيل مخالفة" }).click();
+    > 25 |     await supervisor.getByLabel("الموظف").selectOption({ label: worker.name });
+         |                                           ^
+      26 |     await supervisor
+      27 |       .getByLabel("نوع المخالفة")
+      28 |       .selectOption({ label: "عدم ارتداء الخوذة · متوسطة · خصم 10" });
+        at /home/runner/work/green-o/green-o/tests/e2e/safety.spec.ts:25:43
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-mobile/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-mobile-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-mobile-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-mobile-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-mobile-retry2/error-context.md
+
+  2 failed
+    [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides 
+    [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides 
+  1 skipped
+  55 passed (3.2m)
+::notice title=🎭 Playwright Run Summary::  2 failed%0A    [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A    [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A  1 skipped%0A  55 passed (3.2m)
