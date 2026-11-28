@@ -1,6 +1,6 @@
-import { FactoryIcon } from "lucide-react";
 import Link from "next/link";
 
+import { BrandLogo } from "@/components/brand-logo";
 import { SignOutButton } from "@/components/sign-out-button";
 import { BellForCurrentUser } from "@/features/notifications/components/bell-for-user";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -21,9 +21,14 @@ export async function AdminSidebar() {
 
   return (
     <div className="sticky top-0 flex h-svh flex-col gap-6 p-4">
-      <Link href="/admin" className="flex items-center gap-2 px-2 font-bold">
-        <FactoryIcon className="size-5" aria-hidden />
-        {settings.factoryName}
+      <Link
+        href="/admin"
+        className="flex flex-col items-start gap-1 border-b border-sidebar-border px-2 pb-4"
+      >
+        <BrandLogo tone="white" height={40} />
+        <span className="text-xs text-sidebar-foreground/75">
+          {settings.factoryName}
+        </span>
       </Link>
       <SidebarNav items={navItemsFor(user.role)} />
     </div>
@@ -38,13 +43,15 @@ export async function AdminHeader() {
   if (!user) return null;
 
   return (
-    <header className="flex h-14 items-center justify-between gap-3 border-b bg-background px-4 lg:px-8">
+    <header className="flex h-14 items-center justify-between gap-3 border-b bg-card px-4 shadow-xs lg:px-8">
       <div className="flex items-center gap-2">
         <MobileNav
           items={navItemsFor(user.role)}
           title={settings.factoryName}
         />
-        <span className="font-semibold lg:hidden">{settings.factoryName}</span>
+        <Link href="/admin" className="lg:hidden">
+          <BrandLogo tone="green" height={28} />
+        </Link>
       </div>
       <div className="flex items-center gap-3">
         <div className="text-end leading-tight">
@@ -72,5 +79,5 @@ export function SidebarSkeleton() {
 }
 
 export function HeaderSkeleton() {
-  return <div className="h-14 border-b" />;
+  return <div className="h-14 border-b bg-card" />;
 }

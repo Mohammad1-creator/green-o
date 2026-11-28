@@ -1,14 +1,12 @@
-// The app icon: the "factory" glyph (lucide) on a green tile. Rendered with
-// next/og, so no image files are needed.
+// The app icon: the company mark (white) on the brand green. Rendered with
+// next/og from an embedded copy of the mark, so no file reads are needed.
 
-const FACTORY_PATHS = [
-  "M12 16h.01",
-  "M16 16h.01",
-  "M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.769-.422l-4.462 2.844A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.769-.422L9.77 10.922A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z",
-  "M8 16h.01",
-];
+import { MARK_ASPECT, MARK_WHITE_DATA_URI } from "./brand-mark";
 
-export const BRAND_GREEN = "#166534";
+/** The dark green of the company logo. */
+export const BRAND_GREEN = "#007245";
+/** The light green of the company logo. */
+export const BRAND_LIGHT_GREEN = "#58aa4c";
 
 export type IconVariant = "app" | "maskable" | "badge";
 
@@ -19,12 +17,11 @@ export function AppIcon({
   size: number;
   variant: IconVariant;
 }) {
-  // Maskable icons keep the glyph inside the central safe zone.
-  const glyph = Math.round(
-    size * (variant === "maskable" ? 0.5 : variant === "badge" ? 0.9 : 0.62),
+  // Maskable icons keep the mark inside the central safe zone.
+  const markHeight = Math.round(
+    size * (variant === "maskable" ? 0.56 : variant === "badge" ? 0.9 : 0.72),
   );
   const background = variant === "badge" ? "transparent" : BRAND_GREEN;
-  const stroke = "#ffffff";
 
   return (
     <div
@@ -38,20 +35,14 @@ export function AppIcon({
         borderRadius: variant === "app" ? Math.round(size * 0.22) : 0,
       }}
     >
-      <svg
-        width={glyph}
-        height={glyph}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={stroke}
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {FACTORY_PATHS.map((d) => (
-          <path key={d} d={d} />
-        ))}
-      </svg>
+      {/* next/og renders plain <img>; next/image does not apply here. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={MARK_WHITE_DATA_URI}
+        alt=""
+        width={Math.round(markHeight * MARK_ASPECT)}
+        height={markHeight}
+      />
     </div>
   );
 }

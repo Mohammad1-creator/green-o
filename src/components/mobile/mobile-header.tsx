@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { BrandLogo } from "@/components/brand-logo";
 import { BellForCurrentUser } from "@/features/notifications/components/bell-for-user";
 import { getCurrentUser } from "@/lib/auth/dal";
 import { isManagerRole } from "@/lib/auth/roles";
@@ -12,13 +13,16 @@ export async function MobileHeader() {
   ]);
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b bg-background/95 px-4 pt-[env(safe-area-inset-top)] backdrop-blur">
-      <span className="truncate font-semibold">{settings.factoryName}</span>
+    // Dark green behind the logo (start side) fading to light green, like the logo.
+    <header className="sticky top-0 z-30 box-content flex h-14 items-center justify-between gap-3 bg-linear-to-l from-brand-green to-brand-light-green px-4 pt-[env(safe-area-inset-top)] text-white shadow-md">
+      <Link href="/m" aria-label={settings.factoryName}>
+        <BrandLogo tone="white" height={34} />
+      </Link>
       <div className="flex items-center gap-2">
         {user && isManagerRole(user.role) ? (
           <Link
             href="/admin"
-            className="text-sm text-primary underline-offset-4 hover:underline"
+            className="text-sm font-medium text-white underline-offset-4 hover:underline"
           >
             لوحة الإدارة
           </Link>

@@ -91,7 +91,7 @@ export function NotificationBell({
     <Link
       href={href}
       aria-label={label}
-      className="relative inline-flex size-9 items-center justify-center rounded-lg hover:bg-muted"
+      className="relative inline-flex size-9 items-center justify-center rounded-lg hover:bg-current/10"
     >
       <BellIcon className="size-5" aria-hidden />
       {unread > 0 ? (

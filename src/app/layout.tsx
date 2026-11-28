@@ -4,6 +4,7 @@ import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import { EnvBanner } from "@/components/env-banner";
 import { DirectionProvider } from "@/components/ui/direction";
 import { Toaster } from "@/components/ui/sonner";
+import { BRAND_GREEN } from "@/lib/app-icon";
 
 import "./globals.css";
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: BRAND_GREEN,
   // Lets the mobile app draw under the iPhone notch; layouts pad with safe-area insets.
   viewportFit: "cover",
 };

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { BrandBackdrop } from "@/components/brand-backdrop";
+import { BrandLockup } from "@/components/brand-logo";
 import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -14,8 +15,9 @@ export default function NotFound() {
     // Like the login page: the card sits below the name in the picture.
     <main className="flex flex-1 justify-center px-4 pt-[calc(50svh+4.5rem)] pb-8">
       <BrandBackdrop />
-      <div className="h-fit w-full max-w-sm space-y-4 rounded-2xl bg-background/95 p-6 text-center shadow-2xl backdrop-blur">
-        <p className="text-4xl font-bold text-primary">404</p>
+      <div className="h-fit w-full max-w-sm space-y-4 rounded-2xl bg-card/95 p-6 text-center shadow-2xl backdrop-blur">
+        <BrandLockup tone="green" width={160} className="mx-auto" />
+        <p className="text-3xl font-bold text-primary">404</p>
         <h1 className="text-xl font-bold">الصفحة غير موجودة</h1>
         <p className="text-sm text-muted-foreground">
           الرابط خاطئ، أو أن ما تبحث عنه حُذف أو لا تملك صلاحية رؤيته.
