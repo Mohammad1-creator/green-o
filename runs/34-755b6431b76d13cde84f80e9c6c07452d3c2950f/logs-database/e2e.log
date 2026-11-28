@@ -1,0 +1,164 @@
+
+> green-o@0.1.0 test:e2e
+> playwright test
+
+
+Running 58 tests using 2 workers
+··································×·····°········××T
+::error file=tests/e2e/safety.spec.ts,title=[desktop] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/safety.spec.ts,title=[desktop] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides,line=25,col=43::  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A    Error: locator.selectOption: Test ended.%0A    Browser logs:%0A%0A    <launching> /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=<hidden> --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-OUh9ad --remote-debugging-pipe --no-startup-window%0A    <launched> pid=8187%0A    [pid=8187][err] [1128/100452.099832:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")%0A    [pid=8187][err] [1128/100452.099869:WARNING:dbus/object_proxy.cc:439] Failed to connect to NameOwnerChanged signal for object: /org/freedesktop/portal/desktop%0A    [pid=8187][err] [1128/100452.099877:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")%0A    [pid=8187][err] [1128/100452.099884:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")%0A    [pid=8187][err] [1128/100452.102193:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")%0A    [pid=8187][err] [1128/100452.261345:WARNING:media/gpu/vaapi/vaapi_wrapper.cc:1652] drmGetDevices2() has not found any devices%0A    [pid=8187][err] [1128/100452.264230:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process.%0A    [pid=8187][err] [1128/100453.725505:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: %0A    [pid=8187][err] [1128/100453.725572:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")%0A    [pid=8187][err] [1128/100453.732126:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: %0A    [pid=8187] <gracefully close start>%0A    Call log:%0A      - waiting for getByLabel('الموظف')%0A        - locator resolved to <input dir="ltr" required="" id="employeeNo" data-slot="input" name="employeeNo" inputmode="numeric" autocomplete="username" class="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disable…/>%0A      - attempting select option action%0A        2 × waiting for element to be visible and enabled%0A          - element is not visible%0A        - retrying select option action%0A        - waiting 20ms%0A        2 × waiting for element to be visible and enabled%0A          - element is not visible%0A        - retrying select option action%0A          - waiting 100ms%0A        57 × waiting for element to be visible and enabled%0A           - element is not visible%0A         - retrying select option action%0A           - waiting 500ms%0A        - waiting for element to be visible and enabled%0A%0A%0A      23 |     await supervisor.getByRole("link", { name: "السلامة" }).click();%0A      24 |     await supervisor.getByRole("link", { name: "تسجيل مخالفة" }).click();%0A    > 25 |     await supervisor.getByLabel("الموظف").selectOption({ label: worker.name });%0A         |                                           ^%0A      26 |     await supervisor%0A      27 |       .getByLabel("نوع المخالفة")%0A      28 |       .selectOption({ label: "عدم ارتداء الخوذة · متوسطة · خصم 10" });%0A        at /home/runner/work/green-o/green-o/tests/e2e/safety.spec.ts:25:43
+::error file=tests/e2e/safety.spec.ts,title=[desktop] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/safety.spec.ts,title=[desktop] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/safety.spec.ts,title=[desktop] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides,line=25,col=43::  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Error: locator.selectOption: Test ended.%0A    Browser logs:%0A%0A    <launching> /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=<hidden> --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-7KMFEU --remote-debugging-pipe --no-startup-window%0A    <launched> pid=11394%0A    [pid=11394][err] [1128/100620.849862:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")%0A    [pid=11394][err] [1128/100620.849918:WARNING:dbus/object_proxy.cc:439] Failed to connect to NameOwnerChanged signal for object: /org/freedesktop/portal/desktop%0A    [pid=11394][err] [1128/100620.849927:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")%0A    [pid=11394][err] [1128/100620.849966:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")%0A    [pid=11394][err] [1128/100620.851080:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")%0A    [pid=11394][err] [1128/100620.865039:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: %0A    [pid=11394][err] [1128/100620.865119:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")%0A    [pid=11394][err] [1128/100620.869096:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: %0A    [pid=11394][err] [1128/100620.880853:WARNING:media/gpu/vaapi/vaapi_wrapper.cc:1652] drmGetDevices2() has not found any devices%0A    [pid=11394][err] [1128/100620.883704:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process.%0A    [pid=11394] <gracefully close start>%0A    Call log:%0A      - waiting for getByLabel('الموظف')%0A        - locator resolved to <input dir="ltr" required="" id="employeeNo" data-slot="input" name="employeeNo" inputmode="numeric" autocomplete="username" class="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disable…/>%0A      - attempting select option action%0A        2 × waiting for element to be visible and enabled%0A          - element is not visible%0A        - retrying select option action%0A        - waiting 20ms%0A        2 × waiting for element to be visible and enabled%0A          - element is not visible%0A        - retrying select option action%0A          - waiting 100ms%0A        56 × waiting for element to be visible and enabled%0A           - element is not visible%0A         - retrying select option action%0A           - waiting 500ms%0A        - waiting for element to be visible and enabled%0A%0A%0A      23 |     await supervisor.getByRole("link", { name: "السلامة" }).click();%0A      24 |     await supervisor.getByRole("link", { name: "تسجيل مخالفة" }).click();%0A    > 25 |     await supervisor.getByLabel("الموظف").selectOption({ label: worker.name });%0A         |                                           ^%0A      26 |     await supervisor%0A      27 |       .getByLabel("نوع المخالفة")%0A      28 |       .selectOption({ label: "عدم ارتداء الخوذة · متوسطة · خصم 10" });%0A        at /home/runner/work/green-o/green-o/tests/e2e/safety.spec.ts:25:43
+········×T
+::error file=tests/e2e/safety.spec.ts,title=[mobile] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  2) [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/safety.spec.ts,title=[mobile] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  2) [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A%0A    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+::error file=tests/e2e/safety.spec.ts,title=[mobile] › tests/e2e/safety.spec.ts%3A10%3A3 › safety violations › a supervisor records a violation%2C the employee objects%2C the safety manager decides::  2) [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A%0A    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────%0A    Test timeout of 30000ms exceeded.
+
+
+  1) [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.selectOption: Test ended.
+    Browser logs:
+
+    <launching> /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=<hidden> --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-OUh9ad --remote-debugging-pipe --no-startup-window
+    <launched> pid=8187
+    [pid=8187][err] [1128/100452.099832:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+    [pid=8187][err] [1128/100452.099869:WARNING:dbus/object_proxy.cc:439] Failed to connect to NameOwnerChanged signal for object: /org/freedesktop/portal/desktop
+    [pid=8187][err] [1128/100452.099877:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+    [pid=8187][err] [1128/100452.099884:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+    [pid=8187][err] [1128/100452.102193:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+    [pid=8187][err] [1128/100452.261345:WARNING:media/gpu/vaapi/vaapi_wrapper.cc:1652] drmGetDevices2() has not found any devices
+    [pid=8187][err] [1128/100452.264230:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process.
+    [pid=8187][err] [1128/100453.725505:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+    [pid=8187][err] [1128/100453.725572:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+    [pid=8187][err] [1128/100453.732126:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+    [pid=8187] <gracefully close start>
+    Call log:
+      - waiting for getByLabel('الموظف')
+        - locator resolved to <input dir="ltr" required="" id="employeeNo" data-slot="input" name="employeeNo" inputmode="numeric" autocomplete="username" class="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disable…/>
+      - attempting select option action
+        2 × waiting for element to be visible and enabled
+          - element is not visible
+        - retrying select option action
+        - waiting 20ms
+        2 × waiting for element to be visible and enabled
+          - element is not visible
+        - retrying select option action
+          - waiting 100ms
+        57 × waiting for element to be visible and enabled
+           - element is not visible
+         - retrying select option action
+           - waiting 500ms
+        - waiting for element to be visible and enabled
+
+
+      23 |     await supervisor.getByRole("link", { name: "السلامة" }).click();
+      24 |     await supervisor.getByRole("link", { name: "تسجيل مخالفة" }).click();
+    > 25 |     await supervisor.getByLabel("الموظف").selectOption({ label: worker.name });
+         |                                           ^
+      26 |     await supervisor
+      27 |       .getByLabel("نوع المخالفة")
+      28 |       .selectOption({ label: "عدم ارتداء الخوذة · متوسطة · خصم 10" });
+        at /home/runner/work/green-o/green-o/tests/e2e/safety.spec.ts:25:43
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-desktop/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-desktop-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-desktop-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-desktop-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.selectOption: Test ended.
+    Browser logs:
+
+    <launching> /home/runner/.cache/ms-playwright/chromium_headless_shell-1254/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=<hidden> --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-7KMFEU --remote-debugging-pipe --no-startup-window
+    <launched> pid=11394
+    [pid=11394][err] [1128/100620.849862:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+    [pid=11394][err] [1128/100620.849918:WARNING:dbus/object_proxy.cc:439] Failed to connect to NameOwnerChanged signal for object: /org/freedesktop/portal/desktop
+    [pid=11394][err] [1128/100620.849927:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+    [pid=11394][err] [1128/100620.849966:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+    [pid=11394][err] [1128/100620.851080:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+    [pid=11394][err] [1128/100620.865039:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+    [pid=11394][err] [1128/100620.865119:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+    [pid=11394][err] [1128/100620.869096:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+    [pid=11394][err] [1128/100620.880853:WARNING:media/gpu/vaapi/vaapi_wrapper.cc:1652] drmGetDevices2() has not found any devices
+    [pid=11394][err] [1128/100620.883704:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process.
+    [pid=11394] <gracefully close start>
+    Call log:
+      - waiting for getByLabel('الموظف')
+        - locator resolved to <input dir="ltr" required="" id="employeeNo" data-slot="input" name="employeeNo" inputmode="numeric" autocomplete="username" class="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disable…/>
+      - attempting select option action
+        2 × waiting for element to be visible and enabled
+          - element is not visible
+        - retrying select option action
+        - waiting 20ms
+        2 × waiting for element to be visible and enabled
+          - element is not visible
+        - retrying select option action
+          - waiting 100ms
+        56 × waiting for element to be visible and enabled
+           - element is not visible
+         - retrying select option action
+           - waiting 500ms
+        - waiting for element to be visible and enabled
+
+
+      23 |     await supervisor.getByRole("link", { name: "السلامة" }).click();
+      24 |     await supervisor.getByRole("link", { name: "تسجيل مخالفة" }).click();
+    > 25 |     await supervisor.getByLabel("الموظف").selectOption({ label: worker.name });
+         |                                           ^
+      26 |     await supervisor
+      27 |       .getByLabel("نوع المخالفة")
+      28 |       .selectOption({ label: "عدم ارتداء الخوذة · متوسطة · خصم 10" });
+        at /home/runner/work/green-o/green-o/tests/e2e/safety.spec.ts:25:43
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-desktop-retry2/error-context.md
+
+  2) [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides 
+
+    Test timeout of 30000ms exceeded.
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-mobile/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-mobile-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-mobile-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-mobile-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error Context: test-results/safety-safety-violations-a-d8737--the-safety-manager-decides-mobile-retry2/error-context.md
+
+  2 failed
+    [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides 
+    [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides 
+  1 skipped
+  55 passed (3.0m)
+::notice title=🎭 Playwright Run Summary::  2 failed%0A    [desktop] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A    [mobile] › tests/e2e/safety.spec.ts:10:3 › safety violations › a supervisor records a violation, the employee objects, the safety manager decides %0A  1 skipped%0A  55 passed (3.0m)
